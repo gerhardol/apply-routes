@@ -141,13 +141,15 @@ namespace ApplyRoutesPlugin.Activities
                             webBrowser.Document.InvokeScript("add_marker", new Object[] {
                                 a.GPSRoute[0].Value.LatitudeDegrees,
                                 a.GPSRoute[0].Value.LongitudeDegrees,
-                                Properties.Resources.Route_StartTime_Text + start.ToShortDateString() + " " + start.ToShortTimeString()
+                                Properties.Resources.Route_StartTime_Text + start.ToShortDateString() + " " + start.ToShortTimeString(),
+                                "start_" + a.ReferenceId
                             });
                             DateTime end = ai.EndTime.ToLocalTime();
                             webBrowser.Document.InvokeScript("add_marker", new Object[] {
                                 a.GPSRoute[a.GPSRoute.Count-1].Value.LatitudeDegrees,
                                 a.GPSRoute[a.GPSRoute.Count-1].Value.LongitudeDegrees,
-                                Properties.Resources.Route_EndTime_Text + end.ToShortDateString() + " " + end.ToShortTimeString()
+                                Properties.Resources.Route_EndTime_Text + end.ToShortDateString() + " " + end.ToShortTimeString(),
+                                "end_" + a.ReferenceId
                             });
 
                             webBrowser.Document.InvokeScript("add_polyline", new Object[] {
@@ -333,6 +335,19 @@ namespace ApplyRoutesPlugin.Activities
         private string selected_guid = "";
         private static string guid = "";
 
+        static float GetInterpolatedValue(INumericTimeDataSeries s, DateTime when)
+        {
+            if (s != null)
+            {
+                ITimeValueEntry<float> value = s.GetInterpolatedValue(when);
+                if (value != null)
+                {
+                    return value.Value;
+                }
+            }
+            return -1e30f;
+        }
+
         internal string RouteInfo(object okey, object otime, object opt)
         {
             if (activities == null) return "";
@@ -345,14 +360,36 @@ namespace ApplyRoutesPlugin.Activities
                     if ((otime == null || otime.ToString() == "")&& 
                         (opt == null || opt.ToString() == ""))
                     {
-                        return ai.Time.TotalSeconds.ToString();
+                        return ai.TimeNonPaused.TotalSeconds.ToString();
                     }
                     else
                     {
                         double t;
+                        DateTime when;
+
+                        IDistanceDataTrack ddt = act.DistanceMetersTrack;
+                        if (ddt == null) ddt = act.GPSRoute.GetDistanceMetersTrack();
+                        float delta = 0;
+
                         if (otime != null && otime.ToString() != "")
                         {
                             t = Convert.ToDouble(otime.ToString());
+                            if (t < 0) t = 0;
+                            if (t > ai.TimeNonPaused.TotalSeconds)
+                            {
+                                t = ai.TimeNonPaused.TotalSeconds;
+                            }
+                            when = ddt.StartTime.AddSeconds(t);
+                            foreach (IValueRange<DateTime> nmt in ai.NonMovingTimes)
+                            {
+                                if (when < nmt.Lower)
+                                {
+                                    break;
+                                }
+                                delta += GetInterpolatedValue(ddt, nmt.Upper);
+                                delta -= GetInterpolatedValue(ddt, nmt.Lower);
+                                when = when.Add(nmt.Upper.Subtract(nmt.Lower));
+                            }
                         }
                         else
                         {
@@ -362,26 +399,45 @@ namespace ApplyRoutesPlugin.Activities
                             } else if (pt >= act.GPSRoute.Count) {
                                 pt = act.GPSRoute.Count - 1;
                             }
-                            t = act.GPSRoute.EntryDateTime(act.GPSRoute[pt]).Subtract(act.StartTime).TotalSeconds;
+                            when = act.GPSRoute.EntryDateTime(act.GPSRoute[pt]);
+                            DateTime npt = when;
+                            foreach (IValueRange<DateTime> nmt in ai.NonMovingTimes)
+                            {
+                                if (npt < nmt.Lower)
+                                {
+                                    break;
+                                }
+                                if (npt > nmt.Upper)
+                                {
+                                    delta += GetInterpolatedValue(ddt, nmt.Upper);
+                                    delta -= GetInterpolatedValue(ddt, nmt.Lower);
+                                    npt = npt.Subtract(nmt.Upper.Subtract(nmt.Lower));
+                                }
+                                else
+                                {
+                                    delta += GetInterpolatedValue(ddt, npt);
+                                    delta -= GetInterpolatedValue(ddt, nmt.Lower);
+                                    npt = nmt.Lower;
+                                    break;
+                                }
+                            }
+                            t = npt.Subtract(act.StartTime).TotalSeconds;
                         }
-                        if (t < 0) t = 0;
-                        if (t > ai.Time.TotalSeconds)
-                        {
-                            t = ai.Time.TotalSeconds;
-                        }
-                        IDistanceDataTrack ddt = act.DistanceMetersTrack;
-                        if (ddt == null) ddt = act.GPSRoute.GetDistanceMetersTrack();
-                        DateTime when = ddt.StartTime.AddSeconds(t);
-                        float dist = ddt.GetInterpolatedValue(when).Value;
-                        float elev = ai.SmoothedElevationTrack.GetInterpolatedValue(when).Value;
-                        float hrt = ai.SmoothedHeartRateTrack.GetInterpolatedValue(when).Value;
-                        float pace = ai.SmoothedSpeedTrack.GetInterpolatedValue(when).Value;
+                        
+                        float dist = GetInterpolatedValue(ddt,when) - delta;
+                        float elev = GetInterpolatedValue(ai.SmoothedElevationTrack,when);
+                        float hrt = GetInterpolatedValue(ai.SmoothedHeartRateTrack,when);
+                        float pace = GetInterpolatedValue(ai.SmoothedSpeedTrack,when);
                         IGPSPoint where = act.GPSRoute.GetInterpolatedValue(when).Value;
+                        if (elev == -1e30f)
+                        {
+                            elev = where.ElevationMeters;
+                        }
 
                         return
                             ApplyRouteForm.DistanceAsString(dist) + ";" +
                             TimeSpan.FromSeconds(t).ToString() + ";" +
-                            String.Format("{0:F};{1:F};{2:F}", where.LatitudeDegrees, where.LongitudeDegrees, where.ElevationMeters) + ";" +
+                            String.Format("{0:F};{1:F};{2:F}", where.LatitudeDegrees, where.LongitudeDegrees, elev) + ";" +
                             hrt.ToString("F") + ";" +
                             pace.ToString("F") + ";" +
                             when.ToString("t");

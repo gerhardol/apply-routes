@@ -544,12 +544,11 @@ namespace ApplyRoutesPlugin.MapProviders
         private Point MercatorGPSToPixel(IGPSLocation where, double zoomLevel)
         {
             int zm = GMZoom(zoomLevel);
-            int z1 = 64 << zm;
-            int z2 = z1 << 1;
+            double z1 = Math.Pow(2, zm) * 64;
+            double z2 = z1 * 2;
 
             double x = where.LongitudeDegrees * z2 / 180 + z2;
             double s = Math.Sin(where.LatitudeDegrees * Math.PI / 180);
-            double z = 128 << GMZoom(zoomLevel);
             s = Math.Max(s, -.9999);
             s = Math.Min(s, 0.9999);
             double y = z2 - z1*Math.Log((1 + s)/(1 - s))/Math.PI;
@@ -558,7 +557,7 @@ namespace ApplyRoutesPlugin.MapProviders
 
         private IGPSLocation MercatorPixelToGPS(Point where, double zoomLevel)
         {
-            double z = 128 << GMZoom(zoomLevel);
+            double z = 128 * Math.Pow(2, GMZoom(zoomLevel));
 
             double x = ((where.X) / z - 1) * 180;
             double y = Math.Min(Math.Max(1 - (where.Y) / z, -1), 1) * Math.PI;

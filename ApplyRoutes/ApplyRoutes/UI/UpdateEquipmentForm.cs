@@ -142,12 +142,31 @@ namespace ApplyRoutesPlugin.UI
             };
 
             selectedNamesTxt.ButtonClick += renamePopupClick;
-            selectedLocationsTxt.ButtonClick += renamePopupClick;                
+            selectedLocationsTxt.ButtonClick += renamePopupClick;
+            /*
+            IActivityCategory common = GetCommonCategory();
+            if (common != null)
+            {
+                categoryFromTxt.Text = GetCategoryName(common);
+            }*/
+
+            selectedCategoriesTxt.ButtonClick += delegate(object sender, EventArgs e)
+            {
+                SortedList<string, IActivityCategory> categories = GetCategoryList();
+                Plugin.OpenListPopup(Plugin.GetApplication().VisualTheme,
+                                     categories.Keys,
+                                     (Control)sender, null, null,
+                                     delegate(string name)
+                                     {
+                                         ((ZoneFiveSoftware.Common.Visuals.TextBox)sender).Text = name;
+                                         newCategory = categories[name];
+                                     });
+            };
 
             //TabPage renameTab = updateTab.TabPages["renameTab"];
             //TabPage globalRenameTab = updateTab.TabPages["globalRenameTab"];
             //TabPage updateEquipmentTab = updateTab.TabPages["updateEquipmentTab"];
-
+            
             if (activities == null)
             {
                 updateTab.TabPages.RemoveByKey("updateEquipmentTab");
@@ -171,6 +190,7 @@ namespace ApplyRoutesPlugin.UI
             toNameTxt.ThemeChanged(visualTheme);
             fromLocationTxt.ThemeChanged(visualTheme);
             toLocationTxt.ThemeChanged(visualTheme);
+            selectedCategoriesTxt.ThemeChanged(visualTheme);
 
             Plugin.ThemeChanged(okBtn, visualTheme);
             Plugin.ThemeChanged(cancelBtn, visualTheme);
@@ -289,6 +309,11 @@ namespace ApplyRoutesPlugin.UI
             get { return toLocationTxt.Text.Trim(); }
         }
 
+        public IActivityCategory NewCategory
+        {
+            get { return newCategory; }
+        }
+
         public static string CanonicalName(string name)
         {
             return name.Trim().ToLower();
@@ -355,8 +380,94 @@ namespace ApplyRoutesPlugin.UI
             return names;
         }
 
+        private static string GetCategoryName(IActivityCategory cat)
+        {
+            string name = cat.Name;
+            IActivityCategory c = cat;
+            while ((c = c.Parent) != null)
+            {
+                name = c.Name + " : " + name;
+            }
+            return name;
+        }
+
+        private static void GetCategoriesRec(SortedList<string, IActivityCategory> list, IList<IActivityCategory> cats)
+        {
+            foreach (IActivityCategory cat in cats)
+            {
+                list.Add(GetCategoryName(cat), cat);
+                GetCategoriesRec(list, cat.SubCategories);
+            }
+        }
+
+        private static SortedList<string, IActivityCategory> GetCategoryList()
+        {
+            SortedList<string, IActivityCategory> list = new SortedList<string, IActivityCategory>();
+
+            GetCategoriesRec(list, Plugin.GetApplication().Logbook.ActivityCategories);
+            return list;
+        }
+
+        private static bool IsSubCategory(IActivityCategory root, IActivityCategory sub)
+        {
+            while (sub != null)
+            {
+                if (sub == root)
+                {
+                    return true;
+                }
+                sub = sub.Parent;
+            }
+            return false;
+        }
+
+        private static IActivityCategory CommonCategory(IActivityCategory root, IActivityCategory sub)
+        {
+            while (root != null)
+            {
+                if (IsSubCategory(root, sub))
+                {
+                    return root;
+                }
+                root = root.Parent;
+            }
+            
+            return null;
+        }
+
+        private IActivityCategory GetCommonCategory()
+        {
+            IActivityCategory common = null;
+            if (activities != null)
+            {
+                foreach (IActivity activity in activities)
+                {
+                    if (common == null)
+                    {
+                        common = activity.Category;
+                    }
+                    else
+                    {
+                        IActivityCategory c = CommonCategory(common, activity.Category);
+                        if (c == null)
+                        {
+                            c = CommonCategory(activity.Category, common);
+                            if (c == null)
+                            {
+                                break;
+                            }
+                        }
+                        common = c;
+                    }
+                }
+            }
+
+            return common;
+        }
+
         private IList<IActivity> activities = null;
         private IList<IRoute> routes = null;
         private IList<IEquipmentItem> commonItems = null;
+        private IActivityCategory newCategory = null;
     }
 }

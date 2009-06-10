@@ -70,13 +70,25 @@ namespace ApplyRoutesPlugin.Edit
 
         private bool checkSalistSpan(SortedList<DateTime, IActivity> salist)
         {
-            DateTime start = salist.Keys[0];
-            IActivity last = salist.Values[salist.Count - 1];
-            ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(last);
-            DateTime end = ai.EndTime;
+            NumericTimeDataSeries ntd = new NumericTimeDataSeries();
+            DateTime st = DateTime.FromBinary(0);
+            ntd.Add(st, 0);
+            DateTime et = st.AddDays(5);
+            ntd.Add(et, 0);
+            if (ntd.EntryDateTime(ntd[1]) != et)
+            {
+                DateTime start = salist.Keys[0];
+                IActivity last = salist.Values[salist.Count - 1];
+                ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(last);
+                DateTime end = ai.EndTime;
 
-            TimeSpan span = end.Subtract(start);
-            return span.TotalSeconds <= 65535;
+                TimeSpan span = end.Subtract(start);
+                return span.TotalSeconds <= 65535;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void Append<T>(ITimeDataSeries<T> s, DateTime t, T value)
@@ -130,6 +142,7 @@ namespace ApplyRoutesPlugin.Edit
             {
                 IActivity activity = salist.Values[i];
                 ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
+                DateTime prevEnd = endTime;
 
                 Append(route, activity.GPSRoute, ref endTime);
                 Append(ddt, activity.DistanceMetersTrack, ref endTime);
@@ -174,8 +187,8 @@ namespace ApplyRoutesPlugin.Edit
                         li.TotalDistanceMeters = lap.TotalDistanceMeters;
                     }
 
-                    if (activity.StartTime > endTime) {
-                        first.TimerPauses.Add(new ValueRange<DateTime>(endTime, activity.StartTime));
+                    if (activity.StartTime > prevEnd) {
+                        first.TimerPauses.Add(new ValueRange<DateTime>(prevEnd, activity.StartTime));
                     }
 
                     foreach (IValueRange<DateTime> dtr in activity.TimerPauses)

@@ -130,6 +130,17 @@ namespace ApplyRoutesPlugin.Edit
                     }
                 }
 
+                if (m.NewCategory != null)
+                {
+                    if (activities != null)
+                    {
+                        foreach (IActivity activity in activities)
+                        {
+                            activity.Category = m.NewCategory;
+                        }
+                    }
+                }
+
                 if (m.FromName != "" && m.ToName != "")
                 {
                     foreach (IActivity activity in Plugin.GetApplication().Logbook.Activities)
