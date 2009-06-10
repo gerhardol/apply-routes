@@ -60,8 +60,15 @@ namespace ApplyRoutesPlugin.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DropDown8 {
+            get {
+                object obj = ResourceManager.GetObject("DropDown8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
-        ///   Looks up a localized string similar to Apply Route....
+        ///   Looks up a localized string similar to AR - Apply Route....
         /// </summary>
         internal static string Edit_ApplyRouteAction_Text {
             get {
@@ -79,7 +86,7 @@ namespace ApplyRoutesPlugin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Routes From Activities.
+        ///   Looks up a localized string similar to AR - Create Routes From Activities....
         /// </summary>
         internal static string Edit_CreateRouteAction_Text {
             get {
@@ -93,6 +100,45 @@ namespace ApplyRoutesPlugin.Properties {
         internal static string Edit_RouteManipulation_Text {
             get {
                 return ResourceManager.GetString("Edit_RouteManipulation_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AR - Update Equipment....
+        /// </summary>
+        internal static string Edit_UpdateEquipment_Text {
+            get {
+                return ResourceManager.GetString("Edit_UpdateEquipment_Text", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Map_Waypoint {
+            get {
+                object obj = ResourceManager.GetObject("Map_Waypoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Map_Waypoint_Hi {
+            get {
+                object obj = ResourceManager.GetObject("Map_Waypoint_Hi", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Map_Waypoint_Sel {
+            get {
+                object obj = ResourceManager.GetObject("Map_Waypoint_Sel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Splits.
+        /// </summary>
+        internal static string MCL_SplitsMCL_Text {
+            get {
+                return ResourceManager.GetString("MCL_SplitsMCL_Text", resourceCulture);
             }
         }
     }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.equipmentList = new ZoneFiveSoftware.Common.Visuals.TreeList();
             this.routeList = new ZoneFiveSoftware.Common.Visuals.TreeList();
             this.okBtn = new ZoneFiveSoftware.Common.Visuals.Button();
             this.cancelBtn = new ZoneFiveSoftware.Common.Visuals.Button();
@@ -42,33 +41,8 @@
             this.maxDistLbl = new System.Windows.Forms.Label();
             this.routeLbl = new System.Windows.Forms.Label();
             this.ignoreGPSActChk = new System.Windows.Forms.CheckBox();
-            this.equipmentLbl = new System.Windows.Forms.Label();
+            this.applyTimesLinearlyChk = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            // 
-            // equipmentList
-            // 
-            this.equipmentList.BackColor = System.Drawing.Color.Transparent;
-            this.equipmentList.Border = ZoneFiveSoftware.Common.Visuals.ControlBorder.Style.SmallRoundShadow;
-            this.equipmentList.CheckBoxes = true;
-            this.equipmentList.DefaultIndent = 15;
-            this.equipmentList.DefaultRowHeight = -1;
-            this.equipmentList.HeaderRowHeight = 42;
-            this.equipmentList.Location = new System.Drawing.Point(133, 232);
-            this.equipmentList.MultiSelect = false;
-            this.equipmentList.Name = "equipmentList";
-            this.equipmentList.NumHeaderRows = ZoneFiveSoftware.Common.Visuals.TreeList.HeaderRows.One;
-            this.equipmentList.NumLockedColumns = 0;
-            this.equipmentList.RowAlternatingColors = true;
-            this.equipmentList.RowHotlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(49)))), ((int)(((byte)(106)))), ((int)(((byte)(197)))));
-            this.equipmentList.RowHotlightColorText = System.Drawing.SystemColors.HighlightText;
-            this.equipmentList.RowHotlightMouse = true;
-            this.equipmentList.RowSelectedColor = System.Drawing.SystemColors.Highlight;
-            this.equipmentList.RowSelectedColorText = System.Drawing.SystemColors.HighlightText;
-            this.equipmentList.RowSeparatorLines = true;
-            this.equipmentList.ShowLines = false;
-            this.equipmentList.ShowPlusMinus = false;
-            this.equipmentList.Size = new System.Drawing.Size(425, 115);
-            this.equipmentList.TabIndex = 4;
             // 
             // routeList
             // 
@@ -105,7 +79,7 @@
             this.okBtn.HyperlinkStyle = false;
             this.okBtn.ImageMargin = 2;
             this.okBtn.LeftImage = null;
-            this.okBtn.Location = new System.Drawing.Point(361, 362);
+            this.okBtn.Location = new System.Drawing.Point(376, 246);
             this.okBtn.Name = "okBtn";
             this.okBtn.PushStyle = true;
             this.okBtn.RightImage = null;
@@ -126,7 +100,7 @@
             this.cancelBtn.HyperlinkStyle = false;
             this.cancelBtn.ImageMargin = 2;
             this.cancelBtn.LeftImage = null;
-            this.cancelBtn.Location = new System.Drawing.Point(468, 362);
+            this.cancelBtn.Location = new System.Drawing.Point(483, 246);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.PushStyle = true;
             this.cancelBtn.RightImage = null;
@@ -268,15 +242,15 @@
             this.ignoreGPSActChk.Text = "Ignore activities with GPS data";
             this.ignoreGPSActChk.UseVisualStyleBackColor = true;
             // 
-            // equipmentLbl
+            // applyTimesLinearlyChk
             // 
-            this.equipmentLbl.AutoSize = true;
-            this.equipmentLbl.Location = new System.Drawing.Point(32, 283);
-            this.equipmentLbl.Name = "equipmentLbl";
-            this.equipmentLbl.Size = new System.Drawing.Size(95, 13);
-            this.equipmentLbl.TabIndex = 22;
-            this.equipmentLbl.Text = "Update Equipment";
-            this.equipmentLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.applyTimesLinearlyChk.AutoSize = true;
+            this.applyTimesLinearlyChk.Location = new System.Drawing.Point(23, 246);
+            this.applyTimesLinearlyChk.Name = "applyTimesLinearlyChk";
+            this.applyTimesLinearlyChk.Size = new System.Drawing.Size(122, 17);
+            this.applyTimesLinearlyChk.TabIndex = 22;
+            this.applyTimesLinearlyChk.Text = "Apply Times Linearly";
+            this.applyTimesLinearlyChk.UseVisualStyleBackColor = true;
             // 
             // ApplyRouteForm
             // 
@@ -284,8 +258,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(572, 400);
-            this.Controls.Add(this.equipmentLbl);
+            this.ClientSize = new System.Drawing.Size(571, 285);
+            this.Controls.Add(this.applyTimesLinearlyChk);
             this.Controls.Add(this.ignoreGPSActChk);
             this.Controls.Add(this.routeLbl);
             this.Controls.Add(this.maxDistTxt);
@@ -299,7 +273,6 @@
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.routeList);
-            this.Controls.Add(this.equipmentList);
             this.Name = "ApplyRouteForm";
             this.Text = "Apply Route";
             this.ResumeLayout(false);
@@ -309,7 +282,6 @@
 
         #endregion
 
-        private ZoneFiveSoftware.Common.Visuals.TreeList equipmentList;
         private ZoneFiveSoftware.Common.Visuals.TreeList routeList;
         private ZoneFiveSoftware.Common.Visuals.Button okBtn;
         private ZoneFiveSoftware.Common.Visuals.Button cancelBtn;
@@ -323,6 +295,6 @@
         private System.Windows.Forms.Label maxDistLbl;
         private System.Windows.Forms.Label routeLbl;
         private System.Windows.Forms.CheckBox ignoreGPSActChk;
-        private System.Windows.Forms.Label equipmentLbl;
+        private System.Windows.Forms.CheckBox applyTimesLinearlyChk;
     }
 }

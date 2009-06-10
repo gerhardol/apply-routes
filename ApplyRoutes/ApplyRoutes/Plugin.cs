@@ -21,11 +21,17 @@ using System.Text;
 using System.Xml;
 using System.Windows.Forms;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ZoneFiveSoftware.Common.Visuals;
 
 namespace ApplyRoutesPlugin
 {
     class Plugin : IPlugin
     {
+        public Plugin()
+        {
+            plugin = this;
+        }
+
         #region IPlugin Members
 
         public IApplication Application
@@ -60,6 +66,10 @@ namespace ApplyRoutesPlugin
 
         #endregion
 
+        public static Plugin thePlugin
+        {
+            get { return plugin; }
+        }
         public static IApplication GetApplication()
         {
             return application;
@@ -99,8 +109,15 @@ namespace ApplyRoutesPlugin
             SetIButtonClick(null);
         }
 
+        static public void ThemeChanged(Control control, ITheme visualTheme)
+        {
+            control.ForeColor = visualTheme.ControlText;
+            control.BackColor = visualTheme.Control;
+        }
+
         #region Private members
         private static IApplication application;
+        private static Plugin plugin;
         #endregion   
     }
 }

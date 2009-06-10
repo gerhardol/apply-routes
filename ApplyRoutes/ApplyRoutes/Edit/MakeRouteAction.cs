@@ -26,9 +26,42 @@ using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
 
 using ApplyRoutesPlugin.UI;
+using System.Windows.Forms;
 
 namespace ApplyRoutesPlugin.Edit
 {
+    public class ActivityRoutePair 
+    {
+        public ActivityRoutePair(IActivity a, IRoute r)
+        {
+            activity = a;
+            route = r;
+        }
+
+        public IActivity Activity {
+            get { return activity; }
+            set { activity = value; }
+        }
+
+        public IRoute Route {
+            get { return route; }
+            set { route = value; }
+        }
+
+        public string RouteName
+        {
+            get { return Route.Name; }
+        }
+
+        public string ActivityName
+        {
+            get { return Activity.StartTime.ToLocalTime().ToShortDateString() + " " + Activity.Name; }
+        }
+
+        private IActivity activity;
+        private IRoute route;
+    }
+
     class MakeRouteAction : IAction
     {
         public MakeRouteAction(IList<IActivity> activities)
@@ -46,7 +79,7 @@ namespace ApplyRoutesPlugin.Edit
                 {
                     foreach (IActivity activity in activities)
                     {
-                        if (activity.GPSRoute != null && activity.Name != "")
+                        if (activity.GPSRoute != null)
                         {
                             return true;
                         }
@@ -74,6 +107,7 @@ namespace ApplyRoutesPlugin.Edit
         {
             if (activities != null)
             {
+                List<ActivityRoutePair> list = new List<ActivityRoutePair>();
                 foreach (IActivity activity in activities)
                 {
                     if (activity.GPSRoute != null && activity.Name != "")
@@ -93,9 +127,22 @@ namespace ApplyRoutesPlugin.Edit
                                 theRoute = route;
                             }
                         }
-                        if (theRoute != null) {
+                        ActivityRoutePair arp = new ActivityRoutePair(activity, theRoute);
+                        list.Add(arp);
+                    }
+                }
+
+                ConfirmRoutesForm m = new ConfirmRoutesForm(list);
+                if (m.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (ActivityRoutePair arp in list)
+                    {
+                        IRoute theRoute = arp.Route;
+                        IActivity activity = arp.Activity;
+                        if (theRoute != null)
+                        {
                             IActivityCategory cat = activity.Category;
-                            
+
                             theRoute.Category = cat.Name;
                             while ((cat = cat.Parent) != null)
                             {
@@ -106,6 +153,7 @@ namespace ApplyRoutesPlugin.Edit
                             theRoute.Name = activity.Name;
                             theRoute.Notes = activity.Notes;
                         }
+
                     }
                 }
             }

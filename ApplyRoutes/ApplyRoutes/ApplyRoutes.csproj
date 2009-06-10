@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Edit\UpdateEquipmentAction.cs" />
     <Compile Include="Edit\RouteManipulator.cs" />
     <Compile Include="Edit\MakeRouteAction.cs" />
     <Compile Include="Edit\ExtendActions.cs" />
@@ -67,11 +68,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings\ExtendSettingsPages.cs" />
+    <Compile Include="UI\ConfirmRoutesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ConfirmRoutesForm.Designer.cs">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ApplyRouteForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ApplyRouteForm.Designer.cs">
       <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UpdateEquipmentForm.Designer.cs">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SettingsControl.Designer.cs">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -80,13 +100,31 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfirmRoutesForm.resx">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\ApplyRouteForm.resx">
       <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateEquipmentForm.resx">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsControl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="plugin.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\DropDown8.png" />
+    <Content Include="Resources\Map_Waypoint.png" />
+    <Content Include="Resources\Map_Waypoint_Sel.png" />
+    <Content Include="Resources\Map_Waypoint_Hi.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

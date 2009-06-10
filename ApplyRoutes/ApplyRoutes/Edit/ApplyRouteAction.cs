@@ -87,9 +87,6 @@ namespace ApplyRoutesPlugin.Edit
             ApplyRouteForm m = new ApplyRouteForm(activities);
             if (m.ShowDialog() == DialogResult.OK)
             {
-                UpdateEquipment(m.EquipmentToAdd, true);
-                UpdateEquipment(m.EquipmentToRemove, false);
-
                 IList<IRoute> routes = m.SelectedRoutes;
                 if (routes != null && routes.Count == 1)
                 {
@@ -101,8 +98,9 @@ namespace ApplyRoutesPlugin.Edit
                             ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
                             IGPSRoute rt = routes[0].GPSRoute;
                             GPSRoute route = new GPSRoute();
+                            bool applyLinearly = m.ApplyLinearly || rt.TotalElapsedSeconds == 0;
                             IDistanceDataTrack dmt = rt.GetDistanceMetersTrack();
-                            double timeScale = rt.TotalElapsedSeconds != 0 ? 
+                            double timeScale = !applyLinearly ? 
                                 ai.Time.TotalSeconds / rt.TotalElapsedSeconds :
                                 ai.Time.TotalSeconds / rt.TotalDistanceMeters;
 
@@ -110,7 +108,7 @@ namespace ApplyRoutesPlugin.Edit
                             for (i = 0; i < rt.Count; i++)
                             {
                                 ITimeValueEntry<IGPSPoint> tpt = rt[i];
-                                double elapsed = (rt.TotalElapsedSeconds != 0 ?
+                                double elapsed = (!applyLinearly ?
                                     tpt.ElapsedSeconds :
                                     dmt[i].Value) * timeScale;
                                 IGPSPoint point = tpt.Value;

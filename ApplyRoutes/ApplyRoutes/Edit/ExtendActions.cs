@@ -31,27 +31,42 @@ namespace ApplyRoutesPlugin.Edit
 
         IList<IAction> IExtendActivityEditActions.GetActions(IList<IActivity> activities)
         {
-            if (activities == null || activities.Count == 0) return null;
-
-            return new IAction[]
-            {
-                //new RouteManipulator(activities),
-                new ApplyRouteAction(activities),
-                new MakeRouteAction(activities)
-            };
+            return MyActions(activities);
         }
 
         IList<IAction> IExtendActivityEditActions.GetActions(IActivity activity)
         {
             if (activity == null) return null;
-            IList<IActivity> activities = new IActivity[] { activity };
-            return new IAction[] {
-                //new RouteManipulator(activities),
-                new ApplyRouteAction(activities),
-                new MakeRouteAction(activities)
-            };
+            return MyActions(new IActivity[] { activity });
         }
 
         #endregion
+
+        IList<IAction> MyActions(IList<IActivity> activities)
+        {
+            if (activities == null || activities.Count == 0) return null;
+
+            List<IAction> actions = new List<IAction>();
+            byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
+            if (data == null || data.Length == 0)
+            {
+                data = new byte[] { 1, 1, 0 };
+                Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
+            }
+            if (data[0] != 0)
+            {
+                actions.Add(new ApplyRouteAction(activities));
+            }
+            if (data[1] != 0)
+            {
+                actions.Add(new MakeRouteAction(activities));
+            }
+            if (data[2] != 0)
+            {
+                actions.Add(new UpdateEquipmentAction(activities));
+            }
+
+            return actions;
+        }
     }
 }

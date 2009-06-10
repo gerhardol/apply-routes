@@ -13,12 +13,13 @@
     See the License for the specific language governing permissions and
     limitations under the License. 
 
-    File: ApplyRoutes/Edit/RouteManipulator.cs
+    File: ApplyRoutes/Edit/UpdateEquipmentAction.cs
 ***********************************************************************/
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 using ZoneFiveSoftware.Common.Data;
 using ZoneFiveSoftware.Common.Data.Fitness;
@@ -29,9 +30,9 @@ using ApplyRoutesPlugin.UI;
 
 namespace ApplyRoutesPlugin.Edit
 {
-    class RouteManipulator : IAction
+    class UpdateEquipmentAction : IAction
     {
-        public RouteManipulator(IList<IActivity> activities)
+        public UpdateEquipmentAction(IList<IActivity> activities)
         {
             this.activities = activities;
         }
@@ -40,54 +41,60 @@ namespace ApplyRoutesPlugin.Edit
 
         public bool Enabled
         {
-            get
-            {
-                return activities != null;
-            }
+            get { return activities != null; }
         }
 
         public bool HasMenuArrow
         {
-            get { return true; }
+            get { return false; }
         }
 
         public Image Image
         {
-            get { return CommonResources.Images.Edit16; }
+            get { return null; }
         }
 
         public void Refresh()
         {
         }
 
+        public void UpdateEquipment(IList<IEquipmentItem> eList, bool add)
+        {
+            if (eList != null && eList.Count != 0)
+            {
+                foreach (IActivity activity in activities)
+                {
+                    foreach (IEquipmentItem eItem in eList)
+                    {
+                        if (add)
+                        {
+                            if (!activity.EquipmentUsed.Contains(eItem))
+                            {
+                                activity.EquipmentUsed.Add(eItem);
+                            }
+                        }
+                        else
+                        {
+                            activity.EquipmentUsed.Remove(eItem);
+                        }
+                    }
+                }
+            }
+        }
+
         public void Run(Rectangle rectButton)
         {
-            if (activities != null)
+            UpdateEquipmentForm m = new UpdateEquipmentForm(activities);
+            if (m.ShowDialog() == DialogResult.OK)
             {
-                TreeListPopup treePop = new TreeListPopup();
-
-                treePop.Tree.Columns.Add(new TreeList.Column("Title"));
-                treePop.Tree.RowData = new IAction[] {
-                        new ApplyRouteAction(activities),
-                        new MakeRouteAction(activities)
-                };
-
-                treePop.ItemSelected += delegate(object sender, TreeListPopup.ItemSelectedEventArgs e)
-                {
-                    if (e.Item is IAction)
-                    {
-                        ((IAction)e.Item).Run(rectButton);
-                    }
-                };
-
-                treePop.ThemeChanged(Plugin.GetApplication().VisualTheme);
-                treePop.Popup(rectButton);
+                UpdateEquipment(m.EquipmentToAdd, true);
+                UpdateEquipment(m.EquipmentToRemove, false);
             }
         }
 
         public string Title
         {
-            get { return Properties.Resources.Edit_RouteManipulation_Text; }
+            get { return Properties.Resources.Edit_UpdateEquipment_Text; }
         }
 
         #endregion
@@ -97,14 +104,6 @@ namespace ApplyRoutesPlugin.Edit
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
-
-        private void treePop_PopupClosed(object sender, EventArgs e)
-        {
-        }
-
-        private void treePop_ItemSelected(object sender, TreeListPopup.ItemSelectedEventArgs e)
-        {
-        }
 
         private void OnPropertyChanged(string propertyName)
         {
