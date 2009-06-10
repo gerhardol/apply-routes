@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplyRouteForm));
             this.routeList = new ZoneFiveSoftware.Common.Visuals.TreeList();
             this.okBtn = new ZoneFiveSoftware.Common.Visuals.Button();
             this.cancelBtn = new ZoneFiveSoftware.Common.Visuals.Button();
@@ -47,14 +48,17 @@
             // 
             // routeList
             // 
-            this.routeList.AutoSize = true;
+            this.routeList.AccessibleDescription = null;
+            this.routeList.AccessibleName = null;
+            resources.ApplyResources(this.routeList, "routeList");
             this.routeList.BackColor = System.Drawing.Color.Transparent;
+            this.routeList.BackgroundImage = null;
             this.routeList.Border = ZoneFiveSoftware.Common.Visuals.ControlBorder.Style.SmallRoundShadow;
             this.routeList.CheckBoxes = false;
             this.routeList.DefaultIndent = 15;
             this.routeList.DefaultRowHeight = -1;
+            this.routeList.Font = null;
             this.routeList.HeaderRowHeight = 21;
-            this.routeList.Location = new System.Drawing.Point(133, 56);
             this.routeList.MultiSelect = false;
             this.routeList.Name = "routeList";
             this.routeList.NumHeaderRows = ZoneFiveSoftware.Common.Visuals.TreeList.HeaderRows.Auto;
@@ -68,209 +72,209 @@
             this.routeList.RowSeparatorLines = true;
             this.routeList.ShowLines = false;
             this.routeList.ShowPlusMinus = false;
-            this.routeList.Size = new System.Drawing.Size(425, 170);
-            this.routeList.TabIndex = 7;
             // 
             // okBtn
             // 
+            this.okBtn.AccessibleDescription = null;
+            this.okBtn.AccessibleName = null;
+            resources.ApplyResources(this.okBtn, "okBtn");
             this.okBtn.BackColor = System.Drawing.Color.Transparent;
+            this.okBtn.BackgroundImage = null;
             this.okBtn.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(120)))));
             this.okBtn.CenterImage = null;
             this.okBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.okBtn.Font = null;
             this.okBtn.HyperlinkStyle = false;
             this.okBtn.ImageMargin = 2;
             this.okBtn.LeftImage = null;
-            this.okBtn.Location = new System.Drawing.Point(376, 246);
             this.okBtn.Name = "okBtn";
             this.okBtn.PushStyle = true;
             this.okBtn.RightImage = null;
-            this.okBtn.Size = new System.Drawing.Size(75, 23);
-            this.okBtn.TabIndex = 8;
-            this.okBtn.Text = "OK";
             this.okBtn.TextAlign = System.Drawing.StringAlignment.Center;
             this.okBtn.TextLeftMargin = 2;
             this.okBtn.TextRightMargin = 2;
             // 
             // cancelBtn
             // 
+            this.cancelBtn.AccessibleDescription = null;
+            this.cancelBtn.AccessibleName = null;
+            resources.ApplyResources(this.cancelBtn, "cancelBtn");
             this.cancelBtn.BackColor = System.Drawing.Color.Transparent;
+            this.cancelBtn.BackgroundImage = null;
             this.cancelBtn.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(120)))));
             this.cancelBtn.CausesValidation = false;
             this.cancelBtn.CenterImage = null;
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelBtn.Font = null;
             this.cancelBtn.HyperlinkStyle = false;
             this.cancelBtn.ImageMargin = 2;
             this.cancelBtn.LeftImage = null;
-            this.cancelBtn.Location = new System.Drawing.Point(483, 246);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.PushStyle = true;
             this.cancelBtn.RightImage = null;
-            this.cancelBtn.Size = new System.Drawing.Size(75, 23);
-            this.cancelBtn.TabIndex = 9;
-            this.cancelBtn.Text = "Cancel";
             this.cancelBtn.TextAlign = System.Drawing.StringAlignment.Center;
             this.cancelBtn.TextLeftMargin = 2;
             this.cancelBtn.TextRightMargin = 2;
             // 
             // numActLbl
             // 
-            this.numActLbl.AutoSize = true;
-            this.numActLbl.Location = new System.Drawing.Point(50, 12);
+            this.numActLbl.AccessibleDescription = null;
+            this.numActLbl.AccessibleName = null;
+            resources.ApplyResources(this.numActLbl, "numActLbl");
+            this.numActLbl.Font = null;
             this.numActLbl.Name = "numActLbl";
-            this.numActLbl.Size = new System.Drawing.Size(77, 13);
-            this.numActLbl.TabIndex = 11;
-            this.numActLbl.Text = "Num Activities:";
-            this.numActLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // numActTxt
             // 
             this.numActTxt.AcceptsReturn = false;
             this.numActTxt.AcceptsTab = false;
+            this.numActTxt.AccessibleDescription = null;
+            this.numActTxt.AccessibleName = null;
+            resources.ApplyResources(this.numActTxt, "numActTxt");
             this.numActTxt.BackColor = System.Drawing.Color.White;
+            this.numActTxt.BackgroundImage = null;
             this.numActTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.numActTxt.ButtonImage = null;
-            this.numActTxt.Location = new System.Drawing.Point(133, 12);
+            this.numActTxt.Font = null;
+            this.numActTxt.MaxLength = 32767;
             this.numActTxt.Multiline = false;
             this.numActTxt.Name = "numActTxt";
             this.numActTxt.ReadOnly = true;
             this.numActTxt.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.numActTxt.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.numActTxt.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numActTxt.Size = new System.Drawing.Size(100, 19);
-            this.numActTxt.TabIndex = 12;
             this.numActTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // minDistTxt
             // 
             this.minDistTxt.AcceptsReturn = false;
             this.minDistTxt.AcceptsTab = false;
+            this.minDistTxt.AccessibleDescription = null;
+            this.minDistTxt.AccessibleName = null;
+            resources.ApplyResources(this.minDistTxt, "minDistTxt");
             this.minDistTxt.BackColor = System.Drawing.Color.White;
+            this.minDistTxt.BackgroundImage = null;
             this.minDistTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.minDistTxt.ButtonImage = null;
-            this.minDistTxt.Location = new System.Drawing.Point(133, 31);
+            this.minDistTxt.Font = null;
+            this.minDistTxt.MaxLength = 32767;
             this.minDistTxt.Multiline = false;
             this.minDistTxt.Name = "minDistTxt";
             this.minDistTxt.ReadOnly = true;
             this.minDistTxt.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.minDistTxt.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.minDistTxt.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.minDistTxt.Size = new System.Drawing.Size(100, 19);
-            this.minDistTxt.TabIndex = 14;
             this.minDistTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // minDistLbl
             // 
-            this.minDistLbl.AutoSize = true;
-            this.minDistLbl.Location = new System.Drawing.Point(79, 34);
+            this.minDistLbl.AccessibleDescription = null;
+            this.minDistLbl.AccessibleName = null;
+            resources.ApplyResources(this.minDistLbl, "minDistLbl");
+            this.minDistLbl.Font = null;
             this.minDistLbl.Name = "minDistLbl";
-            this.minDistLbl.Size = new System.Drawing.Size(48, 13);
-            this.minDistLbl.TabIndex = 13;
-            this.minDistLbl.Text = "Min Dist:";
-            this.minDistLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // avgDistTxt
             // 
             this.avgDistTxt.AcceptsReturn = false;
             this.avgDistTxt.AcceptsTab = false;
+            this.avgDistTxt.AccessibleDescription = null;
+            this.avgDistTxt.AccessibleName = null;
+            resources.ApplyResources(this.avgDistTxt, "avgDistTxt");
             this.avgDistTxt.BackColor = System.Drawing.Color.White;
+            this.avgDistTxt.BackgroundImage = null;
             this.avgDistTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.avgDistTxt.ButtonImage = null;
-            this.avgDistTxt.Location = new System.Drawing.Point(293, 31);
+            this.avgDistTxt.Font = null;
+            this.avgDistTxt.MaxLength = 32767;
             this.avgDistTxt.Multiline = false;
             this.avgDistTxt.Name = "avgDistTxt";
             this.avgDistTxt.ReadOnly = true;
             this.avgDistTxt.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.avgDistTxt.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.avgDistTxt.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.avgDistTxt.Size = new System.Drawing.Size(100, 19);
-            this.avgDistTxt.TabIndex = 16;
             this.avgDistTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // avgDistLbl
             // 
-            this.avgDistLbl.AutoSize = true;
-            this.avgDistLbl.Location = new System.Drawing.Point(239, 34);
+            this.avgDistLbl.AccessibleDescription = null;
+            this.avgDistLbl.AccessibleName = null;
+            resources.ApplyResources(this.avgDistLbl, "avgDistLbl");
+            this.avgDistLbl.Font = null;
             this.avgDistLbl.Name = "avgDistLbl";
-            this.avgDistLbl.Size = new System.Drawing.Size(50, 13);
-            this.avgDistLbl.TabIndex = 15;
-            this.avgDistLbl.Text = "Avg Dist:";
-            this.avgDistLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // maxDistTxt
             // 
             this.maxDistTxt.AcceptsReturn = false;
             this.maxDistTxt.AcceptsTab = false;
+            this.maxDistTxt.AccessibleDescription = null;
+            this.maxDistTxt.AccessibleName = null;
+            resources.ApplyResources(this.maxDistTxt, "maxDistTxt");
             this.maxDistTxt.BackColor = System.Drawing.Color.White;
+            this.maxDistTxt.BackgroundImage = null;
             this.maxDistTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.maxDistTxt.ButtonImage = null;
-            this.maxDistTxt.Location = new System.Drawing.Point(458, 31);
+            this.maxDistTxt.Font = null;
+            this.maxDistTxt.MaxLength = 32767;
             this.maxDistTxt.Multiline = false;
             this.maxDistTxt.Name = "maxDistTxt";
             this.maxDistTxt.ReadOnly = true;
             this.maxDistTxt.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.maxDistTxt.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.maxDistTxt.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.maxDistTxt.Size = new System.Drawing.Size(100, 19);
-            this.maxDistTxt.TabIndex = 18;
             this.maxDistTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // maxDistLbl
             // 
-            this.maxDistLbl.AutoSize = true;
-            this.maxDistLbl.Location = new System.Drawing.Point(404, 34);
+            this.maxDistLbl.AccessibleDescription = null;
+            this.maxDistLbl.AccessibleName = null;
+            resources.ApplyResources(this.maxDistLbl, "maxDistLbl");
+            this.maxDistLbl.Font = null;
             this.maxDistLbl.Name = "maxDistLbl";
-            this.maxDistLbl.Size = new System.Drawing.Size(51, 13);
-            this.maxDistLbl.TabIndex = 17;
-            this.maxDistLbl.Text = "Max Dist:";
-            this.maxDistLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // routeLbl
             // 
-            this.routeLbl.AutoSize = true;
-            this.routeLbl.Location = new System.Drawing.Point(46, 133);
+            this.routeLbl.AccessibleDescription = null;
+            this.routeLbl.AccessibleName = null;
+            resources.ApplyResources(this.routeLbl, "routeLbl");
+            this.routeLbl.Font = null;
             this.routeLbl.Name = "routeLbl";
-            this.routeLbl.Size = new System.Drawing.Size(81, 13);
-            this.routeLbl.TabIndex = 20;
-            this.routeLbl.Text = "Route To Apply";
-            this.routeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ignoreGPSActChk
             // 
-            this.ignoreGPSActChk.Location = new System.Drawing.Point(23, 189);
+            this.ignoreGPSActChk.AccessibleDescription = null;
+            this.ignoreGPSActChk.AccessibleName = null;
+            resources.ApplyResources(this.ignoreGPSActChk, "ignoreGPSActChk");
+            this.ignoreGPSActChk.BackgroundImage = null;
+            this.ignoreGPSActChk.Font = null;
             this.ignoreGPSActChk.Name = "ignoreGPSActChk";
-            this.ignoreGPSActChk.Size = new System.Drawing.Size(104, 37);
-            this.ignoreGPSActChk.TabIndex = 21;
-            this.ignoreGPSActChk.Text = "Ignore activities with GPS data";
             this.ignoreGPSActChk.UseVisualStyleBackColor = true;
             // 
             // applyTimesLinearlyChk
             // 
-            this.applyTimesLinearlyChk.AutoSize = true;
-            this.applyTimesLinearlyChk.Location = new System.Drawing.Point(23, 252);
+            this.applyTimesLinearlyChk.AccessibleDescription = null;
+            this.applyTimesLinearlyChk.AccessibleName = null;
+            resources.ApplyResources(this.applyTimesLinearlyChk, "applyTimesLinearlyChk");
+            this.applyTimesLinearlyChk.BackgroundImage = null;
+            this.applyTimesLinearlyChk.Font = null;
             this.applyTimesLinearlyChk.Name = "applyTimesLinearlyChk";
-            this.applyTimesLinearlyChk.Size = new System.Drawing.Size(122, 17);
-            this.applyTimesLinearlyChk.TabIndex = 22;
-            this.applyTimesLinearlyChk.Text = "Apply Times Linearly";
             this.applyTimesLinearlyChk.UseVisualStyleBackColor = true;
             // 
             // preserveDistChk
             // 
-            this.preserveDistChk.AutoSize = true;
-            this.preserveDistChk.Location = new System.Drawing.Point(23, 229);
+            this.preserveDistChk.AccessibleDescription = null;
+            this.preserveDistChk.AccessibleName = null;
+            resources.ApplyResources(this.preserveDistChk, "preserveDistChk");
+            this.preserveDistChk.BackgroundImage = null;
+            this.preserveDistChk.Font = null;
             this.preserveDistChk.Name = "preserveDistChk";
-            this.preserveDistChk.Size = new System.Drawing.Size(116, 17);
-            this.preserveDistChk.TabIndex = 23;
-            this.preserveDistChk.Text = "Preserve distances";
             this.preserveDistChk.UseVisualStyleBackColor = true;
-            this.preserveDistChk.Visible = false;
             // 
             // ApplyRouteForm
             // 
             this.AcceptButton = this.okBtn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = null;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(571, 285);
             this.Controls.Add(this.preserveDistChk);
             this.Controls.Add(this.applyTimesLinearlyChk);
             this.Controls.Add(this.ignoreGPSActChk);
@@ -286,8 +290,9 @@
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.routeList);
+            this.Font = null;
+            this.Icon = null;
             this.Name = "ApplyRouteForm";
-            this.Text = "Apply Route";
             this.ResumeLayout(false);
             this.PerformLayout();
 

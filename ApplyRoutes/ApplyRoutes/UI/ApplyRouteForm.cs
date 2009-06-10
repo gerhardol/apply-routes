@@ -43,15 +43,19 @@ namespace ApplyRoutesPlugin.UI
 
             this.activities = activities;
             
-            bool hasGPS = false;
+            bool hasGPS = false, hasDist = false;
             foreach (IActivity activity in activities) {
                 if (activity.GPSRoute != null && activity.GPSRoute.Count != 0) {
                     hasGPS = true;
-                    break;
+                }
+                if (activity.DistanceMetersTrack != null)
+                {
+                    hasDist = true;
                 }
             }
             this.ignoreGPSActChk.Enabled = hasGPS;
             this.ignoreGPSActChk.CheckState = CheckState.Checked;
+            this.preserveDistChk.CheckState = hasDist ? CheckState.Checked : CheckState.Unchecked;
 
             EventHandler refreshHandler = delegate(object sender, EventArgs e)
             {
@@ -82,6 +86,7 @@ namespace ApplyRoutesPlugin.UI
             double min = 1e6, max = -1e6, avg = 0;
             int nGps = 0;
             int nToUpdate = 0;
+            int nWithDist = 0;
             foreach (IActivity activity in activities) {
                 if (activity.GPSRoute != null && activity.GPSRoute.Count != 0)
                 {
@@ -97,8 +102,13 @@ namespace ApplyRoutesPlugin.UI
                 if (dist < min) min = dist;
                 avg += dist;
                 nToUpdate++;
+                if (activity.DistanceMetersTrack != null || activity.Laps.Count > 0)
+                {
+                    nWithDist++;
+                }
             }
             ignoreGPSActChk.Enabled = nGps > 0;
+            preserveDistChk.Enabled = nWithDist > 0;
             numActTxt.Text = nToUpdate.ToString();
             minDistTxt.Text = min < 1e6 ? DistanceAsString(min) : "";
             maxDistTxt.Text = max > 0 ? DistanceAsString(max) : "";

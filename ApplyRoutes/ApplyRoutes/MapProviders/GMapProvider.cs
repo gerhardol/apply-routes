@@ -530,7 +530,15 @@ namespace ApplyRoutesPlugin.MapProviders
                         cpt.X, cpt.Y
                         });
                     
-                    string theUrl = url + hash;
+                    Uri uri = new Uri(url+hash);
+                    string theUrl = uri.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+                    if (theUrl.IndexOf("?") == -1) {
+                        theUrl += "?";
+                    } else if (theUrl[theUrl.Length-1] != '&') {
+                        theUrl += "&";
+                    }
+                    theUrl += "strp" + uri.Fragment;
+
                     string pi;
                     Bitmap bmp = imageCache.GetMapImage(new Rectangle(tl2, sz), listener, zoom, theUrl, out pi);
                     if (bmp != null)
@@ -810,15 +818,18 @@ namespace ApplyRoutesPlugin.MapProviders
             if (proj_info == proj_attrs) return false;
 
             proj_attrs = proj_info;
-            useGDAL = false;
             proj_res = null;
             proj_bounds = null;
             proj_tile = null;
 
-            if (proj_attrs == null) return true;
+            bool ret = useGDAL;
+            useGDAL = false;
 
-            Match m = pi_decode.Match(proj_attrs);
-            if (!m.Success) return true;
+            Match m = pi_decode.Match(proj_info == null ? "" : proj_info);
+            if (!m.Success)
+            {
+                return ret;
+            }
 
             proj_res = projArray(m.Groups[1].Value);
             proj_bounds = projArray(m.Groups[2].Value);

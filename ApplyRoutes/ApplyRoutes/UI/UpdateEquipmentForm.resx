@@ -117,4 +117,631 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="equipmentList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 6</value>
+  </data>
+  <data name="equipmentList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>525, 185</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="equipmentList.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;equipmentList.Name" xml:space="preserve">
+    <value>equipmentList</value>
+  </data>
+  <data name="&gt;&gt;equipmentList.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TreeList, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;equipmentList.Parent" xml:space="preserve">
+    <value>updateEquipmentTab</value>
+  </data>
+  <data name="&gt;&gt;equipmentList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="okBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 244</value>
+  </data>
+  <data name="okBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="okBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="okBtn.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;okBtn.Name" xml:space="preserve">
+    <value>okBtn</value>
+  </data>
+  <data name="&gt;&gt;okBtn.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;okBtn.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;okBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>485, 244</value>
+  </data>
+  <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="cancelBtn.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.Name" xml:space="preserve">
+    <value>cancelBtn</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="selectedCategoriesTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 152</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="selectedCategoriesTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="selectedCategoriesTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 19</value>
+  </data>
+  <data name="selectedCategoriesTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;selectedCategoriesTxt.Name" xml:space="preserve">
+    <value>selectedCategoriesTxt</value>
+  </data>
+  <data name="&gt;&gt;selectedCategoriesTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;selectedCategoriesTxt.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;selectedCategoriesTxt.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 152</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 13</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Change Category to:</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 15</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 13</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>For all selected activities/routes:</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="selectedLocationsTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 98</value>
+  </data>
+  <data name="selectedLocationsTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="selectedLocationsTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 19</value>
+  </data>
+  <data name="selectedLocationsTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;selectedLocationsTxt.Name" xml:space="preserve">
+    <value>selectedLocationsTxt</value>
+  </data>
+  <data name="&gt;&gt;selectedLocationsTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;selectedLocationsTxt.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;selectedLocationsTxt.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 98</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Change Locations to:</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="selectedNamesTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 49</value>
+  </data>
+  <data name="selectedNamesTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="selectedNamesTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 19</value>
+  </data>
+  <data name="selectedNamesTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;selectedNamesTxt.Name" xml:space="preserve">
+    <value>selectedNamesTxt</value>
+  </data>
+  <data name="&gt;&gt;selectedNamesTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;selectedNamesTxt.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;selectedNamesTxt.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 49</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 13</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Change Names to:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="renameTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="renameTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="renameTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>540, 200</value>
+  </data>
+  <data name="renameTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="renameTab.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="&gt;&gt;renameTab.Name" xml:space="preserve">
+    <value>renameTab</value>
+  </data>
+  <data name="&gt;&gt;renameTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;renameTab.Parent" xml:space="preserve">
+    <value>updateTab</value>
+  </data>
+  <data name="&gt;&gt;renameTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 105</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 13</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Change "Location" field of all Activities and Routes</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 19</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 13</value>
+  </data>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Change "Name" field of all Activities and Routes</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 157</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 13</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="toLocationTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 157</value>
+  </data>
+  <data name="toLocationTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="toLocationTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>487, 19</value>
+  </data>
+  <data name="toLocationTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;toLocationTxt.Name" xml:space="preserve">
+    <value>toLocationTxt</value>
+  </data>
+  <data name="&gt;&gt;toLocationTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;toLocationTxt.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;toLocationTxt.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="fromLocationTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 132</value>
+  </data>
+  <data name="fromLocationTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="fromLocationTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>487, 19</value>
+  </data>
+  <data name="fromLocationTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;fromLocationTxt.Name" xml:space="preserve">
+    <value>fromLocationTxt</value>
+  </data>
+  <data name="&gt;&gt;fromLocationTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;fromLocationTxt.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;fromLocationTxt.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 134</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 13</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 75</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 13</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="toNameTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 75</value>
+  </data>
+  <data name="toNameTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="toNameTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>487, 19</value>
+  </data>
+  <data name="toNameTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;toNameTxt.Name" xml:space="preserve">
+    <value>toNameTxt</value>
+  </data>
+  <data name="&gt;&gt;toNameTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;toNameTxt.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;toNameTxt.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="fromNameTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 50</value>
+  </data>
+  <data name="fromNameTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="fromNameTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>487, 19</value>
+  </data>
+  <data name="fromNameTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;fromNameTxt.Name" xml:space="preserve">
+    <value>fromNameTxt</value>
+  </data>
+  <data name="&gt;&gt;fromNameTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;fromNameTxt.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;fromNameTxt.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 50</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 13</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="globalRenameTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="globalRenameTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>540, 200</value>
+  </data>
+  <data name="globalRenameTab.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="globalRenameTab.Text" xml:space="preserve">
+    <value>Global Rename</value>
+  </data>
+  <data name="&gt;&gt;globalRenameTab.Name" xml:space="preserve">
+    <value>globalRenameTab</value>
+  </data>
+  <data name="&gt;&gt;globalRenameTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;globalRenameTab.Parent" xml:space="preserve">
+    <value>updateTab</value>
+  </data>
+  <data name="&gt;&gt;globalRenameTab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="updateEquipmentTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="updateEquipmentTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="updateEquipmentTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>540, 200</value>
+  </data>
+  <data name="updateEquipmentTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="updateEquipmentTab.Text" xml:space="preserve">
+    <value>Update Equipment</value>
+  </data>
+  <data name="&gt;&gt;updateEquipmentTab.Name" xml:space="preserve">
+    <value>updateEquipmentTab</value>
+  </data>
+  <data name="&gt;&gt;updateEquipmentTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;updateEquipmentTab.Parent" xml:space="preserve">
+    <value>updateTab</value>
+  </data>
+  <data name="&gt;&gt;updateEquipmentTab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="updateTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="updateTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 226</value>
+  </data>
+  <data name="updateTab.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;updateTab.Name" xml:space="preserve">
+    <value>updateTab</value>
+  </data>
+  <data name="&gt;&gt;updateTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;updateTab.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;updateTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>569, 280</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Update History</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>UpdateEquipmentForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

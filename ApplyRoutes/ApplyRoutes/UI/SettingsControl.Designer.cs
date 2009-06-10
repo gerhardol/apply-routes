@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsControl));
             this.settingsTabs = new System.Windows.Forms.TabControl();
             this.editMenuTabPage = new System.Windows.Forms.TabPage();
             this.showJoinRoutesChk = new System.Windows.Forms.CheckBox();
@@ -51,11 +52,9 @@
             // 
             this.settingsTabs.Controls.Add(this.editMenuTabPage);
             this.settingsTabs.Controls.Add(this.mapProvidersTabPage);
-            this.settingsTabs.Location = new System.Drawing.Point(12, 17);
+            resources.ApplyResources(this.settingsTabs, "settingsTabs");
             this.settingsTabs.Name = "settingsTabs";
             this.settingsTabs.SelectedIndex = 0;
-            this.settingsTabs.Size = new System.Drawing.Size(456, 247);
-            this.settingsTabs.TabIndex = 6;
             // 
             // editMenuTabPage
             // 
@@ -64,62 +63,38 @@
             this.editMenuTabPage.Controls.Add(this.showApplyRoutesChk);
             this.editMenuTabPage.Controls.Add(this.showCreateRoutesChk);
             this.editMenuTabPage.Controls.Add(this.showUpdateEquipmentChk);
-            this.editMenuTabPage.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.editMenuTabPage, "editMenuTabPage");
             this.editMenuTabPage.Name = "editMenuTabPage";
-            this.editMenuTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.editMenuTabPage.Size = new System.Drawing.Size(448, 221);
-            this.editMenuTabPage.TabIndex = 0;
-            this.editMenuTabPage.Text = "Edit Menus";
             this.editMenuTabPage.UseVisualStyleBackColor = true;
             // 
             // showJoinRoutesChk
             // 
-            this.showJoinRoutesChk.AutoSize = true;
-            this.showJoinRoutesChk.Location = new System.Drawing.Point(22, 117);
+            resources.ApplyResources(this.showJoinRoutesChk, "showJoinRoutesChk");
             this.showJoinRoutesChk.Name = "showJoinRoutesChk";
-            this.showJoinRoutesChk.Size = new System.Drawing.Size(189, 17);
-            this.showJoinRoutesChk.TabIndex = 5;
-            this.showJoinRoutesChk.Text = "Show \'Join Activities\' on Edit menu";
             this.showJoinRoutesChk.UseVisualStyleBackColor = true;
             // 
             // showSendToRoutesChk
             // 
-            this.showSendToRoutesChk.AutoSize = true;
-            this.showSendToRoutesChk.Location = new System.Drawing.Point(22, 93);
+            resources.ApplyResources(this.showSendToRoutesChk, "showSendToRoutesChk");
             this.showSendToRoutesChk.Name = "showSendToRoutesChk";
-            this.showSendToRoutesChk.Size = new System.Drawing.Size(203, 17);
-            this.showSendToRoutesChk.TabIndex = 4;
-            this.showSendToRoutesChk.Text = "Show \'Send To Routes\' on Edit menu";
             this.showSendToRoutesChk.UseVisualStyleBackColor = true;
             // 
             // showApplyRoutesChk
             // 
-            this.showApplyRoutesChk.AutoSize = true;
-            this.showApplyRoutesChk.Location = new System.Drawing.Point(22, 45);
+            resources.ApplyResources(this.showApplyRoutesChk, "showApplyRoutesChk");
             this.showApplyRoutesChk.Name = "showApplyRoutesChk";
-            this.showApplyRoutesChk.Size = new System.Drawing.Size(192, 17);
-            this.showApplyRoutesChk.TabIndex = 2;
-            this.showApplyRoutesChk.Text = "Show \'Apply Route...\' on Edit menu";
             this.showApplyRoutesChk.UseVisualStyleBackColor = true;
             // 
             // showCreateRoutesChk
             // 
-            this.showCreateRoutesChk.AutoSize = true;
-            this.showCreateRoutesChk.Location = new System.Drawing.Point(22, 21);
+            resources.ApplyResources(this.showCreateRoutesChk, "showCreateRoutesChk");
             this.showCreateRoutesChk.Name = "showCreateRoutesChk";
-            this.showCreateRoutesChk.Size = new System.Drawing.Size(273, 17);
-            this.showCreateRoutesChk.TabIndex = 1;
-            this.showCreateRoutesChk.Text = "Show \'Create Routes From Activities...\' on Edit menu";
             this.showCreateRoutesChk.UseVisualStyleBackColor = true;
             // 
             // showUpdateEquipmentChk
             // 
-            this.showUpdateEquipmentChk.AutoSize = true;
-            this.showUpdateEquipmentChk.Location = new System.Drawing.Point(22, 69);
+            resources.ApplyResources(this.showUpdateEquipmentChk, "showUpdateEquipmentChk");
             this.showUpdateEquipmentChk.Name = "showUpdateEquipmentChk";
-            this.showUpdateEquipmentChk.Size = new System.Drawing.Size(204, 17);
-            this.showUpdateEquipmentChk.TabIndex = 3;
-            this.showUpdateEquipmentChk.Text = "Show \'Update History...\' on Edit menu";
             this.showUpdateEquipmentChk.UseVisualStyleBackColor = true;
             // 
             // mapProvidersTabPage
@@ -129,12 +104,8 @@
             this.mapProvidersTabPage.Controls.Add(this.mapProviderUrl);
             this.mapProvidersTabPage.Controls.Add(this.mapProviderName);
             this.mapProvidersTabPage.Controls.Add(this.mapProvidersList);
-            this.mapProvidersTabPage.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.mapProvidersTabPage, "mapProvidersTabPage");
             this.mapProvidersTabPage.Name = "mapProvidersTabPage";
-            this.mapProvidersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mapProvidersTabPage.Size = new System.Drawing.Size(448, 221);
-            this.mapProvidersTabPage.TabIndex = 1;
-            this.mapProvidersTabPage.Text = "Map Providers";
             this.mapProvidersTabPage.UseVisualStyleBackColor = true;
             // 
             // mapProviderResetBtn
@@ -146,13 +117,10 @@
             this.mapProviderResetBtn.HyperlinkStyle = false;
             this.mapProviderResetBtn.ImageMargin = 2;
             this.mapProviderResetBtn.LeftImage = null;
-            this.mapProviderResetBtn.Location = new System.Drawing.Point(338, 187);
+            resources.ApplyResources(this.mapProviderResetBtn, "mapProviderResetBtn");
             this.mapProviderResetBtn.Name = "mapProviderResetBtn";
             this.mapProviderResetBtn.PushStyle = true;
             this.mapProviderResetBtn.RightImage = null;
-            this.mapProviderResetBtn.Size = new System.Drawing.Size(104, 23);
-            this.mapProviderResetBtn.TabIndex = 8;
-            this.mapProviderResetBtn.Text = "Reset Defaults";
             this.mapProviderResetBtn.TextAlign = System.Drawing.StringAlignment.Center;
             this.mapProviderResetBtn.TextLeftMargin = 2;
             this.mapProviderResetBtn.TextRightMargin = 2;
@@ -166,13 +134,10 @@
             this.mapProviderUpdateBtn.HyperlinkStyle = false;
             this.mapProviderUpdateBtn.ImageMargin = 2;
             this.mapProviderUpdateBtn.LeftImage = null;
-            this.mapProviderUpdateBtn.Location = new System.Drawing.Point(7, 187);
+            resources.ApplyResources(this.mapProviderUpdateBtn, "mapProviderUpdateBtn");
             this.mapProviderUpdateBtn.Name = "mapProviderUpdateBtn";
             this.mapProviderUpdateBtn.PushStyle = true;
             this.mapProviderUpdateBtn.RightImage = null;
-            this.mapProviderUpdateBtn.Size = new System.Drawing.Size(96, 23);
-            this.mapProviderUpdateBtn.TabIndex = 7;
-            this.mapProviderUpdateBtn.Text = "Update Provider";
             this.mapProviderUpdateBtn.TextAlign = System.Drawing.StringAlignment.Center;
             this.mapProviderUpdateBtn.TextLeftMargin = 2;
             this.mapProviderUpdateBtn.TextRightMargin = 2;
@@ -184,15 +149,13 @@
             this.mapProviderUrl.BackColor = System.Drawing.Color.White;
             this.mapProviderUrl.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.mapProviderUrl.ButtonImage = null;
-            this.mapProviderUrl.Location = new System.Drawing.Point(132, 161);
+            resources.ApplyResources(this.mapProviderUrl, "mapProviderUrl");
+            this.mapProviderUrl.MaxLength = 32767;
             this.mapProviderUrl.Multiline = false;
             this.mapProviderUrl.Name = "mapProviderUrl";
             this.mapProviderUrl.ReadOnly = false;
             this.mapProviderUrl.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.mapProviderUrl.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.mapProviderUrl.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mapProviderUrl.Size = new System.Drawing.Size(292, 19);
-            this.mapProviderUrl.TabIndex = 6;
             this.mapProviderUrl.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // mapProviderName
@@ -202,15 +165,13 @@
             this.mapProviderName.BackColor = System.Drawing.Color.White;
             this.mapProviderName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.mapProviderName.ButtonImage = null;
-            this.mapProviderName.Location = new System.Drawing.Point(7, 161);
+            resources.ApplyResources(this.mapProviderName, "mapProviderName");
+            this.mapProviderName.MaxLength = 32767;
             this.mapProviderName.Multiline = false;
             this.mapProviderName.Name = "mapProviderName";
             this.mapProviderName.ReadOnly = false;
             this.mapProviderName.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.mapProviderName.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.mapProviderName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mapProviderName.Size = new System.Drawing.Size(119, 19);
-            this.mapProviderName.TabIndex = 5;
             this.mapProviderName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // mapProvidersList
@@ -221,7 +182,7 @@
             this.mapProvidersList.DefaultIndent = 15;
             this.mapProvidersList.DefaultRowHeight = -1;
             this.mapProvidersList.HeaderRowHeight = 21;
-            this.mapProvidersList.Location = new System.Drawing.Point(6, 6);
+            resources.ApplyResources(this.mapProvidersList, "mapProvidersList");
             this.mapProvidersList.MultiSelect = false;
             this.mapProvidersList.Name = "mapProvidersList";
             this.mapProvidersList.NumHeaderRows = ZoneFiveSoftware.Common.Visuals.TreeList.HeaderRows.Auto;
@@ -235,27 +196,20 @@
             this.mapProvidersList.RowSeparatorLines = true;
             this.mapProvidersList.ShowLines = false;
             this.mapProvidersList.ShowPlusMinus = false;
-            this.mapProvidersList.Size = new System.Drawing.Size(437, 148);
-            this.mapProvidersList.TabIndex = 4;
             // 
             // homePageLink
             // 
-            this.homePageLink.AutoSize = true;
-            this.homePageLink.Location = new System.Drawing.Point(20, 276);
+            resources.ApplyResources(this.homePageLink, "homePageLink");
             this.homePageLink.Name = "homePageLink";
-            this.homePageLink.Size = new System.Drawing.Size(129, 13);
-            this.homePageLink.TabIndex = 0;
             this.homePageLink.TabStop = true;
-            this.homePageLink.Text = "Apply Routes Home Page";
             // 
             // SettingsControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.settingsTabs);
             this.Controls.Add(this.homePageLink);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(486, 310);
             this.settingsTabs.ResumeLayout(false);
             this.editMenuTabPage.ResumeLayout(false);
             this.editMenuTabPage.PerformLayout();

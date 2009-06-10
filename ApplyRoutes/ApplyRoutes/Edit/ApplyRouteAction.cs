@@ -58,28 +58,138 @@ namespace ApplyRoutesPlugin.Edit
         {
         }
 
-        public void UpdateEquipment(IList<IEquipmentItem> eList, bool add)
+        private void ApplyRoute(IActivity activity, IRoute iroute,
+                bool forceApplyLinearly, IDistanceDataTrack aDist)
         {
-            if (eList != null && eList.Count != 0)
+            ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
+            IGPSRoute rt = iroute.GPSRoute;
+            GPSRoute route = new GPSRoute();
+            double numer = ai.Time.TotalSeconds;
+            long totalElapsedSeconds = Plugin.GetTotalElapsedSeconds(rt);
+            if (numer == 0.0)
             {
-                foreach (IActivity activity in activities)
+                numer = totalElapsedSeconds;
+            }
+            bool applyLinearly = forceApplyLinearly || totalElapsedSeconds == 0;
+            if (forceApplyLinearly)
+            {
+                aDist = null;
+            }
+            IDistanceDataTrack dmt = rt.GetDistanceMetersTrack();
+            double timeScale = !applyLinearly ?
+                numer / totalElapsedSeconds :
+                numer / rt.TotalDistanceMeters;
+
+            double distScale = aDist != null && dmt.Max > 0 ? aDist.Max / dmt.Max : 1;
+
+            int i;
+            if (aDist != null)
+            {
+                int i1,i2;
+                double rt1 = 0, rt2 = 0;
+                long at1 = 0, at2 = 0;
+                GPSPoint.ValueInterpolator interp = new GPSPoint.ValueInterpolator();
+
+                double prev = -1;
+                for (i = i1 = i2 = 0; i1 < rt.Count-1 || i2 < aDist.Count-1; i++)
                 {
-                    foreach (IEquipmentItem eItem in eList)
+                    IGPSPoint point = rt[i1].Value;
+                    double rdist = dmt[i1].Value * distScale;
+                    double adist = aDist[i2].Value;
+                    DateTime t;
+                    if (rdist < adist && i1 < rt.Count - 1)
                     {
-                        if (add)
+                        t = aDist.GetTimeAtDistanceMeters(rdist);
+                        if (i2 > 0 && !applyLinearly)
                         {
-                            if (!activity.EquipmentUsed.Contains(eItem))
+                            long rtm = Plugin.GetElapsedSeconds(dmt, dmt[i1]);
+                            if (rtm > rt2)
                             {
-                                activity.EquipmentUsed.Add(eItem);
+                                rt1 = dmt.GetTimeAtDistanceMeters(aDist[i2 - 1].Value / distScale).Subtract(dmt.StartTime).TotalSeconds; ;
+                                rt2 = dmt.GetTimeAtDistanceMeters(adist / distScale).Subtract(dmt.StartTime).TotalSeconds;
+                                at1 = Plugin.GetElapsedSeconds(aDist, aDist[i2 - 1]);
+                                at2 = Plugin.GetElapsedSeconds(aDist, aDist[i2]);
+                            }
+                            if (rt2 > rt1)
+                            {
+                                double elapsed = at1 + (rtm - rt1) * (at2 - at1) / (rt2 - rt1);
+                                t = aDist.StartTime.AddSeconds(elapsed);
                             }
                         }
-                        else
-                        {
-                            activity.EquipmentUsed.Remove(eItem);
-                        }
+                        i1++;
                     }
+                    else if (i2 < aDist.Count - 1)
+                    {
+                        double elapsed = Plugin.GetElapsedSeconds(aDist, aDist[i2]);
+                        t = aDist.StartTime.AddSeconds(elapsed);
+                        if (i1 > 0)
+                        {
+                            double rd1 = dmt[i1 - 1].Value * distScale;
+                            if (rd1 <= adist)
+                            {
+                                point = interp.Interpolate(rt[i1 - 1].Value, point, (adist - rd1) / (rdist - rd1));
+                            }
+                        }
+                        i2++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    double cur = t.Subtract(activity.StartTime).TotalSeconds;
+                    if (cur <= prev)
+                    {
+                        continue;
+                    }
+                    else if (Math.Round(cur) == Math.Round(prev))
+                    {
+                        cur = Math.Ceiling(cur);
+                        if (cur == Math.Round(prev))
+                        {
+                            continue;
+                        }
+                        t = aDist.StartTime.AddSeconds(cur);
+                    }
+                    prev = cur;
+                    route.InsertAtPosition(i, t, point);
                 }
             }
+            else
+            {
+                for (i = 0; i < rt.Count; i++)
+                {
+                    ITimeValueEntry<IGPSPoint> tpt = rt[i];
+                    DateTime t;
+                    double elapsed = (!applyLinearly ?
+                        Plugin.GetElapsedSeconds(rt, tpt) :
+                        dmt[i].Value) * timeScale;
+                    t = activity.StartTime.AddSeconds(elapsed);
+
+                    IGPSPoint point = tpt.Value;
+                    route.InsertAtPosition(i, t, point);
+                }
+            }
+
+            dmt = route.GetDistanceMetersTrack();
+            float dist = 0;
+            long dmtTotalElapsedSeconds = Plugin.GetTotalElapsedSeconds(dmt);
+            for (i = 0; i < activity.Laps.Count; i++)
+            {
+                ILapInfo li = activity.Laps[i];
+                DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
+                float old_dist = dist;
+
+                dist = t.Subtract(dmt.StartTime).TotalSeconds >= dmtTotalElapsedSeconds ?
+                        route.TotalDistanceMeters :
+                        dmt.GetInterpolatedValue(t).Value;
+
+                li.TotalDistanceMeters = dist - old_dist;
+            }
+            activity.Name = iroute.Name;
+            activity.Location = iroute.Location;
+            activity.GPSRoute = route;
+            //activity.DistanceMetersTrack = route.GetDistanceMetersTrack();
+            activity.UseEnteredData = false;
         }
 
         public void Run(Rectangle rectButton)
@@ -95,53 +205,26 @@ namespace ApplyRoutesPlugin.Edit
                     {
                         if (activity.GPSRoute == null || applyToAll)
                         {
-                            ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
-                            IGPSRoute rt = routes[0].GPSRoute;
-                            GPSRoute route = new GPSRoute();
-                            double numer = ai.Time.TotalSeconds;
-                            long totalElapsedSeconds = Plugin.GetTotalElapsedSeconds(rt);
-                            if (numer == 0.0)
+                            IDistanceDataTrack adist = null;
+                            if (m.PreserveDistances)
                             {
-                                numer = totalElapsedSeconds;
+                                adist = activity.DistanceMetersTrack;
+                                if ((adist == null || adist.Count == 0) && activity.Laps.Count > 0)
+                                {
+                                    adist = new DistanceDataTrack();
+                                    float dist = 0;
+                                    adist.Add(activity.Laps[0].StartTime, 0);
+                                    for (int i = 0; i < activity.Laps.Count; i++)
+                                    {
+                                        ILapInfo li = activity.Laps[i];
+                                        DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
+
+                                        dist += li.TotalDistanceMeters;
+                                        adist.Add(t, dist);
+                                    }
+                                }
                             }
-                            bool applyLinearly = m.ApplyLinearly || totalElapsedSeconds == 0;
-                            IDistanceDataTrack dmt = rt.GetDistanceMetersTrack();
-                            double timeScale = !applyLinearly ? 
-                                numer / totalElapsedSeconds :
-                                numer / rt.TotalDistanceMeters;
-
-                            int i;
-                            for (i = 0; i < rt.Count; i++)
-                            {
-                                ITimeValueEntry<IGPSPoint> tpt = rt[i];
-                                double elapsed = (!applyLinearly ?
-                                    Plugin.GetElapsedSeconds(rt, tpt) :
-                                    dmt[i].Value) * timeScale;
-                                IGPSPoint point = tpt.Value;
-                                DateTime t = activity.StartTime.AddSeconds(elapsed);
-                                route.InsertAtPosition(i, t, point);
-                            }
-
-                            dmt = route.GetDistanceMetersTrack();
-                            float dist = 0;
-                            long dmtTotalElapsedSeconds = Plugin.GetTotalElapsedSeconds(dmt);
-                            for (i = 0; i < activity.Laps.Count; i++)
-                            {
-                                ILapInfo li = activity.Laps[i];
-                                DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
-                                float old_dist = dist;
-
-                                dist = t.Subtract(dmt.StartTime).TotalSeconds >= dmtTotalElapsedSeconds ?
-                                        route.TotalDistanceMeters :
-                                        dmt.GetInterpolatedValue(t).Value;
-
-                                li.TotalDistanceMeters = dist - old_dist;
-                            }
-                            activity.Name = routes[0].Name;
-                            activity.Location = routes[0].Location;
-                            activity.GPSRoute = route;
-                            //activity.DistanceMetersTrack = route.GetDistanceMetersTrack();
-                            activity.UseEnteredData = false;
+                            ApplyRoute(activity, routes[0], m.ApplyLinearly, adist);
                         }
                     }
                 }

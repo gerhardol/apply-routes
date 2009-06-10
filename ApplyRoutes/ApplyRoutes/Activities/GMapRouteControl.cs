@@ -83,19 +83,31 @@ namespace ApplyRoutesPlugin.Activities
         {
             mti = newType;
             mapTypePopup.Text = newType.title;
-            Uri url = new Uri(newType.url + "gsmc&");
+            Uri uri = new Uri(newType.url + "gsmc&");
+            string theUrl = uri.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+            if (theUrl.IndexOf("?") == -1)
+            {
+                theUrl += "?";
+            }
+            else if (theUrl[theUrl.Length - 1] != '&')
+            {
+                theUrl += "&";
+            }
+            theUrl += "arrp" + uri.Fragment;
+            uri = new Uri(theUrl);
+            
             selected_guid = guid = newType.guid;
-            string req1 = url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
-            string req2 = webBrowser.Url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+            string req1 = uri.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+            string req2 = webBrowser.Url != null ? webBrowser.Url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped) : null;
 
             if (req1 != req2)
             {
                 ready = false;
-                webBrowser.Navigate(url);
+                webBrowser.Navigate(uri);
             }
             else
             {
-                string hash = url.Fragment.Substring(1);
+                string hash = uri.Fragment.Substring(1);
                 webBrowser.Document.InvokeScript("doGetPage", new Object[] { (Object)hash });
             }
         }
@@ -434,9 +446,7 @@ namespace ApplyRoutesPlugin.Activities
 
             if (curMapType != null)
             {
-                guid = selected_guid = curMapType.guid;
-                mapTypePopup.Text = curMapType.title;
-                webBrowser.Navigate(curMapType.url + "gsmc&");
+                SelectProvider(curMapType);
             }
 
             return curMapType;
