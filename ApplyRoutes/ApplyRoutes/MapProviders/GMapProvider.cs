@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.ComponentModel;
 using System.Security.Permissions;
+using System.Globalization;
 
 [Guid("3050f669-98b5-11cf-bb82-00aa00bdce0b"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
@@ -278,10 +279,17 @@ namespace ApplyRoutesPlugin.MapProviders
                 if (render != null)
                 {
                     bmp = new Bitmap(ce.pixRect.Width, ce.pixRect.Height);
-                    Graphics g = Graphics.FromImage(bmp);
-                    IntPtr hdc = g.GetHdc();
-                    render.DrawToDC(hdc);
-                    g.ReleaseHdc(hdc);
+                    if (true)
+                    {
+                        Graphics g = Graphics.FromImage(bmp);
+                        IntPtr hdc = g.GetHdc();
+                        render.DrawToDC(hdc);
+                        g.ReleaseHdc(hdc);
+                    }
+                    else
+                    {
+                        ((Control)webBrowser).DrawToBitmap(bmp, new Rectangle(0, 0, ce.pixRect.Width, ce.pixRect.Height));
+                    }
                 }
             }
 
@@ -337,25 +345,16 @@ namespace ApplyRoutesPlugin.MapProviders
             webBrowser.Show();
 
             webBrowser.DocumentCompleted += LoadComplete;
-            if (true)
-            {
-                System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-                timer.Interval = 200;
-                timer.Tick += delegate(object sender, EventArgs e)
-                {
-                    ProcessQueue();
-                };
 
-                timer.Start();
-                Application.Run();
-            }
-            else
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = 200;
+            timer.Tick += delegate(object sender, EventArgs e)
             {
-                while (true)
-                {
-                    ProcessQueue();
-                }
-            }
+                ProcessQueue();
+            };
+
+            timer.Start();
+            Application.Run();
         }
     }
 
@@ -363,17 +362,29 @@ namespace ApplyRoutesPlugin.MapProviders
     {
         #region IMapProvider Members
 
-        public GMapProvider(string kind, string n, Guid id)
+        public GMapProvider(string u, string n, Guid id)
         {
-            url = "http://maps.myosotissp.com/index.html#t=" + kind + "&";
-            name = "AR - " + n;
+            url = u;
+            name = n;
             guid = id;
             if (imageCache == null)
             {
                 imageCache = new GMapImageCache(url);
             }
             
-            ready = true;
+            enabled = true;
+        }
+
+        public string Url
+        {
+            get { return url; }
+            set { url = value; }
+        }
+
+        public string Title
+        {
+            get { return name; }
+            set { name = value; }
         }
 
         private static GMapImageCache imageCache = null;
@@ -397,7 +408,7 @@ namespace ApplyRoutesPlugin.MapProviders
             Rectangle clipRectangle, IGPSLocation center, double zoomLevel)
         {
             int zoom = GMZoom(zoomLevel);
-            int size = 256;
+            int size = 512;
             int max = 256 << zoom;
 
             imageCache.NudgeQueue();
@@ -420,9 +431,14 @@ namespace ApplyRoutesPlugin.MapProviders
                 {
                     Point cpt = new Point(tl2.X+(size/2), tl2.Y+((size+GMapImageCache.logoSize)/2));
                     IGPSLocation c = MercatorPixelToGPS(cpt, zoomLevel);
-                    string hash = String.Format("s={0:D},{1:D}&ll={2:F7},{3:F7}&z={4:D}&q={5:D},{6:D}", new object[] {
+                    Point cpt2 = MercatorGPSToPixel(c, zoomLevel);
+                    if (cpt2.X != cpt.X || cpt2.Y != cpt.Y)
+                    {
+                        cpt2.X = cpt.X;
+                    }
+                    string hash = String.Format(NumberFormatInfo.InvariantInfo, "s={0:D},{1:D}&ll={2:F7},{3:F7}&z={4:D}&q={5:D},{6:D}", new object[] {
                         size, size + GMapImageCache.logoSize,
-                        c.LatitudeDegrees, c.LongitudeDegrees,
+                        (double)c.LatitudeDegrees, (double)c.LongitudeDegrees,
                         zoom,
                         cpt.X, cpt.Y
                         });
@@ -507,14 +523,17 @@ namespace ApplyRoutesPlugin.MapProviders
 
         private Point MercatorGPSToPixel(IGPSLocation where, double zoomLevel)
         {
-            double x = where.LongitudeDegrees / 180 + 1;
-            double s = -Math.Sin(where.LatitudeDegrees * Math.PI / 180);
-            double y = Math.Log((1 + s)/(1 - s))/2/Math.PI;
-            y = Math.Max(y, -1);
-            y = Math.Min(y, 1);
-            y += 1;
+            int zm = GMZoom(zoomLevel);
+            int z1 = 64 << zm;
+            int z2 = z1 << 1;
+
+            double x = where.LongitudeDegrees * z2 / 180 + z2;
+            double s = Math.Sin(where.LatitudeDegrees * Math.PI / 180);
             double z = 128 << GMZoom(zoomLevel);
-            return new Point((int)Math.Round(x * z), (int)Math.Round(y * z));
+            s = Math.Max(s, -.9999);
+            s = Math.Min(s, 0.9999);
+            double y = z2 - z1*Math.Log((1 + s)/(1 - s))/Math.PI;
+            return new Point((int)Math.Round(x), (int)Math.Round(y));
         }
 
         private IGPSLocation MercatorPixelToGPS(Point where, double zoomLevel)
@@ -551,12 +570,13 @@ namespace ApplyRoutesPlugin.MapProviders
 
         #endregion
 
-        public bool Ready
+        public bool Enabled
         {
-            get { return ready; }
+            get { return enabled; }
+            set { enabled = value; }
         }
 
-        private bool ready = false;
+        private bool enabled = true;
 
         private int minZoom = 1;
         private int maxZoom = 25;

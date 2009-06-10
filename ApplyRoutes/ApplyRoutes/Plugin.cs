@@ -22,6 +22,8 @@ using System.Xml;
 using System.Windows.Forms;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ZoneFiveSoftware.Common.Visuals;
+using ApplyRoutesPlugin.MapProviders;
+using ApplyRoutesPlugin.UI;
 
 namespace ApplyRoutesPlugin
 {
@@ -53,7 +55,8 @@ namespace ApplyRoutesPlugin
 
         public void ReadOptions(XmlDocument xmlDoc, XmlNamespaceManager nsmgr, XmlElement pluginNode)
         {
-            
+            ExtendMapProviders.ReadOptions(xmlDoc, nsmgr, pluginNode);
+            EditMenuSettingsInfo.ReadOptions(xmlDoc, nsmgr, pluginNode);
         }
 
         public string Version
@@ -63,7 +66,8 @@ namespace ApplyRoutesPlugin
 
         public void WriteOptions(XmlDocument xmlDoc, XmlElement pluginNode)
         {
-            
+            ExtendMapProviders.WriteOptions(xmlDoc, pluginNode);
+            EditMenuSettingsInfo.WriteOptions(xmlDoc, pluginNode);
         }
 
         #endregion

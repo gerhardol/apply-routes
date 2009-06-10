@@ -25,51 +25,18 @@ using System.Windows.Forms;
 using System.Globalization;
 using ZoneFiveSoftware.Common.Visuals;
 using System.Diagnostics;
+using ApplyRoutesPlugin.MapProviders;
+using System.Xml;
 
 namespace ApplyRoutesPlugin.UI
 {
-    public struct SettingsInfo
-    {
-        public SettingsInfo(bool sar, bool scr, bool sue)
-        {
-            showApplyRoutes = sar;
-            showCreateRoutes = scr;
-            showUpdateEquipment = sue;
-        }
-
-        public static SettingsInfo Get()
-        {
-            byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
-            if (data == null || data.Length == 0)
-            {
-                data = new byte[] { 1, 1, 0 };
-            }
-            return new SettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0);
-        }
-
-        public static void Set(SettingsInfo info)
-        {
-            byte[] data = new byte[] {
-                (byte)(info.showApplyRoutes ? 1 : 0),
-                (byte)(info.showCreateRoutes ? 1 : 0),
-                (byte)(info.showUpdateEquipment ? 1 : 0)
-            };
-            Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
-        }
-
-        public bool showApplyRoutes;
-        public bool showCreateRoutes;
-        public bool showUpdateEquipment;
-    };
 
     public partial class SettingsControl : UserControl
     {
-        
-
         public SettingsControl()
         {
             InitializeComponent();
-            SettingsInfo info = SettingsInfo.Get();
+            EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
             
             RefreshPage();
             
@@ -95,20 +62,70 @@ namespace ApplyRoutesPlugin.UI
                 {
                     return;
                 }
-
-                SettingsInfo.Set(info);
             };
 
             showApplyRoutesChk.CheckedChanged += chkChange;
             showCreateRoutesChk.CheckedChanged += chkChange;
             showUpdateEquipmentChk.CheckedChanged += chkChange;
 
+            int w1 = (mapProviderName.Right + mapProviderUrl.Left)/2 - mapProvidersList.Left;
+            int w2 = mapProvidersList.Width - mapProvidersList.VScrollBar.Width - 2 - w1;
+            mapProvidersList.Columns.Add(new TreeList.Column("Title", "Title", w1, StringAlignment.Near));
+            mapProvidersList.Columns.Add(new TreeList.Column("Url", "Url", w2, StringAlignment.Near));
+            mapProvidersList.RowData = ExtendMapProviders.GetMapProviders();
+            mapProvidersList.CheckBoxes = true;
+            foreach (GMapProvider p in ExtendMapProviders.GetMapProviders())
+            {
+                mapProvidersList.SetChecked(p, p.Enabled);
+            }
+            mapProvidersList.CheckedChanged += delegate(object sender, TreeList.ItemEventArgs e)
+            {
+                GMapProvider item = e.Item as GMapProvider;
+                if (item != null)
+                {
+                    item.Enabled = mapProvidersList.CheckedElements.Contains(item);
+                }
+            };
+            mapProvidersList.SelectedChanged += delegate(object sender, EventArgs e)
+            {
+                if (mapProvidersList.SelectedItems.Count == 1)
+                {
+                    GMapProvider item = mapProvidersList.SelectedItems[0] as GMapProvider;
+                    mapProviderName.Text = item.Title;
+                    mapProviderUrl.Text = item.Url;
+                    mapProviderUpdateBtn.Enabled = true;
+                } else {
+                    mapProviderName.Text = mapProviderUrl.Text = "";
+                    mapProviderUpdateBtn.Enabled = false;
+                }
+            };
+
+            mapProviderUpdateBtn.Click += delegate(object sender, EventArgs e)
+            {
+                if (mapProvidersList.SelectedItems.Count == 1)
+                {
+                    GMapProvider item = mapProvidersList.SelectedItems[0] as GMapProvider;
+                    item.Title = mapProviderName.Text;
+                    item.Url = mapProviderUrl.Text;
+                    mapProvidersList.RefreshElements(mapProvidersList.Selected);
+                    mapProvidersList.Selected.Clear();
+                }
+            };
+
+            mapProviderResetBtn.Click += delegate(object sender, EventArgs e)
+            {
+                ExtendMapProviders.ApplyDefaults();
+                mapProvidersList.Invalidate();
+            };
+
+            mapProviderUpdateBtn.Enabled = false;
+
             homePageLink.Click += homePageLink_Click;
         }
 
         public void RefreshPage()
         {
-            SettingsInfo info = SettingsInfo.Get();
+            EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
             
             showApplyRoutesChk.Checked = info.showApplyRoutes;
             showCreateRoutesChk.Checked = info.showCreateRoutes;
@@ -120,6 +137,15 @@ namespace ApplyRoutesPlugin.UI
             Plugin.ThemeChanged(showApplyRoutesChk, theme);
             Plugin.ThemeChanged(showCreateRoutesChk, theme);
             Plugin.ThemeChanged(showUpdateEquipmentChk, theme);
+
+            mapProvidersList.ThemeChanged(theme);
+            mapProviderName.ThemeChanged(theme);
+            mapProviderUrl.ThemeChanged(theme);
+            Plugin.ThemeChanged(mapProviderUpdateBtn, theme);
+            Plugin.ThemeChanged(mapProviderResetBtn, theme);
+            Plugin.ThemeChanged(this.settingsTabs, theme);
+            Plugin.ThemeChanged(this.editMenuTabPage, theme);
+            Plugin.ThemeChanged(this.mapProvidersTabPage, theme);
         }
 
         public void UICultureChanged(CultureInfo culture)
@@ -139,4 +165,74 @@ namespace ApplyRoutesPlugin.UI
             }
         }
     }
+    public class EditMenuSettingsInfo
+    {
+        public EditMenuSettingsInfo(bool sar, bool scr, bool sue)
+        {
+            showApplyRoutes = sar;
+            showCreateRoutes = scr;
+            showUpdateEquipment = sue;
+        }
+
+        public static EditMenuSettingsInfo Get()
+        {
+            if (emsi == null)
+            {
+                byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
+                if (data != null && data.Length == 3)
+                {
+                    emsi = new EditMenuSettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0);
+                }
+                else
+                {
+                    emsi = new EditMenuSettingsInfo(true, true, false);
+                }
+            }
+            return emsi;
+        }
+
+        public static void ReadOptions(XmlDocument xmlDoc, XmlNamespaceManager nsmgr, XmlElement pluginNode)
+        {
+            XmlAttribute sar = pluginNode.Attributes["showApplyRoutes"];
+            XmlAttribute scr = pluginNode.Attributes["showCreateRoutes"];
+            XmlAttribute sue = pluginNode.Attributes["showUpdateEquipment"];
+
+            if (sar != null && scr != null && sue != null)
+            {
+                bool sarb = sar.Value == "1";
+                bool scrb = scr.Value == "1";
+                bool sueb = sue.Value == "1";
+                emsi = new EditMenuSettingsInfo(sarb, scrb, sueb);
+            }
+        }
+
+        private static XmlAttribute GetOrCreate(XmlDocument xmlDoc, XmlNode node, string name)
+        {
+            XmlAttribute att = node.Attributes[name];
+            if (att == null)
+            {
+                att = xmlDoc.CreateAttribute(name);
+                node.Attributes.Append(att);
+            }
+            return att;
+        }
+
+        public static void WriteOptions(XmlDocument xmlDoc, XmlElement pluginNode)
+        {
+            XmlAttribute sar = GetOrCreate(xmlDoc, pluginNode, "showApplyRoutes");
+            XmlAttribute scr = GetOrCreate(xmlDoc, pluginNode, "showCreateRoutes");
+            XmlAttribute sue = GetOrCreate(xmlDoc, pluginNode, "showUpdateEquipment");
+
+            EditMenuSettingsInfo e = Get();
+            sar.Value = e.showApplyRoutes ? "1" : "0";
+            scr.Value = e.showCreateRoutes ? "1" : "0";
+            sue.Value = e.showUpdateEquipment ? "1" : "0";
+        }
+
+        public bool showApplyRoutes;
+        public bool showCreateRoutes;
+        public bool showUpdateEquipment;
+
+        private static EditMenuSettingsInfo emsi = null;
+    };
 }

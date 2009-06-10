@@ -48,7 +48,7 @@ namespace ApplyRoutesPlugin.Edit
             if (activities == null || activities.Count == 0) return null;
 
             List<IAction> actions = new List<IAction>();
-            SettingsInfo info = SettingsInfo.Get();
+            EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
             
             if (info.showApplyRoutes)
             {
@@ -73,7 +73,7 @@ namespace ApplyRoutesPlugin.Edit
 
         IList<IAction> MyRouteActions(IList<IRoute> routes)
         {
-            SettingsInfo info = SettingsInfo.Get();
+            EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
             if (info.showUpdateEquipment)
             {
                 return new IAction[] { new UpdateEquipmentAction(null, routes) };

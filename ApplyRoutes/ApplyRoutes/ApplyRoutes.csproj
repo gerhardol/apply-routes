@@ -56,6 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\GMapActivityDetail.cs" />
+    <Compile Include="Activities\GMapRouteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\GMapRouteControl.Designer.cs">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Edit\UpdateEquipmentAction.cs" />
     <Compile Include="Edit\RouteManipulator.cs" />
     <Compile Include="Edit\MakeRouteAction.cs" />
@@ -101,8 +108,13 @@
     <Compile Include="UI\SettingsControl.Designer.cs">
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\ExtendActivities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Activities\GMapRouteControl.resx">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MapProviders\GMapBrowser.resx">
       <DependentUpon>GMapBrowser.cs</DependentUpon>
       <SubType>Designer</SubType>
