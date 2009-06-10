@@ -55,23 +55,15 @@ namespace ApplyRoutesPlugin.UI
             {
                 if (curArp != null)
                 {
-                    TreeListPopup treePop = new TreeListPopup();
-
-                    treePop.Tree.Columns.Add(new TreeList.Column("Name"));
-                    treePop.Tree.RowData = Plugin.GetApplication().Logbook.Routes;
-
-                    treePop.ItemSelected += delegate(object s, TreeListPopup.ItemSelectedEventArgs i)
-                    {
-                        if (i.Item is IRoute)
-                        {
-                            curArp.Route = (IRoute)i.Item;
-                            activityRouteTree.Invalidate();
-                            SetupActivityRoutePop();
-                        }
-                    };
-
-                    treePop.ThemeChanged(Plugin.GetApplication().VisualTheme);
-                    treePop.Popup(activityRoutePop.Parent.RectangleToScreen(activityRoutePop.Bounds));
+                    Plugin.OpenListPopup(Plugin.GetApplication().VisualTheme,
+                                         Plugin.GetApplication().Logbook.Routes,
+                                         activityRoutePop, "Name", curArp.Route,
+                                         delegate(IRoute route)
+                                         {
+                                             curArp.Route = route;
+                                             activityRouteTree.Invalidate();
+                                             SetupActivityRoutePop();
+                                         });
                 }
             };
 

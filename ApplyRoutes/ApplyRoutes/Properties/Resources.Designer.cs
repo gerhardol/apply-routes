@@ -104,7 +104,7 @@ namespace ApplyRoutesPlugin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AR - Update Equipment....
+        ///   Looks up a localized string similar to AR - Update History....
         /// </summary>
         internal static string Edit_UpdateEquipment_Text {
             get {

@@ -69,9 +69,9 @@
             this.showUpdateEquipmentChk.AutoSize = true;
             this.showUpdateEquipmentChk.Location = new System.Drawing.Point(38, 72);
             this.showUpdateEquipmentChk.Name = "showUpdateEquipmentChk";
-            this.showUpdateEquipmentChk.Size = new System.Drawing.Size(222, 17);
+            this.showUpdateEquipmentChk.Size = new System.Drawing.Size(204, 17);
             this.showUpdateEquipmentChk.TabIndex = 3;
-            this.showUpdateEquipmentChk.Text = "Show \'Update Equipment...\' on Edit menu";
+            this.showUpdateEquipmentChk.Text = "Show \'Update History...\' on Edit menu";
             this.showUpdateEquipmentChk.UseVisualStyleBackColor = true;
             // 
             // SettingsControl

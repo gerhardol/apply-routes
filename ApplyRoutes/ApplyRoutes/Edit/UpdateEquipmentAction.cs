@@ -32,16 +32,17 @@ namespace ApplyRoutesPlugin.Edit
 {
     class UpdateEquipmentAction : IAction
     {
-        public UpdateEquipmentAction(IList<IActivity> activities)
+        public UpdateEquipmentAction(IList<IActivity> activities, IList<IRoute> routes)
         {
             this.activities = activities;
+            this.routes = routes;
         }
 
         #region IAction Members
 
         public bool Enabled
         {
-            get { return activities != null; }
+            get { return true; }
         }
 
         public bool HasMenuArrow
@@ -84,11 +85,88 @@ namespace ApplyRoutesPlugin.Edit
 
         public void Run(Rectangle rectButton)
         {
-            UpdateEquipmentForm m = new UpdateEquipmentForm(activities);
+            UpdateEquipmentForm m = new UpdateEquipmentForm(activities, null);
             if (m.ShowDialog() == DialogResult.OK)
             {
-                UpdateEquipment(m.EquipmentToAdd, true);
-                UpdateEquipment(m.EquipmentToRemove, false);
+                if (activities != null)
+                {
+                    UpdateEquipment(m.EquipmentToAdd, true);
+                    UpdateEquipment(m.EquipmentToRemove, false);
+                }
+
+                if (m.SelectedName != "")
+                {
+                    if (activities != null)
+                    {
+                        foreach (IActivity activity in activities)
+                        {
+                            activity.Name = m.SelectedName;
+                        }
+                    }
+                    if (routes != null)
+                    {
+                        foreach (IRoute route in routes)
+                        {
+                            route.Name = m.SelectedName;
+                        }
+                    }
+                }
+
+                if (m.SelectedLocation != "")
+                {
+                    if (activities != null)
+                    {
+                        foreach (IActivity activity in activities)
+                        {
+                            activity.Location = m.SelectedLocation;
+                        }
+                    }
+                    if (routes != null)
+                    {
+                        foreach (IRoute route in routes)
+                        {
+                            route.Location = m.SelectedLocation;
+                        }
+                    }
+                }
+
+                if (m.FromName != "" && m.ToName != "")
+                {
+                    foreach (IActivity activity in Plugin.GetApplication().Logbook.Activities)
+                    {
+                        if (UpdateEquipmentForm.CanonicalName(activity.Name) == m.FromName)
+                        {
+                            activity.Name = m.ToName;
+                        }
+                    }
+
+                    foreach (IRoute route in Plugin.GetApplication().Logbook.Routes)
+                    {
+                        if (UpdateEquipmentForm.CanonicalName(route.Name) == m.FromName)
+                        {
+                            route.Name = m.ToName;
+                        }
+                    }
+                }
+
+                if (m.FromLocation != "" && m.ToLocation != "")
+                {
+                    foreach (IActivity activity in Plugin.GetApplication().Logbook.Activities)
+                    {
+                        if (UpdateEquipmentForm.CanonicalName(activity.Location) == m.FromLocation)
+                        {
+                            activity.Location = m.ToLocation;
+                        }
+                    }
+
+                    foreach (IRoute route in Plugin.GetApplication().Logbook.Routes)
+                    {
+                        if (UpdateEquipmentForm.CanonicalName(route.Location) == m.FromLocation)
+                        {
+                            route.Location = m.ToLocation;
+                        }
+                    }
+                }
             }
         }
 
@@ -114,5 +192,6 @@ namespace ApplyRoutesPlugin.Edit
         }
 
         private IList<IActivity> activities = null;
+        private IList<IRoute> routes = null;
     }
 }

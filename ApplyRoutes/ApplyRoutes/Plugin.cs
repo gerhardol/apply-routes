@@ -25,6 +25,8 @@ using ZoneFiveSoftware.Common.Visuals;
 
 namespace ApplyRoutesPlugin
 {
+    public delegate void ItemSelectHandler<T>(T item);
+
     class Plugin : IPlugin
     {
         public Plugin()
@@ -113,6 +115,26 @@ namespace ApplyRoutesPlugin
         {
             control.ForeColor = visualTheme.ControlText;
             control.BackColor = visualTheme.Control;
+        }
+
+        public static void OpenListPopup<T>(ITheme theme, IList<T> items, System.Windows.Forms.Control control, string Id, T selected, ItemSelectHandler<T> selectHandler)
+        {
+            TreeListPopup popup = new TreeListPopup();
+            popup.ThemeChanged(theme);
+            popup.Tree.Columns.Add(new TreeList.Column(Id));
+            popup.Tree.RowData = items;
+            if (selected != null)
+            {
+                popup.Tree.Selected = new object[] { selected };
+            }
+            popup.ItemSelected += delegate(object sender, TreeListPopup.ItemSelectedEventArgs e)
+            {
+                if (e.Item is T)
+                {
+                    selectHandler((T)e.Item);
+                }
+            };
+            popup.Popup(control.Parent.RectangleToScreen(control.Bounds));
         }
 
         #region Private members

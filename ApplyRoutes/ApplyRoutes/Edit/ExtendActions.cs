@@ -22,10 +22,11 @@ using ZoneFiveSoftware.Common.Data.Fitness;
 using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ApplyRoutesPlugin.UI;
 
 namespace ApplyRoutesPlugin.Edit
 {
-    class ExtendActions : IExtendActivityEditActions
+    class ExtendActions : IExtendActivityEditActions, IExtendRouteEditActions
     {
         #region IExtendActivityEditActions Members
 
@@ -47,26 +48,59 @@ namespace ApplyRoutesPlugin.Edit
             if (activities == null || activities.Count == 0) return null;
 
             List<IAction> actions = new List<IAction>();
-            byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
-            if (data == null || data.Length == 0)
-            {
-                data = new byte[] { 1, 1, 0 };
-                Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
-            }
-            if (data[0] != 0)
+            SettingsInfo info = SettingsInfo.Get();
+            
+            if (info.showApplyRoutes)
             {
                 actions.Add(new ApplyRouteAction(activities));
             }
-            if (data[1] != 0)
+            if (info.showCreateRoutes)
             {
                 actions.Add(new MakeRouteAction(activities));
             }
-            if (data[2] != 0)
+            if (info.showUpdateEquipment)
             {
-                actions.Add(new UpdateEquipmentAction(activities));
+                actions.Add(new UpdateEquipmentAction(activities, null));
             }
-
+            if (actions.Count == 0)
+            {
+                actions = null;
+            }
             return actions;
         }
+
+        #region IExtendRouteEditActions Members
+
+        IList<IAction> MyRouteActions(IList<IRoute> routes)
+        {
+            SettingsInfo info = SettingsInfo.Get();
+            if (info.showUpdateEquipment)
+            {
+                return new IAction[] { new UpdateEquipmentAction(null, routes) };
+            }
+
+            return null;
+        }
+
+        public IList<IAction> GetActions(IList<IRoute> routes)
+        {
+            return MyRouteActions(routes);
+        }
+
+        public IList<IAction> GetActions(IRoute route)
+        {
+            List<IRoute> list = new List<IRoute>();
+            if (route != null)
+            {
+                list.Add(route);
+            }
+            if (list.Count == 0)
+            {
+                list = null;
+            }
+            return MyRouteActions(list);
+        }
+
+        #endregion
     }
 }

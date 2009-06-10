@@ -28,43 +28,75 @@ using System.Diagnostics;
 
 namespace ApplyRoutesPlugin.UI
 {
-    public partial class SettingsControl : UserControl
+    public struct SettingsInfo
     {
-        public SettingsControl()
+        public SettingsInfo(bool sar, bool scr, bool sue)
         {
-            InitializeComponent();
+            showApplyRoutes = sar;
+            showCreateRoutes = scr;
+            showUpdateEquipment = sue;
+        }
+
+        public static SettingsInfo Get()
+        {
             byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
             if (data == null || data.Length == 0)
             {
                 data = new byte[] { 1, 1, 0 };
-                Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
             }
+            return new SettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0);
+        }
 
+        public static void Set(SettingsInfo info)
+        {
+            byte[] data = new byte[] {
+                (byte)(info.showApplyRoutes ? 1 : 0),
+                (byte)(info.showCreateRoutes ? 1 : 0),
+                (byte)(info.showUpdateEquipment ? 1 : 0)
+            };
+            Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
+        }
+
+        public bool showApplyRoutes;
+        public bool showCreateRoutes;
+        public bool showUpdateEquipment;
+    };
+
+    public partial class SettingsControl : UserControl
+    {
+        
+
+        public SettingsControl()
+        {
+            InitializeComponent();
+            SettingsInfo info = SettingsInfo.Get();
+            
             RefreshPage();
             
             ThemeChanged(Plugin.GetApplication().VisualTheme);
 
             EventHandler chkChange = delegate(object sender, EventArgs e)
             {
-                int i = -1;
+                bool chk = ((CheckBox)sender).Checked;
+
                 if (sender == showApplyRoutesChk)
                 {
-                    i = 0;
+                    info.showApplyRoutes = chk;
                 }
                 else if (sender == showCreateRoutesChk)
                 {
-                    i = 1;
+                    info.showCreateRoutes = chk;
                 }
                 else if (sender == showUpdateEquipmentChk)
                 {
-                    i = 2;
+                    info.showUpdateEquipment = chk;
+                }
+                else
+                {
+                    return;
                 }
 
-                if (i >= 0)
-                {
-                    data[i] = (byte)(((CheckBox)sender).Checked ? 1 : 0);
-                    Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
-                }
+                SettingsInfo.Set(info);
             };
 
             showApplyRoutesChk.CheckedChanged += chkChange;
@@ -76,16 +108,11 @@ namespace ApplyRoutesPlugin.UI
 
         public void RefreshPage()
         {
-            byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
-            if (data == null || data.Length == 0)
-            {
-                data = new byte[] { 1, 1, 0 };
-                Plugin.GetApplication().Logbook.SetExtensionData(Plugin.thePlugin.Id, data);
-            }
-
-            showApplyRoutesChk.Checked = data[0] != 0;
-            showCreateRoutesChk.Checked = data[1] != 0;
-            showUpdateEquipmentChk.Checked = data[2] != 0;
+            SettingsInfo info = SettingsInfo.Get();
+            
+            showApplyRoutesChk.Checked = info.showApplyRoutes;
+            showCreateRoutesChk.Checked = info.showCreateRoutes;
+            showUpdateEquipmentChk.Checked = info.showUpdateEquipment;
         }
 
         public void ThemeChanged(ITheme theme)

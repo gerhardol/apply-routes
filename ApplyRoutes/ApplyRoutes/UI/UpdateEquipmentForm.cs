@@ -32,46 +32,145 @@ using ZoneFiveSoftware.Common.Data.Measurement;
 
 namespace ApplyRoutesPlugin.UI
 {
-    
+
 
     public partial class UpdateEquipmentForm : Form
     {
-        public UpdateEquipmentForm(IList<IActivity> activities)
+        public UpdateEquipmentForm(IList<IActivity> activities, IList<IRoute> routes)
         {
             InitializeComponent();
             Plugin.registerDefaultBtns(this);
 
             this.activities = activities;
-            int width = this.equipmentList.Width - this.equipmentList.VScrollBar.Width - 2;
-            int w1 = width / 3;
-            int w2 = width - 2 * w1;
+            this.routes = routes;
 
-            this.equipmentList.Columns.Add(new TreeList.Column("Brand", "Brand", w2, StringAlignment.Near));
-            this.equipmentList.Columns.Add(new TreeList.Column("Model", "Model", w1, StringAlignment.Near));
-            this.equipmentList.Columns.Add(new TreeList.Column("Type", "Type", w1, StringAlignment.Near));
-            this.equipmentList.RowData = Plugin.GetApplication().Logbook.Equipment;
-
-            commonItems = CommonEquipment();
-            /*
-            
-                IList<IEquipmentItem> usedEquipment = UsedEquipment();
-                foreach (Object obj in usedEquipment)
-                {
-                    this.equipmentList.SetCheckedState(obj, CheckState.Indeterminate);
-                }
-            */
-            foreach (Object obj in commonItems)
+            if (activities != null)
             {
-                this.equipmentList.SetCheckedState(obj, CheckState.Checked);
+                int width = this.equipmentList.Width - this.equipmentList.VScrollBar.Width - 2;
+                int w1 = width / 3;
+                int w2 = width - 2 * w1;
+
+                this.equipmentList.Columns.Add(new TreeList.Column("Brand", "Brand", w2, StringAlignment.Near));
+                this.equipmentList.Columns.Add(new TreeList.Column("Model", "Model", w1, StringAlignment.Near));
+                this.equipmentList.Columns.Add(new TreeList.Column("Type", "Type", w1, StringAlignment.Near));
+                this.equipmentList.RowData = Plugin.GetApplication().Logbook.Equipment;
+
+                commonItems = CommonEquipment();
+
+                foreach (Object obj in commonItems)
+                {
+                    this.equipmentList.SetCheckedState(obj, CheckState.Checked);
+                }
             }
-            
-            ThemeChanged(Plugin.GetApplication().VisualTheme);
+
+            ITheme theme = Plugin.GetApplication().VisualTheme;
+
+            EventHandler fromPopupClick = delegate(object sender, EventArgs e)
+            {
+                string selected;
+                SortedList<string, string> names = GetIActivityNameList(Plugin.GetApplication().Logbook.Activities,
+                        null, out selected, sender == fromNameTxt || sender == toNameTxt);
+
+                if (names.Count != 0)
+                {
+                    Plugin.OpenListPopup(Plugin.GetApplication().VisualTheme,
+                                         names.Values,
+                                         (Control)sender, null, selected,
+                                         delegate(string name)
+                                         {
+                                             ((ZoneFiveSoftware.Common.Visuals.TextBox)sender).Text = name;
+                                         });
+                }
+            };
+
+            this.fromNameTxt.ButtonClick += fromPopupClick;
+            this.fromLocationTxt.ButtonClick += fromPopupClick;
+            this.toNameTxt.ButtonClick += fromPopupClick;
+            this.toLocationTxt.ButtonClick += fromPopupClick;
+
+            if (activities != null)
+            {
+                string selected;
+                SortedList<string, string> selectedNames;
+
+                selectedNames = GetIActivityNameList(
+                        activities,
+                        null, out selected, true);
+                if (selectedNames.Count == 1)
+                {
+                    selectedNamesTxt.Text = selectedNames.Values[0];
+                }
+                selectedNames = GetIActivityNameList(
+                        activities,
+                        null, out selected, false);
+                if (selectedNames.Count == 1)
+                {
+                    selectedLocationsTxt.Text = selectedNames.Values[0];
+                }
+            }
+
+            EventHandler renamePopupClick = delegate(object sender, EventArgs e)
+            {
+                if (activities == null)
+                {
+                    return;
+                }
+
+                string selected;
+                SortedList<string, string> selectedNames = GetIActivityNameList(
+                        activities,
+                        null, out selected, sender == selectedNamesTxt);
+
+                SortedList<string, string> names = GetIActivityNameList(
+                        Plugin.GetApplication().Logbook.Activities,
+                        null, out selected, sender == selectedNamesTxt);
+
+                if (names.Count != 0)
+                {
+                    if (selectedNames.Count == 1)
+                    {
+                        selected = names[selectedNames.Keys[0]];
+                    }
+                    Plugin.OpenListPopup(Plugin.GetApplication().VisualTheme,
+                                         names.Values,
+                                         (Control)sender, null, selected,
+                                         delegate(string name)
+                                         {
+                                             ((ZoneFiveSoftware.Common.Visuals.TextBox)sender).Text = name;
+                                         });
+                }
+            };
+
+            selectedNamesTxt.ButtonClick += renamePopupClick;
+            selectedLocationsTxt.ButtonClick += renamePopupClick;                
+
+            //TabPage renameTab = updateTab.TabPages["renameTab"];
+            //TabPage globalRenameTab = updateTab.TabPages["globalRenameTab"];
+            //TabPage updateEquipmentTab = updateTab.TabPages["updateEquipmentTab"];
+
+            if (activities == null)
+            {
+                updateTab.TabPages.RemoveByKey("updateEquipmentTab");
+            }
+            if (activities == null && routes == null)
+            {
+                updateTab.TabPages.RemoveByKey("renameTab");
+            //    renameTab.Enabled = false;
+                updateTab.SelectTab("globalRenameTab");
+            }
+
+            ThemeChanged(theme);
         }
 
         public void ThemeChanged(ITheme visualTheme)
         {
-            Plugin.ThemeChanged(equipmentLbl, visualTheme);
             equipmentList.ThemeChanged(visualTheme);
+            selectedNamesTxt.ThemeChanged(visualTheme);
+            selectedLocationsTxt.ThemeChanged(visualTheme);
+            fromNameTxt.ThemeChanged(visualTheme);
+            toNameTxt.ThemeChanged(visualTheme);
+            fromLocationTxt.ThemeChanged(visualTheme);
+            toLocationTxt.ThemeChanged(visualTheme);
 
             Plugin.ThemeChanged(okBtn, visualTheme);
             Plugin.ThemeChanged(cancelBtn, visualTheme);
@@ -121,7 +220,8 @@ namespace ApplyRoutesPlugin.UI
 
         public IList<IEquipmentItem> EquipmentToAdd
         {
-            get {
+            get
+            {
                 return DiffList(ConvertToListOf<IEquipmentItem>(equipmentList.CheckedElements),
                                 commonItems, true);
             }
@@ -137,11 +237,11 @@ namespace ApplyRoutesPlugin.UI
             }
         }
 
-        public static IList<T> ConvertToListOf<T>(IList iList)  
-        {  
-            IList<T> result = new List<T>();  
-            foreach(T value in iList)
-            {  
+        public static IList<T> ConvertToListOf<T>(IList iList)
+        {
+            IList<T> result = new List<T>();
+            foreach (T value in iList)
+            {
                 result.Add(value);
             }
 
@@ -159,7 +259,104 @@ namespace ApplyRoutesPlugin.UI
             return result;
         }
 
+        public string SelectedName
+        {
+            get { return selectedNamesTxt.Text; }
+        }
+
+        public string SelectedLocation
+        {
+            get { return selectedLocationsTxt.Text; }
+        }
+
+        public string FromName
+        {
+            get { return CanonicalName(fromNameTxt.Text); }
+        }
+
+        public string ToName
+        {
+            get { return toNameTxt.Text.Trim(); }
+        }
+
+        public string FromLocation
+        {
+            get { return CanonicalName(fromLocationTxt.Text); }
+        }
+
+        public string ToLocation
+        {
+            get { return toLocationTxt.Text.Trim(); }
+        }
+
+        public static string CanonicalName(string name)
+        {
+            return name.Trim().ToLower();
+        }
+
+        public SortedList<string, string> GetIActivityNameList(IList<IActivity> items,
+            IActivity itemToSelect, out string selected, bool useNames)
+        {
+            SortedList<string, string> names = new SortedList<string, string>();
+
+            selected = null;
+            if (items != null)
+            {
+                foreach (IActivity item in items)
+                {
+                    string name = (useNames ? item.Name : item.Location);
+                    name = name.Trim();
+                    if (name.Length > 0)
+                    {
+                        string lowerName = name.ToLower();
+                        if (!names.ContainsKey(lowerName))
+                        {
+                            names.Add(lowerName, name);
+                        }
+                        else
+                        {
+                            name = names[lowerName];
+                        }
+                        if (itemToSelect == item)
+                        {
+                            selected = name;
+                        }
+                    }
+                }
+            }
+            return names;
+        }
+
+        public SortedList<string, string> GetIRouteNameList(IList<IRoute> items, IRoute itemToSelect, out string selected)
+        {
+            SortedList<string, string> names = new SortedList<string, string>();
+
+            selected = null;
+            foreach (IRoute item in items)
+            {
+                string name = item.Name.Trim();
+                if (name.Length > 0)
+                {
+                    string lowerName = name.ToLower();
+                    if (!names.ContainsKey(lowerName))
+                    {
+                        names.Add(lowerName, name);
+                    }
+                    else
+                    {
+                        name = names[lowerName];
+                    }
+                    if (itemToSelect == item)
+                    {
+                        selected = name;
+                    }
+                }
+            }
+            return names;
+        }
+
         private IList<IActivity> activities = null;
+        private IList<IRoute> routes = null;
         private IList<IEquipmentItem> commonItems = null;
     }
 }
