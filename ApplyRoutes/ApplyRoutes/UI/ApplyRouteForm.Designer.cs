@@ -42,6 +42,7 @@
             this.routeLbl = new System.Windows.Forms.Label();
             this.ignoreGPSActChk = new System.Windows.Forms.CheckBox();
             this.applyTimesLinearlyChk = new System.Windows.Forms.CheckBox();
+            this.preserveDistChk = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // routeList
@@ -235,9 +236,9 @@
             // 
             // ignoreGPSActChk
             // 
-            this.ignoreGPSActChk.Location = new System.Drawing.Point(23, 178);
+            this.ignoreGPSActChk.Location = new System.Drawing.Point(23, 189);
             this.ignoreGPSActChk.Name = "ignoreGPSActChk";
-            this.ignoreGPSActChk.Size = new System.Drawing.Size(104, 48);
+            this.ignoreGPSActChk.Size = new System.Drawing.Size(104, 37);
             this.ignoreGPSActChk.TabIndex = 21;
             this.ignoreGPSActChk.Text = "Ignore activities with GPS data";
             this.ignoreGPSActChk.UseVisualStyleBackColor = true;
@@ -245,12 +246,23 @@
             // applyTimesLinearlyChk
             // 
             this.applyTimesLinearlyChk.AutoSize = true;
-            this.applyTimesLinearlyChk.Location = new System.Drawing.Point(23, 246);
+            this.applyTimesLinearlyChk.Location = new System.Drawing.Point(23, 252);
             this.applyTimesLinearlyChk.Name = "applyTimesLinearlyChk";
             this.applyTimesLinearlyChk.Size = new System.Drawing.Size(122, 17);
             this.applyTimesLinearlyChk.TabIndex = 22;
             this.applyTimesLinearlyChk.Text = "Apply Times Linearly";
             this.applyTimesLinearlyChk.UseVisualStyleBackColor = true;
+            // 
+            // preserveDistChk
+            // 
+            this.preserveDistChk.AutoSize = true;
+            this.preserveDistChk.Location = new System.Drawing.Point(23, 229);
+            this.preserveDistChk.Name = "preserveDistChk";
+            this.preserveDistChk.Size = new System.Drawing.Size(116, 17);
+            this.preserveDistChk.TabIndex = 23;
+            this.preserveDistChk.Text = "Preserve distances";
+            this.preserveDistChk.UseVisualStyleBackColor = true;
+            this.preserveDistChk.Visible = false;
             // 
             // ApplyRouteForm
             // 
@@ -259,6 +271,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
             this.ClientSize = new System.Drawing.Size(571, 285);
+            this.Controls.Add(this.preserveDistChk);
             this.Controls.Add(this.applyTimesLinearlyChk);
             this.Controls.Add(this.ignoreGPSActChk);
             this.Controls.Add(this.routeLbl);
@@ -296,5 +309,6 @@
         private System.Windows.Forms.Label routeLbl;
         private System.Windows.Forms.CheckBox ignoreGPSActChk;
         private System.Windows.Forms.CheckBox applyTimesLinearlyChk;
+        private System.Windows.Forms.CheckBox preserveDistChk;
     }
 }

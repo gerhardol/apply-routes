@@ -149,7 +149,7 @@
     <value>Manage Splits</value>
   </data>
   <data name="Edit_SendToRouteControl_Text" xml:space="preserve">
-    <value>AR - Send To Routes</value>
+    <value>AR - Send {0:S} {1:S} To Routes View</value>
   </data>
   <data name="Route_Control_Title" xml:space="preserve">
     <value>AR - Routes</value>
@@ -161,6 +161,21 @@
     <value>Start: </value>
   </data>
   <data name="Edit_JoinRoutesAction_Text" xml:space="preserve">
-    <value>AR - Join Activities</value>
+    <value>AR - Join  {0:S} {1:S}</value>
+  </data>
+  <data name="Generic_Activities_Text" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="Generic_Activity_Text" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="Generic_One_Text" xml:space="preserve">
+    <value>One</value>
+  </data>
+  <data name="Generic_Three_Text" xml:space="preserve">
+    <value>Three</value>
+  </data>
+  <data name="Generic_Two_Text" xml:space="preserve">
+    <value>Two</value>
   </data>
 </root>

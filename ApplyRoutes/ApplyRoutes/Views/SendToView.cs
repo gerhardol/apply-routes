@@ -76,7 +76,13 @@ namespace ApplyRoutesPlugin.Views
 
         public string Title
         {
-            get { return Properties.Resources.Edit_SendToRouteControl_Text; }
+            get
+            {
+                int num = (activities != null ? activities.Count : 0) +
+                    (routes != null ? routes.Count : 0);
+
+                return Plugin.NumberedActivityText(Properties.Resources.Edit_SendToRouteControl_Text, num);
+            }
         }
 
         #endregion

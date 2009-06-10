@@ -59,7 +59,6 @@
     </Compile>
     <Compile Include="Edit\JoinActivitiesAction.cs" />
     <Compile Include="Edit\UpdateEquipmentAction.cs" />
-    <Compile Include="Edit\RouteManipulator.cs" />
     <Compile Include="Edit\MakeRouteAction.cs" />
     <Compile Include="Edit\ExtendActions.cs" />
     <Compile Include="Edit\ApplyRouteAction.cs" />
@@ -119,6 +118,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.de.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ConfirmRoutesForm.resx">

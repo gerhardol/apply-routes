@@ -24,6 +24,7 @@ using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ZoneFiveSoftware.Common.Visuals;
 using ApplyRoutesPlugin.MapProviders;
 using ApplyRoutesPlugin.UI;
+using ZoneFiveSoftware.Common.Data;
 
 namespace ApplyRoutesPlugin
 {
@@ -139,6 +140,36 @@ namespace ApplyRoutesPlugin
                 }
             };
             popup.Popup(control.Parent.RectangleToScreen(control.Bounds));
+        }
+
+        public static string NumberedActivityText(string tmplt, int num)
+        {
+            string act_text = num == 1 ? Properties.Resources.Generic_Activity_Text :
+                    Properties.Resources.Generic_Activities_Text;
+            string num_text = num == 1 ? Properties.Resources.Generic_One_Text :
+                num == 2 ? Properties.Resources.Generic_Two_Text :
+                num == 3 ? Properties.Resources.Generic_Three_Text :
+                num.ToString();
+
+            return string.Format(tmplt, num_text, act_text);
+        }
+
+        public static long GetElapsedSeconds<T>(ITimeDataSeries<T> s, ITimeValueEntry<T> e)
+        {
+            TimeSpan span = s.EntryDateTime(e).Subtract(s.StartTime);
+            return Convert.ToInt64(span.TotalSeconds);
+        }
+
+        public static long GetTotalElapsedSeconds<T>(ITimeDataSeries<T> s)
+        {
+            if (s.Count > 1)
+            {
+                return GetElapsedSeconds(s, s[s.Count - 1]);
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         #region Private members

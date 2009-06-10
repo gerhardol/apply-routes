@@ -149,6 +149,11 @@ namespace ApplyRoutesPlugin.UI
         {
             get { return applyTimesLinearlyChk.Checked; }
         }
+
+        public bool PreserveDistances
+        {
+            get { return preserveDistChk.Checked; }
+        }
                 
         public static IList<T> ConvertToListOf<T>(IList iList)  
         {  

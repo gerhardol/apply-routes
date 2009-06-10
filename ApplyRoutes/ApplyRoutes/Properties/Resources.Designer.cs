@@ -95,7 +95,7 @@ namespace ApplyRoutesPlugin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AR - Join Activities.
+        ///   Looks up a localized string similar to AR - Join  {0:S} {1:S}.
         /// </summary>
         internal static string Edit_JoinRoutesAction_Text {
             get {
@@ -113,7 +113,7 @@ namespace ApplyRoutesPlugin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AR - Send To Routes.
+        ///   Looks up a localized string similar to AR - Send {0:S} {1:S} To Routes View.
         /// </summary>
         internal static string Edit_SendToRouteControl_Text {
             get {
@@ -127,6 +127,51 @@ namespace ApplyRoutesPlugin.Properties {
         internal static string Edit_UpdateEquipment_Text {
             get {
                 return ResourceManager.GetString("Edit_UpdateEquipment_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activities.
+        /// </summary>
+        internal static string Generic_Activities_Text {
+            get {
+                return ResourceManager.GetString("Generic_Activities_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity.
+        /// </summary>
+        internal static string Generic_Activity_Text {
+            get {
+                return ResourceManager.GetString("Generic_Activity_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One.
+        /// </summary>
+        internal static string Generic_One_Text {
+            get {
+                return ResourceManager.GetString("Generic_One_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Three.
+        /// </summary>
+        internal static string Generic_Three_Text {
+            get {
+                return ResourceManager.GetString("Generic_Three_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two.
+        /// </summary>
+        internal static string Generic_Two_Text {
+            get {
+                return ResourceManager.GetString("Generic_Two_Text", resourceCulture);
             }
         }
         

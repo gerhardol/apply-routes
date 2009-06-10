@@ -82,24 +82,6 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
-        private static long GetElapsedSeconds<T>(ITimeDataSeries<T> s, ITimeValueEntry<T> e)
-        {
-            TimeSpan span = s.EntryDateTime(e).Subtract(s.StartTime);
-            return Convert.ToInt64(span.TotalSeconds);
-        }
-
-        private static long GetTotalElapsedSeconds<T>(ITimeDataSeries<T> s)
-        {
-            if (s.Count > 1)
-            {
-                return GetElapsedSeconds(s, s[s.Count - 1]);
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
         public void Run(Rectangle rectButton)
         {
             ApplyRouteForm m = new ApplyRouteForm(activities);
@@ -117,7 +99,7 @@ namespace ApplyRoutesPlugin.Edit
                             IGPSRoute rt = routes[0].GPSRoute;
                             GPSRoute route = new GPSRoute();
                             double numer = ai.Time.TotalSeconds;
-                            long totalElapsedSeconds = GetTotalElapsedSeconds(rt);
+                            long totalElapsedSeconds = Plugin.GetTotalElapsedSeconds(rt);
                             if (numer == 0.0)
                             {
                                 numer = totalElapsedSeconds;
@@ -133,7 +115,7 @@ namespace ApplyRoutesPlugin.Edit
                             {
                                 ITimeValueEntry<IGPSPoint> tpt = rt[i];
                                 double elapsed = (!applyLinearly ?
-                                    GetElapsedSeconds(rt, tpt) :
+                                    Plugin.GetElapsedSeconds(rt, tpt) :
                                     dmt[i].Value) * timeScale;
                                 IGPSPoint point = tpt.Value;
                                 DateTime t = activity.StartTime.AddSeconds(elapsed);
@@ -142,7 +124,7 @@ namespace ApplyRoutesPlugin.Edit
 
                             dmt = route.GetDistanceMetersTrack();
                             float dist = 0;
-                            long dmtTotalElapsedSeconds = GetTotalElapsedSeconds(dmt);
+                            long dmtTotalElapsedSeconds = Plugin.GetTotalElapsedSeconds(dmt);
                             for (i = 0; i < activity.Laps.Count; i++)
                             {
                                 ILapInfo li = activity.Laps[i];

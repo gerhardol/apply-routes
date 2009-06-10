@@ -63,6 +63,9 @@ namespace ApplyRoutesPlugin.Edit
             SortedList<DateTime, IActivity> salist = new SortedList<DateTime, IActivity>();
             foreach (IActivity activity in activities)
             {
+                if (salist.ContainsKey(activity.StartTime))
+                    return null;
+
                 salist.Add(activity.StartTime, activity);
             }
             return salist;
@@ -70,6 +73,10 @@ namespace ApplyRoutesPlugin.Edit
 
         private bool checkSalistSpan(SortedList<DateTime, IActivity> salist)
         {
+            if (salist == null)
+            {
+                return false;
+            }
             NumericTimeDataSeries ntd = new NumericTimeDataSeries();
             DateTime st = DateTime.FromBinary(0);
             ntd.Add(st, 0);
@@ -219,7 +226,10 @@ namespace ApplyRoutesPlugin.Edit
 
         public string Title
         {
-            get { return Properties.Resources.Edit_JoinRoutesAction_Text; }
+            get {
+                int num = Enabled ? activities.Count : 0;
+                return Plugin.NumberedActivityText(Properties.Resources.Edit_JoinRoutesAction_Text, num);
+            }
         }
 
         #endregion
