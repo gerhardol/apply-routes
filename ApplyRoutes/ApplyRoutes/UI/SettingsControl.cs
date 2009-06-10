@@ -188,7 +188,7 @@ namespace ApplyRoutesPlugin.UI
         {
             try
             {
-                ProcessStartInfo procStartInfo = new ProcessStartInfo("http://sporttracks.myosotissp.com/applyroutesplugin-0.1.3117.html");
+                ProcessStartInfo procStartInfo = new ProcessStartInfo("http://sporttracks.myosotissp.com/applyroutesplugin.html");
                 Process.Start(procStartInfo);
             }
             catch // (Exception ex)
