@@ -403,11 +403,11 @@ namespace ApplyRoutesPlugin.Activities
                             DateTime npt = when;
                             foreach (IValueRange<DateTime> nmt in ai.NonMovingTimes)
                             {
-                                if (npt < nmt.Lower)
+                                if (when <= nmt.Lower)
                                 {
                                     break;
                                 }
-                                if (npt > nmt.Upper)
+                                if (when >= nmt.Upper)
                                 {
                                     delta += GetInterpolatedValue(ddt, nmt.Upper);
                                     delta -= GetInterpolatedValue(ddt, nmt.Lower);
@@ -415,9 +415,9 @@ namespace ApplyRoutesPlugin.Activities
                                 }
                                 else
                                 {
-                                    delta += GetInterpolatedValue(ddt, npt);
+                                    delta += GetInterpolatedValue(ddt, when);
                                     delta -= GetInterpolatedValue(ddt, nmt.Lower);
-                                    npt = nmt.Lower;
+                                    npt = npt.Subtract(when.Subtract(nmt.Lower));
                                     break;
                                 }
                             }
@@ -435,19 +435,23 @@ namespace ApplyRoutesPlugin.Activities
                         }
 
                         return
-                            ApplyRouteForm.DistanceAsString(dist) + ";" +
-                            TimeSpan.FromSeconds(t).ToString() + ";" +
-                            String.Format("{0:F};{1:F};{2:F}", where.LatitudeDegrees, where.LongitudeDegrees, elev) + ";" +
-                            hrt.ToString("F") + ";" +
-                            pace.ToString("F") + ";" +
-                            when.ToString("t");
+                            String.Format(NumberFormatInfo.InvariantInfo,
+                                "{0:F};{1:s};{2:F};{3:F};{4:F};{5:F};{6:F};{7:s};{8:F}",
+                                new object[] {
+                                    dist,
+                                    TimeSpan.FromSeconds(t).ToString(),
+                                    where.LatitudeDegrees, where.LongitudeDegrees, elev,
+                                    hrt, pace,
+                                    when.ToLocalTime().ToString("t"),
+                                    t
+                                });
                     }
                 }
             }
             return "";
         }
     }
-
+    
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public class ObjectForScriptingClass
