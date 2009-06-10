@@ -27,6 +27,8 @@ using ZoneFiveSoftware.Common.Visuals;
 using System.Diagnostics;
 using ApplyRoutesPlugin.MapProviders;
 using System.Xml;
+using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ApplyRoutesPlugin.Activities;
 
 namespace ApplyRoutesPlugin.UI
 {
@@ -58,6 +60,14 @@ namespace ApplyRoutesPlugin.UI
                 {
                     info.showUpdateEquipment = chk;
                 }
+                else if (sender == showSendToRoutesChk)
+                {
+                    info.showSendToRoutes = chk;
+                }
+                else if (sender == showJoinRoutesChk)
+                {
+                    info.showJoinRoutes = chk;
+                }
                 else
                 {
                     return;
@@ -67,6 +77,8 @@ namespace ApplyRoutesPlugin.UI
             showApplyRoutesChk.CheckedChanged += chkChange;
             showCreateRoutesChk.CheckedChanged += chkChange;
             showUpdateEquipmentChk.CheckedChanged += chkChange;
+            showSendToRoutesChk.CheckedChanged += chkChange;
+            showJoinRoutesChk.CheckedChanged += chkChange;
 
             int w1 = (mapProviderName.Right + mapProviderUrl.Left)/2 - mapProvidersList.Left;
             int w2 = mapProvidersList.Width - mapProvidersList.VScrollBar.Width - 2 - w1;
@@ -109,6 +121,7 @@ namespace ApplyRoutesPlugin.UI
                     item.Url = mapProviderUrl.Text;
                     mapProvidersList.RefreshElements(mapProvidersList.Selected);
                     mapProvidersList.Selected.Clear();
+                    GMapRouteControl.ResetMapTypes();
                 }
             };
 
@@ -116,6 +129,7 @@ namespace ApplyRoutesPlugin.UI
             {
                 ExtendMapProviders.ApplyDefaults();
                 mapProvidersList.Invalidate();
+                GMapRouteControl.ResetMapTypes();
             };
 
             mapProviderUpdateBtn.Enabled = false;
@@ -130,6 +144,8 @@ namespace ApplyRoutesPlugin.UI
             showApplyRoutesChk.Checked = info.showApplyRoutes;
             showCreateRoutesChk.Checked = info.showCreateRoutes;
             showUpdateEquipmentChk.Checked = info.showUpdateEquipment;
+            showSendToRoutesChk.Checked = info.showSendToRoutes;
+            showJoinRoutesChk.Checked = info.showJoinRoutes;
         }
 
         public void ThemeChanged(ITheme theme)
@@ -137,10 +153,13 @@ namespace ApplyRoutesPlugin.UI
             Plugin.ThemeChanged(showApplyRoutesChk, theme);
             Plugin.ThemeChanged(showCreateRoutesChk, theme);
             Plugin.ThemeChanged(showUpdateEquipmentChk, theme);
+            Plugin.ThemeChanged(showSendToRoutesChk, theme);
+            Plugin.ThemeChanged(showJoinRoutesChk, theme);
 
             mapProvidersList.ThemeChanged(theme);
             mapProviderName.ThemeChanged(theme);
             mapProviderUrl.ThemeChanged(theme);
+
             Plugin.ThemeChanged(mapProviderUpdateBtn, theme);
             Plugin.ThemeChanged(mapProviderResetBtn, theme);
             Plugin.ThemeChanged(this.settingsTabs, theme);
@@ -156,7 +175,7 @@ namespace ApplyRoutesPlugin.UI
         {
             try
             {
-                ProcessStartInfo procStartInfo = new ProcessStartInfo("http://sporttracks.myosotissp.com/applyroutesplugin.html");
+                ProcessStartInfo procStartInfo = new ProcessStartInfo("http://sporttracks.myosotissp.com/applyroutesplugin-0.1.3117.html");
                 Process.Start(procStartInfo);
             }
             catch // (Exception ex)
@@ -167,25 +186,32 @@ namespace ApplyRoutesPlugin.UI
     }
     public class EditMenuSettingsInfo
     {
-        public EditMenuSettingsInfo(bool sar, bool scr, bool sue)
+        public EditMenuSettingsInfo(bool sar, bool scr, bool sue, bool sst, bool sjr)
         {
             showApplyRoutes = sar;
             showCreateRoutes = scr;
             showUpdateEquipment = sue;
+            showSendToRoutes = sst;
+            showJoinRoutes = sjr;
         }
 
         public static EditMenuSettingsInfo Get()
         {
             if (emsi == null)
             {
-                byte[] data = Plugin.GetApplication().Logbook.GetExtensionData(Plugin.thePlugin.Id);
+                byte[] data = null;
+                IApplication app = Plugin.GetApplication();
+                if (app != null && app.Logbook != null)
+                {
+                    data = app.Logbook.GetExtensionData(Plugin.thePlugin.Id);
+                }
                 if (data != null && data.Length == 3)
                 {
-                    emsi = new EditMenuSettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0);
+                    emsi = new EditMenuSettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0, true, true);
                 }
                 else
                 {
-                    emsi = new EditMenuSettingsInfo(true, true, false);
+                    emsi = new EditMenuSettingsInfo(true, true, false, true, true);
                 }
             }
             return emsi;
@@ -196,14 +222,17 @@ namespace ApplyRoutesPlugin.UI
             XmlAttribute sar = pluginNode.Attributes["showApplyRoutes"];
             XmlAttribute scr = pluginNode.Attributes["showCreateRoutes"];
             XmlAttribute sue = pluginNode.Attributes["showUpdateEquipment"];
+            XmlAttribute sst = pluginNode.Attributes["showSendToRoutes"];
+            XmlAttribute sjr = pluginNode.Attributes["showJoinRoutes"];
 
-            if (sar != null && scr != null && sue != null)
-            {
-                bool sarb = sar.Value == "1";
-                bool scrb = scr.Value == "1";
-                bool sueb = sue.Value == "1";
-                emsi = new EditMenuSettingsInfo(sarb, scrb, sueb);
-            }
+
+            bool sarb = sar == null || sar.Value == "1";
+            bool scrb = scr == null || scr.Value == "1";
+            bool sueb = sue != null && sue.Value == "1";
+            bool sstb = sst == null || sst.Value == "1";
+            bool sjrb = sjr == null || sjr.Value == "1";
+
+            emsi = new EditMenuSettingsInfo(sarb, scrb, sueb, sstb, sjrb);
         }
 
         private static XmlAttribute GetOrCreate(XmlDocument xmlDoc, XmlNode node, string name)
@@ -222,16 +251,22 @@ namespace ApplyRoutesPlugin.UI
             XmlAttribute sar = GetOrCreate(xmlDoc, pluginNode, "showApplyRoutes");
             XmlAttribute scr = GetOrCreate(xmlDoc, pluginNode, "showCreateRoutes");
             XmlAttribute sue = GetOrCreate(xmlDoc, pluginNode, "showUpdateEquipment");
+            XmlAttribute sst = GetOrCreate(xmlDoc, pluginNode, "showSendToRoutes");
+            XmlAttribute sjr = GetOrCreate(xmlDoc, pluginNode, "showJoinRoutes");
 
             EditMenuSettingsInfo e = Get();
             sar.Value = e.showApplyRoutes ? "1" : "0";
             scr.Value = e.showCreateRoutes ? "1" : "0";
             sue.Value = e.showUpdateEquipment ? "1" : "0";
+            sst.Value = e.showSendToRoutes ? "1" : "0";
+            sjr.Value = e.showJoinRoutes ? "1" : "0";
         }
 
         public bool showApplyRoutes;
         public bool showCreateRoutes;
         public bool showUpdateEquipment;
+        public bool showSendToRoutes;
+        public bool showJoinRoutes;
 
         private static EditMenuSettingsInfo emsi = null;
     };

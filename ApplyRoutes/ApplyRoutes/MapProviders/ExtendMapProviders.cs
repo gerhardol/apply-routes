@@ -21,6 +21,7 @@ using System.Text;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ZoneFiveSoftware.Common.Visuals.Fitness.GPS;
 using System.Xml;
+using ApplyRoutesPlugin.Activities;
 
 namespace ApplyRoutesPlugin.MapProviders
 {
@@ -28,10 +29,26 @@ namespace ApplyRoutesPlugin.MapProviders
     {
         public static IList<GMapProvider> GetMapProviders()
         {
+            if (mpiList == null)
+            {
+                ResetDefaults();
+            }
+            if (providers == null)
+            {
+                providers = new List<GMapProvider>();
+                int i = 0;
+                foreach (MapProviderInfo info in mpiList)
+                {
+                    Guid id = new Guid("{" + guids[i++] + "}");
+                    GMapProvider p = new GMapProvider(info.url, info.title, id);
+                    p.Enabled = info.enabled;
+                    providers.Add(p);
+                }
+            }
             return providers;
         }
 
-        private class MapProviderInfo
+        public class MapProviderInfo
         {
             public string guid = null;
             public string title = null;
@@ -44,27 +61,11 @@ namespace ApplyRoutesPlugin.MapProviders
         {
             get
             {
-                if (mpiList == null)
-                {
-                    ResetDefaults();
-                }
-                if (providers == null)
-                {
-                    providers = new List<GMapProvider>();
-                    int i = 0;
-                    foreach (MapProviderInfo info in mpiList)
-                    {
-                        Guid id = new Guid("{" + guids[i++] + "}");
-                        GMapProvider p = new GMapProvider(info.url, info.title, id);
-                        p.Enabled = info.enabled;
-                        providers.Add(p);
-                    }
-                }
-
+                GetMapProviders();
                 List<IMapProvider> ready = new List<IMapProvider>();
                 foreach (GMapProvider mp in providers)
                 {
-                    if (mp.Enabled)
+                    if (mp.Enabled && !mp.Url.EndsWith("&gmrc&"))
                     {
                         ready.Add(mp);
                     }
@@ -77,31 +78,45 @@ namespace ApplyRoutesPlugin.MapProviders
                 return ready;
             }
         }
+        #endregion
 
         private static void ResetDefaults()
         {
             mpiList = new List<MapProviderInfo>();
 
-            SortedList<string,string> titles = new SortedList<string, string>();
-            titles["NORMAL"] = "Street";
-            titles["SATELLITE"] = "Satellite";
-            titles["HYBRID"] = "Hybrid";
-            titles["MOON_ELEVATION"] = "Moon Elevation";
-            titles["MOON_VISIBLE"] = "Moon Visible";
-            titles["MARS_ELEVATION"] = "Mars Elevation";
-            titles["MARS_VISIBLE"] = "Mars Visible";
-            titles["MARS_INFRARED"] = "Mars Infrared";
-            titles["SKY_VISIBLE"] = "Sky Visible";
-            // titles["SATELLITE_3D"] = "Earth";
-            titles["PHYSICAL"] = "Terrain";
+            string[] strings = new string[] {
+            "gmaps:HYBRID", "Hybrid",
+            "gmaps:MARS_ELEVATION", "Mars Elevation",
+            "gmaps:MARS_INFRARED", "Mars Infrared",
+            "gmaps:MARS_VISIBLE", "Mars Visible",
+            "gmaps:MOON_ELEVATION", "Moon Elevation",
+            "gmaps:MOON_VISIBLE", "Moon Visible",
+            "gmaps:NORMAL", "Street",
+            "gmaps:PHYSICAL", "Terrain",
+            "gmaps:SATELLITE", "Satellite",
+            "gmaps:SATELLITE_3D&gmrc", "Earth",
+            "gmaps:SKY_VISIBLE", "Sky Visible",
+            "msmaps:Aerial", "MSLive-Aerial",
+            "msmaps:Hybrid", "MSLive-Hybrid",
+            "msmaps:Hybrid-3d&gmrc", "MSLive-VE",
+            "msmaps:Road", "MSLive-Road",
+            "geoportail.shtml:Hybrid&gmrc", "Geoportail - Mainland",
+            "openlayers:OpenStreetMapMapnik", "OpenLayers - Open Streetmap"
+            };
 
             int i = 0;
-            foreach (string k in titles.Keys)
+            for (int j = 0; j < strings.GetLength(0); j += 2)
             {
                 MapProviderInfo info = new MapProviderInfo();
+                string k = strings[j];
+                string[] keys = k.Split(':');
 
-                info.title = "AR - " + titles[k];
-                info.url = "http://maps.myosotissp.com/index.html#t=" + k + "&";
+                info.title = "AR - " + strings[j+1];
+                if (!keys[0].Contains("."))
+                {
+                    keys[0] += ".html";
+                }
+                info.url = "http://maps.myosotissp.com/" + keys[0] + "#t=" + keys[1] + "&";
                 info.guid = guids[i++];
                 info.enabled = true;
                 mpiList.Add(info);
@@ -122,61 +137,99 @@ namespace ApplyRoutesPlugin.MapProviders
 
         public static void ReadOptions(XmlDocument xmlDoc, XmlNamespaceManager nsmgr, XmlElement pluginNode)
         {
-            XmlNodeList mapProviderLists = pluginNode.GetElementsByTagName("MapProviders");
-            if (mapProviderLists.Count == 1)
+            ResetDefaults();
+            if (pluginNode != null)
             {
-                mpiList = new List<MapProviderInfo>();
-                XmlNode mapProviderList = mapProviderLists[0];
-                XmlNodeList mapProviders = mapProviderList.ChildNodes;
-                foreach (XmlNode mapProvider in mapProviders)
+                XmlNodeList mapProviderLists = pluginNode.GetElementsByTagName("MapProviders");
+                if (mapProviderLists.Count == 1)
                 {
-                    if (mpiList.Count == guids.GetLength(0))
+                    XmlNode mapProviderList = mapProviderLists[0];
+                    XmlAttribute att = mapProviderList.Attributes["cur_guid"];
+                    if (att != null)
                     {
-                        break;
+                        GMapRouteControl.SelectedGuid = att.Value;
                     }
-                    MapProviderInfo info = new MapProviderInfo();
-                    info.guid = guids[mpiList.Count];
-                    XmlAttribute titleAtt = mapProvider.Attributes["Title"];
-                    XmlAttribute urlAtt = mapProvider.Attributes["Url"];
-                    XmlAttribute enabledAtt = mapProvider.Attributes["Enabled"];
-                    if (titleAtt != null && urlAtt != null && enabledAtt != null)
+
+                    XmlNodeList mapProviders = mapProviderList.ChildNodes;
+                    SortedList<string,int> guidMap = new SortedList<string,int>();
+                    
+                    int i = 0;
+                    foreach (string guid in guids) {
+                        guidMap[guid] = i++;
+                    }
+                    i = 0;
+                    foreach (XmlNode mapProvider in mapProviders)
                     {
-                        info.enabled = enabledAtt.Value == "1";
-                        info.title = titleAtt.Value;
-                        info.url = urlAtt.Value;
-                        mpiList.Add(info);
+                        if (i == mpiList.Count)
+                        {
+                            break;
+                        }
+                        MapProviderInfo info;
+                        XmlAttribute guidAtt = mapProvider.Attributes["Guid"];
+                        if (guidAtt != null && guidMap.ContainsKey(guidAtt.Value))
+                        {
+                            info = mpiList[guidMap[guidAtt.Value]];
+                        }
+                        else
+                        {
+                            info = mpiList[i];
+                            info.guid = guids[i];
+                        }
+                        XmlAttribute titleAtt = mapProvider.Attributes["Title"];
+                        XmlAttribute urlAtt = mapProvider.Attributes["Url"];
+                        XmlAttribute enabledAtt = mapProvider.Attributes["Enabled"];
+                        if (titleAtt != null && urlAtt != null && enabledAtt != null)
+                        {
+                            info.enabled = enabledAtt.Value == "1";
+                            info.title = titleAtt.Value;
+                            info.url = urlAtt.Value.Replace("maps.myosotissp.com/index.html", "maps.myosotissp.com/gmaps.html");
+                        }
+                        else
+                        {
+                            info.enabled = false;
+                        }
+                        i++;
                     }
                 }
-            }
-            else
-            {
-                ResetDefaults();
             }
         }
                 
         public static void WriteOptions(XmlDocument xmlDoc, XmlElement pluginNode)
         {
-            XmlNode mapProviderList = mapProviderList = xmlDoc.CreateElement("MapProviders");
-            pluginNode.AppendChild(mapProviderList);
+            XmlNode mapProviderList = xmlDoc.CreateElement("MapProviders");
+            XmlAttribute att;
             
-            foreach (GMapProvider p in providers)
+            att = xmlDoc.CreateAttribute("cur_guid");
+            att.Value = GMapRouteControl.SelectedGuid;
+            mapProviderList.Attributes.Append(att);
+
+            pluginNode.AppendChild(mapProviderList);
+
+            if (providers != null)
             {
-                XmlNode mp = xmlDoc.CreateElement("MapProvider");
-                XmlAttribute att;
-                att = xmlDoc.CreateAttribute("Title");
-                att.Value = p.Title;
-                mp.Attributes.Append(att);
-                att = xmlDoc.CreateAttribute("Url");
-                att.Value = p.Url;
-                mp.Attributes.Append(att);
-                mapProviderList.AppendChild(mp);
-                att = xmlDoc.CreateAttribute("Enabled");
-                att.Value = p.Enabled ? "1" : "0";
-                mp.Attributes.Append(att);
-                mapProviderList.AppendChild(mp);
+                foreach (GMapProvider p in providers)
+                {
+                    XmlNode mp = xmlDoc.CreateElement("MapProvider");
+
+                    att = xmlDoc.CreateAttribute("Guid");
+                    att.Value = p.Id.ToString();
+                    mp.Attributes.Append(att);
+
+                    att = xmlDoc.CreateAttribute("Title");
+                    att.Value = p.Title;
+                    mp.Attributes.Append(att);
+
+                    att = xmlDoc.CreateAttribute("Url");
+                    att.Value = p.Url;
+                    mp.Attributes.Append(att);
+
+                    att = xmlDoc.CreateAttribute("Enabled");
+                    att.Value = p.Enabled ? "1" : "0";
+                    mp.Attributes.Append(att);
+                    mapProviderList.AppendChild(mp);
+                }
             }
         }
-        #endregion
 
         private static IList<GMapProvider> providers = null;
         private static string[] guids = 
@@ -192,7 +245,17 @@ namespace ApplyRoutesPlugin.MapProviders
                 "9becc678-2982-4b9d-a297-a080dde9f910",
                 "f294c1f3-e272-4de6-8638-c0ce1f6d8abe",
                 "39b2a8e5-ef1c-4929-b058-dd3809f838d8",
-                "866e253c-a312-47a1-9064-78de1178e254"
+                "866e253c-a312-47a1-9064-78de1178e254",
+                "9cc306e0-585e-11dd-ae16-0800200c9a66",
+                "9cc306e1-585e-11dd-ae16-0800200c9a66",
+                "9cc306e2-585e-11dd-ae16-0800200c9a66",
+                "9cc306e3-585e-11dd-ae16-0800200c9a66",
+                "9cc306e4-585e-11dd-ae16-0800200c9a66",
+                "9cc306e5-585e-11dd-ae16-0800200c9a66",
+                "9cc306e6-585e-11dd-ae16-0800200c9a66",
+                "9cc306e7-585e-11dd-ae16-0800200c9a66",
+                "9cc306e8-585e-11dd-ae16-0800200c9a66",
+                "9cc306e9-585e-11dd-ae16-0800200c9a66"
             };
         private static List<MapProviderInfo> mpiList = null;
     }

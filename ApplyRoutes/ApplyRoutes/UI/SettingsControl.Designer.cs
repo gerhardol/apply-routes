@@ -30,16 +30,18 @@
         {
             this.settingsTabs = new System.Windows.Forms.TabControl();
             this.editMenuTabPage = new System.Windows.Forms.TabPage();
+            this.showJoinRoutesChk = new System.Windows.Forms.CheckBox();
+            this.showSendToRoutesChk = new System.Windows.Forms.CheckBox();
             this.showApplyRoutesChk = new System.Windows.Forms.CheckBox();
             this.showCreateRoutesChk = new System.Windows.Forms.CheckBox();
             this.showUpdateEquipmentChk = new System.Windows.Forms.CheckBox();
             this.mapProvidersTabPage = new System.Windows.Forms.TabPage();
+            this.mapProviderResetBtn = new ZoneFiveSoftware.Common.Visuals.Button();
             this.mapProviderUpdateBtn = new ZoneFiveSoftware.Common.Visuals.Button();
             this.mapProviderUrl = new ZoneFiveSoftware.Common.Visuals.TextBox();
             this.mapProviderName = new ZoneFiveSoftware.Common.Visuals.TextBox();
             this.mapProvidersList = new ZoneFiveSoftware.Common.Visuals.TreeList();
             this.homePageLink = new System.Windows.Forms.LinkLabel();
-            this.mapProviderResetBtn = new ZoneFiveSoftware.Common.Visuals.Button();
             this.settingsTabs.SuspendLayout();
             this.editMenuTabPage.SuspendLayout();
             this.mapProvidersTabPage.SuspendLayout();
@@ -57,6 +59,8 @@
             // 
             // editMenuTabPage
             // 
+            this.editMenuTabPage.Controls.Add(this.showJoinRoutesChk);
+            this.editMenuTabPage.Controls.Add(this.showSendToRoutesChk);
             this.editMenuTabPage.Controls.Add(this.showApplyRoutesChk);
             this.editMenuTabPage.Controls.Add(this.showCreateRoutesChk);
             this.editMenuTabPage.Controls.Add(this.showUpdateEquipmentChk);
@@ -68,14 +72,34 @@
             this.editMenuTabPage.Text = "Edit Menus";
             this.editMenuTabPage.UseVisualStyleBackColor = true;
             // 
+            // showJoinRoutesChk
+            // 
+            this.showJoinRoutesChk.AutoSize = true;
+            this.showJoinRoutesChk.Location = new System.Drawing.Point(22, 117);
+            this.showJoinRoutesChk.Name = "showJoinRoutesChk";
+            this.showJoinRoutesChk.Size = new System.Drawing.Size(189, 17);
+            this.showJoinRoutesChk.TabIndex = 5;
+            this.showJoinRoutesChk.Text = "Show \'Join Activities\' on Edit menu";
+            this.showJoinRoutesChk.UseVisualStyleBackColor = true;
+            // 
+            // showSendToRoutesChk
+            // 
+            this.showSendToRoutesChk.AutoSize = true;
+            this.showSendToRoutesChk.Location = new System.Drawing.Point(22, 93);
+            this.showSendToRoutesChk.Name = "showSendToRoutesChk";
+            this.showSendToRoutesChk.Size = new System.Drawing.Size(203, 17);
+            this.showSendToRoutesChk.TabIndex = 4;
+            this.showSendToRoutesChk.Text = "Show \'Send To Routes\' on Edit menu";
+            this.showSendToRoutesChk.UseVisualStyleBackColor = true;
+            // 
             // showApplyRoutesChk
             // 
             this.showApplyRoutesChk.AutoSize = true;
             this.showApplyRoutesChk.Location = new System.Drawing.Point(22, 45);
             this.showApplyRoutesChk.Name = "showApplyRoutesChk";
-            this.showApplyRoutesChk.Size = new System.Drawing.Size(195, 17);
+            this.showApplyRoutesChk.Size = new System.Drawing.Size(192, 17);
             this.showApplyRoutesChk.TabIndex = 2;
-            this.showApplyRoutesChk.Text = "Show \'Apply Route...\" on Edit menu";
+            this.showApplyRoutesChk.Text = "Show \'Apply Route...\' on Edit menu";
             this.showApplyRoutesChk.UseVisualStyleBackColor = true;
             // 
             // showCreateRoutesChk
@@ -112,6 +136,26 @@
             this.mapProvidersTabPage.TabIndex = 1;
             this.mapProvidersTabPage.Text = "Map Providers";
             this.mapProvidersTabPage.UseVisualStyleBackColor = true;
+            // 
+            // mapProviderResetBtn
+            // 
+            this.mapProviderResetBtn.BackColor = System.Drawing.Color.Transparent;
+            this.mapProviderResetBtn.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(120)))));
+            this.mapProviderResetBtn.CenterImage = null;
+            this.mapProviderResetBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.mapProviderResetBtn.HyperlinkStyle = false;
+            this.mapProviderResetBtn.ImageMargin = 2;
+            this.mapProviderResetBtn.LeftImage = null;
+            this.mapProviderResetBtn.Location = new System.Drawing.Point(338, 187);
+            this.mapProviderResetBtn.Name = "mapProviderResetBtn";
+            this.mapProviderResetBtn.PushStyle = true;
+            this.mapProviderResetBtn.RightImage = null;
+            this.mapProviderResetBtn.Size = new System.Drawing.Size(104, 23);
+            this.mapProviderResetBtn.TabIndex = 8;
+            this.mapProviderResetBtn.Text = "Reset Defaults";
+            this.mapProviderResetBtn.TextAlign = System.Drawing.StringAlignment.Center;
+            this.mapProviderResetBtn.TextLeftMargin = 2;
+            this.mapProviderResetBtn.TextRightMargin = 2;
             // 
             // mapProviderUpdateBtn
             // 
@@ -204,26 +248,6 @@
             this.homePageLink.TabStop = true;
             this.homePageLink.Text = "Apply Routes Home Page";
             // 
-            // mapProviderResetBtn
-            // 
-            this.mapProviderResetBtn.BackColor = System.Drawing.Color.Transparent;
-            this.mapProviderResetBtn.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(120)))));
-            this.mapProviderResetBtn.CenterImage = null;
-            this.mapProviderResetBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.mapProviderResetBtn.HyperlinkStyle = false;
-            this.mapProviderResetBtn.ImageMargin = 2;
-            this.mapProviderResetBtn.LeftImage = null;
-            this.mapProviderResetBtn.Location = new System.Drawing.Point(338, 187);
-            this.mapProviderResetBtn.Name = "mapProviderResetBtn";
-            this.mapProviderResetBtn.PushStyle = true;
-            this.mapProviderResetBtn.RightImage = null;
-            this.mapProviderResetBtn.Size = new System.Drawing.Size(104, 23);
-            this.mapProviderResetBtn.TabIndex = 8;
-            this.mapProviderResetBtn.Text = "Reset Defaults";
-            this.mapProviderResetBtn.TextAlign = System.Drawing.StringAlignment.Center;
-            this.mapProviderResetBtn.TextLeftMargin = 2;
-            this.mapProviderResetBtn.TextRightMargin = 2;
-            // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +279,8 @@
         private ZoneFiveSoftware.Common.Visuals.TextBox mapProviderName;
         private System.Windows.Forms.TabControl settingsTabs;
         private ZoneFiveSoftware.Common.Visuals.Button mapProviderResetBtn;
+        private System.Windows.Forms.CheckBox showSendToRoutesChk;
+        private System.Windows.Forms.CheckBox showJoinRoutesChk;
 
     }
 }

@@ -31,6 +31,7 @@ using System.Text.RegularExpressions;
 using System.Security.Permissions;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
 using System.Globalization;
+using ApplyRoutesPlugin.UI;
 
 namespace ApplyRoutesPlugin.Activities
 {
@@ -40,51 +41,57 @@ namespace ApplyRoutesPlugin.Activities
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+            webBrowser.ScriptErrorsSuppressed = true;
 
             fitToPageBtn.Click += delegate(object sender, EventArgs e)
             {
+                changed = true;
                 FitToPage();
             };
 
-            SortedList<string, string> mapTypes = new SortedList<string, string>();
-            string curMapType = "AR - Earth";
-            mapTypes[curMapType] = "SATELLITE_3D";
-            foreach (GMapProvider mp in ExtendMapProviders.GetMapProviders())
-            {
-                Match m = Regex.Match(mp.Url, "#t=([a-zA-Z_0-9]+)&$");
-                if (m.Success)
-                {
-                    string type = m.Groups[1].Value;
-                    if (mp.Enabled || type == "SATELLITE")
-                    {
-                        mapTypes[mp.Title] = type;
-                        if (type == "SATELLITE")
-                        {
-                            curMapType = mp.Title;
-                        }
-                    }
-                }
-            }
+            selected_guid = guid;
+            mapTypePopup.Enabled = false;
+            mti = SetupMapTypes();
 
-            mapTypePopup.Text = curMapType;
             mapTypePopup.ButtonClick += delegate(object sender, EventArgs e)
             {
                 Plugin.OpenListPopup(Plugin.GetApplication().VisualTheme,
-                                     mapTypes.Keys,
-                                     mapTypePopup, null, curMapType,
-                                     delegate(string newType)
+                                     mapTypes,
+                                     mapTypePopup, "Title", mti,
+                                     delegate(MapTypeInfo newType)
                                      {
-                                         webBrowser.Document.InvokeScript("doGetPage",
-                                             new Object[] { "gsmc&t=" + mapTypes[newType] });
-                                         mapTypePopup.Text = curMapType = newType;
+                                         SelectProvider(newType);
                                      });
             };
 
             webBrowser.ObjectForScripting = new ObjectForScriptingClass(this);
-
-            mapTypePopup.Enabled = false;
-            webBrowser.Navigate("http://maps.myosotissp.com/gmroutectrl.html#gsmc&t=SATELLITE");
             ThemeChanged(Plugin.GetApplication().VisualTheme);
+            if (controls == null)
+            {
+                controls = new List<GMapRouteControl>();
+            }
+            controls.Add(this);
+        }
+
+        private void SelectProvider(MapTypeInfo newType)
+        {
+            mti = newType;
+            mapTypePopup.Text = newType.title;
+            Uri url = new Uri(newType.url + "gsmc&");
+            selected_guid = guid = newType.guid;
+            string req1 = url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+            string req2 = webBrowser.Url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+
+            if (req1 != req2)
+            {
+                ready = false;
+                webBrowser.Navigate(url);
+            }
+            else
+            {
+                string hash = url.Fragment.Substring(1);
+                webBrowser.Document.InvokeScript("doGetPage", new Object[] { (Object)hash });
+            }
         }
 
         public void MapLoaded()
@@ -93,19 +100,24 @@ namespace ApplyRoutesPlugin.Activities
             mapTypePopup.Enabled = true;
             if (activities != null || routes != null)
             {
+                changed = true;
                 FitToPage();
             }
         }
 
         private void FitToPage()
         {
-            if (ready)
+            if (ready && this.Visible && changed)
             {
+                changed = false;
+
                 float n = -200, s = 200, e = -200, w = 200;
                 webBrowser.Document.InvokeScript("clear_markers");
                 IRouteSettings rs = Plugin.GetApplication().SystemPreferences.RouteSettings;
                 string linecolor = String.Format("#{0:X2}{1:X2}{2:X2}",
                         rs.RouteColor.R, rs.RouteColor.G, rs.RouteColor.B);
+                float weight = rs.RouteWidth;
+                float opacity = (float)(rs.RouteColor.A / 255.0);
 
                 if (activities != null)
                 {
@@ -122,24 +134,24 @@ namespace ApplyRoutesPlugin.Activities
                                 if (p.LongitudeDegrees < w) w = p.LongitudeDegrees;
                                 if (p.LongitudeDegrees > e) e = p.LongitudeDegrees;
 
-                                values += "," + ((double)p.LatitudeDegrees).ToString("F7", NumberFormatInfo.InvariantInfo);
-                                values += "," + ((double)p.LongitudeDegrees).ToString("F7", NumberFormatInfo.InvariantInfo);
+                                values += "," + FloatToCoord(p.LatitudeDegrees);
+                                values += "," + FloatToCoord(p.LongitudeDegrees);
                             }
                             DateTime start = a.StartTime.ToLocalTime();
                             webBrowser.Document.InvokeScript("add_marker", new Object[] {
                                 a.GPSRoute[0].Value.LatitudeDegrees,
                                 a.GPSRoute[0].Value.LongitudeDegrees,
-                                "Start: " + start.ToShortDateString() + " " + start.ToShortTimeString()
+                                Properties.Resources.Route_StartTime_Text + start.ToShortDateString() + " " + start.ToShortTimeString()
                             });
                             DateTime end = ai.EndTime.ToLocalTime();
                             webBrowser.Document.InvokeScript("add_marker", new Object[] {
                                 a.GPSRoute[a.GPSRoute.Count-1].Value.LatitudeDegrees,
                                 a.GPSRoute[a.GPSRoute.Count-1].Value.LongitudeDegrees,
-                                "End: " + end.ToShortDateString() + " " + end.ToShortTimeString()
+                                Properties.Resources.Route_EndTime_Text + end.ToShortDateString() + " " + end.ToShortTimeString()
                             });
 
                             webBrowser.Document.InvokeScript("add_polyline", new Object[] {
-                                linecolor, values.Substring(1) });
+                                linecolor, values.Substring(1), weight, opacity, a.ReferenceId });
                         }
                     }
                 }
@@ -166,6 +178,78 @@ namespace ApplyRoutesPlugin.Activities
             }
         }
 
+        public static void ResetMapTypes()
+        {
+            if (controls != null)
+            {
+                foreach (GMapRouteControl gmrc in controls)
+                {
+                    gmrc.SetupMapTypes();
+                }
+            }
+        }
+
+        private MapTypeInfo SetupMapTypes()
+        {
+            mapTypes = new List<MapTypeInfo>();
+            MapTypeInfo curMapType = null, firstMapType = null;
+            foreach (GMapProvider mp in ExtendMapProviders.GetMapProviders())
+            {
+                Match m = Regex.Match(mp.Url, "[#&]t=([-a-zA-Z_0-9]+)&");
+                bool isSat = m.Success && m.Groups[1].Value == "SATELLITE";
+                if (mp.Enabled || isSat)
+                {
+                    MapTypeInfo mti = new MapTypeInfo();
+                    mti.title = mp.Title;
+                    mti.url = mp.Url;
+                    mti.guid = mp.Id.ToString();
+                    mapTypes.Add(mti);
+                    if (firstMapType == null)
+                    {
+                        firstMapType = mti;
+                    }
+                    if (mti.guid == selected_guid ||
+                        (curMapType == null && isSat))
+                    {
+                        curMapType = mti;
+                    }
+                }
+            }
+
+            if (curMapType == null)
+            {
+                curMapType = firstMapType;
+            }
+
+            if (curMapType != null)
+            {
+                guid = selected_guid = curMapType.guid;
+                mapTypePopup.Text = curMapType.title;
+                webBrowser.Navigate(curMapType.url + "gsmc&");
+            }
+
+            return curMapType;
+        }
+
+        public void ShowPage()
+        {
+            if (guid != "" && guid != selected_guid)
+            {
+                foreach (MapTypeInfo m in mapTypes)
+                {
+                    if (m.guid == guid)
+                    {
+                        selected_guid = guid;
+                        SelectProvider(m);
+                        break;
+                    }
+                }
+            }
+
+            this.Show();
+            FitToPage();
+        }
+
         public void ThemeChanged(ITheme visualTheme)
         {
             Plugin.ThemeChanged(fitToPageBtn, visualTheme);
@@ -189,10 +273,8 @@ namespace ApplyRoutesPlugin.Activities
             set
             {
                 activities = value;
-                if (ready)
-                {
-                    FitToPage();
-                }
+                changed = true;
+                FitToPage();
             }
         }
 
@@ -202,10 +284,8 @@ namespace ApplyRoutesPlugin.Activities
             set
             {
                 routes = value;
-                if (ready)
-                {
-                    FitToPage();
-                }
+                changed = true;
+                FitToPage();
             }
         }
 
@@ -215,9 +295,101 @@ namespace ApplyRoutesPlugin.Activities
             set { webBrowser.Url = new Uri(value); }
         }
 
+        private string FloatToCoord(float c)
+        {
+            string s = ((double)c).ToString("F7", NumberFormatInfo.InvariantInfo);
+            s = s.Trim('0');
+            if (s == ".")
+            {
+                s = "0";
+            }
+            return s;
+        }
+
+        public static string SelectedGuid
+        {
+            get { return guid; }
+            set { guid = value; }
+        }
+
+        class MapTypeInfo
+        {
+            public string Title
+            {
+                get { return title; }
+            }
+            public string title;
+            public string url;
+            public string guid;
+        };
+
+        private MapTypeInfo mti = null;
+        private static IList<GMapRouteControl> controls = null;
+        private IList<MapTypeInfo> mapTypes = null;
         private IList<IActivity> activities = null;
         private IList<IRoute> routes = null;
-        private bool ready;
+        private bool ready = false;
+        private bool changed = false;
+        private string selected_guid = "";
+        private static string guid = "";
+
+        internal string RouteInfo(object okey, object otime, object opt)
+        {
+            if (activities == null) return "";
+            string key = okey.ToString();
+            foreach (IActivity act in activities)
+            {
+                if (act.ReferenceId == key)
+                {
+                    ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(act);
+                    if ((otime == null || otime.ToString() == "")&& 
+                        (opt == null || opt.ToString() == ""))
+                    {
+                        return ai.Time.TotalSeconds.ToString();
+                    }
+                    else
+                    {
+                        double t;
+                        if (otime != null && otime.ToString() != "")
+                        {
+                            t = Convert.ToDouble(otime.ToString());
+                        }
+                        else
+                        {
+                            int pt = Convert.ToInt32(opt.ToString());
+                            if (pt < 0) {
+                                pt = 0;
+                            } else if (pt >= act.GPSRoute.Count) {
+                                pt = act.GPSRoute.Count - 1;
+                            }
+                            t = act.GPSRoute.EntryDateTime(act.GPSRoute[pt]).Subtract(act.StartTime).TotalSeconds;
+                        }
+                        if (t < 0) t = 0;
+                        if (t > ai.Time.TotalSeconds)
+                        {
+                            t = ai.Time.TotalSeconds;
+                        }
+                        IDistanceDataTrack ddt = act.DistanceMetersTrack;
+                        if (ddt == null) ddt = act.GPSRoute.GetDistanceMetersTrack();
+                        DateTime when = ddt.StartTime.AddSeconds(t);
+                        float dist = ddt.GetInterpolatedValue(when).Value;
+                        float elev = ai.SmoothedElevationTrack.GetInterpolatedValue(when).Value;
+                        float hrt = ai.SmoothedHeartRateTrack.GetInterpolatedValue(when).Value;
+                        float pace = ai.SmoothedSpeedTrack.GetInterpolatedValue(when).Value;
+                        IGPSPoint where = act.GPSRoute.GetInterpolatedValue(when).Value;
+
+                        return
+                            ApplyRouteForm.DistanceAsString(dist) + ";" +
+                            TimeSpan.FromSeconds(t).ToString() + ";" +
+                            String.Format("{0:F};{1:F};{2:F}", where.LatitudeDegrees, where.LongitudeDegrees, where.ElevationMeters) + ";" +
+                            hrt.ToString("F") + ";" +
+                            pace.ToString("F") + ";" +
+                            when.ToString("t");
+                    }
+                }
+            }
+            return "";
+        }
     }
 
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -233,6 +405,14 @@ namespace ApplyRoutesPlugin.Activities
         {
             ownerControl.MapLoaded();
         }
+
+        public string RouteInfo(object key, object time, object pt)
+        {
+            return ownerControl.RouteInfo(key, time, pt);
+        }
+
+        public bool wantsMapLoaded = true;
+        public bool hasRouteInfo = true;
 
         private GMapRouteControl ownerControl;
     }

@@ -23,6 +23,7 @@ using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ApplyRoutesPlugin.UI;
+using ApplyRoutesPlugin.Views;
 
 namespace ApplyRoutesPlugin.Edit
 {
@@ -62,6 +63,15 @@ namespace ApplyRoutesPlugin.Edit
             {
                 actions.Add(new UpdateEquipmentAction(activities, null));
             }
+            if (info.showSendToRoutes)
+            {
+                actions.Add(new SendToView(activities, null));
+            }
+            if (info.showJoinRoutes)
+            {
+                actions.Add(new JoinActivitiesAction(activities));
+            }
+
             if (actions.Count == 0)
             {
                 actions = null;
@@ -74,12 +84,21 @@ namespace ApplyRoutesPlugin.Edit
         IList<IAction> MyRouteActions(IList<IRoute> routes)
         {
             EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
+            List<IAction> actions = new List<IAction>();
             if (info.showUpdateEquipment)
             {
-                return new IAction[] { new UpdateEquipmentAction(null, routes) };
+                actions.Add(new UpdateEquipmentAction(null, routes));
+            }
+            if (info.showSendToRoutes)
+            {
+                actions.Add(new SendToView(null, routes));
             }
 
-            return null;
+            if (actions.Count == 0)
+            {
+                actions = null;
+            }
+            return actions;
         }
 
         public IList<IAction> GetActions(IList<IRoute> routes)

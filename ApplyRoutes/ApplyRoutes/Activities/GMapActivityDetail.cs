@@ -27,8 +27,16 @@ using System.ComponentModel;
 
 namespace ApplyRoutesPlugin.Activities
 {
-    class GMapActivityDetail : IActivityDetailPage
+    class GMapActivityDetail : IActivityDetailPage, IView
     {
+        public static GMapActivityDetail Singleton
+        {
+            get
+            {
+                return new GMapActivityDetail();
+            }
+        }
+
         #region IActivityDetailPage Members
 
         public IActivity Activity
@@ -57,27 +65,37 @@ namespace ApplyRoutesPlugin.Activities
 
         public Control CreatePageControl()
         {
-            control = new GMapRouteControl();
-            if (activity != null)
+            if (control == null)
             {
-                control.Activities = new IActivity[] { activity };
+                control = new GMapRouteControl();
+                if (activity != null)
+                {
+                    control.Activities = new IActivity[] { activity };
+                }
             }
             return control;
         }
 
         public bool HidePage()
         {
+            if (control != null)
+            {
+                control.Hide();
+            }
             return true;
         }
 
         public string PageName
         {
-            get { return "GMaps Route Control"; }
+            get { return Properties.Resources.Route_Control_Title; }
         }
 
         public void ShowPage(string bookmark)
         {
-            
+            if (control != null)
+            {
+                control.ShowPage();
+            }
         }
 
         public IPageStatus Status
@@ -95,7 +113,7 @@ namespace ApplyRoutesPlugin.Activities
 
         public string Title
         {
-            get { return "GMaps Route Control"; }
+            get { return Properties.Resources.Route_Control_Title; }
         }
 
         public void UICultureChanged(System.Globalization.CultureInfo culture)
@@ -124,5 +142,38 @@ namespace ApplyRoutesPlugin.Activities
 
         private IActivity activity = null;
         private GMapRouteControl control = null;
+
+        #region IView Members
+
+        public IList<IAction> Actions
+        {
+            get { return null; }
+        }
+
+        public Guid Id
+        {
+            get { return Plugin.thePlugin.Id; }
+        }
+
+        public string SubTitle
+        {
+            get { return null; }
+        }
+
+        public void SubTitleClicked(System.Drawing.Rectangle subTitleRect)
+        {
+        }
+
+        public bool SubTitleHyperlink
+        {
+            get { return false; }
+        }
+
+        public string TasksHeading
+        {
+            get { return Properties.Resources.Route_Control_Title; }
+        }
+
+        #endregion
     }
 }

@@ -61,7 +61,16 @@ namespace ApplyRoutesPlugin.UI
             this.routeList.SelectedChanged += refreshHandler;
 
             this.routeList.Columns.Add(new TreeList.Column("Name", "Name", 100, StringAlignment.Near));
-            this.routeList.RowData = Plugin.GetApplication().Logbook.Routes;
+
+            List<IRoute> routes = new List<IRoute>();
+            foreach (IRoute rt in Plugin.GetApplication().Logbook.Routes)
+            {
+                if (rt.GPSRoute != null && rt.GPSRoute.Count != 0)
+                {
+                    routes.Add(rt);
+                }
+            }
+            this.routeList.RowData = routes;
 
             RefreshPage();
 
@@ -97,7 +106,7 @@ namespace ApplyRoutesPlugin.UI
             okBtn.Enabled = nToUpdate > 0 && routeList.Selected.Count > 0;
         }
 
-        public string DistanceAsString(double adist)
+        public static string DistanceAsString(double adist)
         {
             Length.Units displayUnits = Plugin.GetApplication().SystemPreferences.DistanceUnits;
 

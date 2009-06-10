@@ -33,20 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Data, Version=2.0.3074.14534, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Common.Data, Version=2.0.3088.30779, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 2.0\Common.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 2.0\Common.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Common.Visuals, Version=2.0.3074.14537, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Common.Visuals, Version=2.0.3088.30782, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 2.0\Common.Visuals.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SportTracks, Version=2.0.3074.35273, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 2.0\SportTracks.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Zone Five Software\SportTracks 2.0\Common.Visuals.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -63,6 +57,7 @@
     <Compile Include="Activities\GMapRouteControl.Designer.cs">
       <DependentUpon>GMapRouteControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edit\JoinActivitiesAction.cs" />
     <Compile Include="Edit\UpdateEquipmentAction.cs" />
     <Compile Include="Edit\RouteManipulator.cs" />
     <Compile Include="Edit\MakeRouteAction.cs" />
@@ -109,6 +104,8 @@
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Activities\ExtendActivities.cs" />
+    <Compile Include="Views\ExtendViews.cs" />
+    <Compile Include="Views\SendToView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Activities\GMapRouteControl.resx">

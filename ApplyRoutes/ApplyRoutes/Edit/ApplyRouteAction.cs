@@ -98,11 +98,16 @@ namespace ApplyRoutesPlugin.Edit
                             ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
                             IGPSRoute rt = routes[0].GPSRoute;
                             GPSRoute route = new GPSRoute();
+                            double numer = ai.Time.TotalSeconds;
+                            if (numer == 0.0)
+                            {
+                                numer = rt.TotalElapsedSeconds;
+                            }
                             bool applyLinearly = m.ApplyLinearly || rt.TotalElapsedSeconds == 0;
                             IDistanceDataTrack dmt = rt.GetDistanceMetersTrack();
                             double timeScale = !applyLinearly ? 
-                                ai.Time.TotalSeconds / rt.TotalElapsedSeconds :
-                                ai.Time.TotalSeconds / rt.TotalDistanceMeters;
+                                numer / rt.TotalElapsedSeconds :
+                                numer / rt.TotalDistanceMeters;
 
                             int i;
                             for (i = 0; i < rt.Count; i++)
@@ -123,7 +128,11 @@ namespace ApplyRoutesPlugin.Edit
                                 ILapInfo li = activity.Laps[i];
                                 DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
                                 float old_dist = dist;
-                                dist = dmt.GetInterpolatedValue(t).Value;
+
+                                dist = t.Subtract(dmt.StartTime).TotalSeconds >= dmt.TotalElapsedSeconds ?
+                                        route.TotalDistanceMeters :
+                                        dmt.GetInterpolatedValue(t).Value;
+
                                 li.TotalDistanceMeters = dist - old_dist;
                             }
                             activity.Name = routes[0].Name;

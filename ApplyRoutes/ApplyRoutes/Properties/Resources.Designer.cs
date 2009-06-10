@@ -95,11 +95,29 @@ namespace ApplyRoutesPlugin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AR - Join Activities.
+        /// </summary>
+        internal static string Edit_JoinRoutesAction_Text {
+            get {
+                return ResourceManager.GetString("Edit_JoinRoutesAction_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Route Manipulation.
         /// </summary>
         internal static string Edit_RouteManipulation_Text {
             get {
                 return ResourceManager.GetString("Edit_RouteManipulation_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AR - Send To Routes.
+        /// </summary>
+        internal static string Edit_SendToRouteControl_Text {
+            get {
+                return ResourceManager.GetString("Edit_SendToRouteControl_Text", resourceCulture);
             }
         }
         
@@ -139,6 +157,33 @@ namespace ApplyRoutesPlugin.Properties {
         internal static string MCL_SplitsMCL_Text {
             get {
                 return ResourceManager.GetString("MCL_SplitsMCL_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AR - Routes.
+        /// </summary>
+        internal static string Route_Control_Title {
+            get {
+                return ResourceManager.GetString("Route_Control_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End: .
+        /// </summary>
+        internal static string Route_EndTime_Text {
+            get {
+                return ResourceManager.GetString("Route_EndTime_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start: .
+        /// </summary>
+        internal static string Route_StartTime_Text {
+            get {
+                return ResourceManager.GetString("Route_StartTime_Text", resourceCulture);
             }
         }
     }

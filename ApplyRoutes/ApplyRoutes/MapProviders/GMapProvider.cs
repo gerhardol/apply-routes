@@ -30,6 +30,14 @@ using System.ComponentModel;
 using System.Security.Permissions;
 using System.Globalization;
 
+[GuidAttribute("0000010d-0000-0000-C000-000000000046")]
+[InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+[ComImportAttribute()]
+public interface IViewObject
+{
+    void Draw([MarshalAs(UnmanagedType.U4)] int dwDrawAspect, int lindex, IntPtr pvAspect, IntPtr ptd, IntPtr hdcTargetDev, IntPtr hdcDraw, IntPtr lprcBounds, IntPtr lprcWBounds, IntPtr pfnContinue, int dwContinue);
+}
+
 [Guid("3050f669-98b5-11cf-bb82-00aa00bdce0b"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
     ComVisible(true),
@@ -63,7 +71,7 @@ namespace ApplyRoutesPlugin.MapProviders
         public int maxZoom = -1;
     };
 
-    class GMapImageCache
+    public class GMapImageCache
     {
         private ReaderWriterLock rwl = new ReaderWriterLock();
         private ManualResetEvent mre = new ManualResetEvent(false);
@@ -83,10 +91,12 @@ namespace ApplyRoutesPlugin.MapProviders
         {
             operOnMainThread = AsyncOperationManager.CreateOperation(null);
 
+            mre.Reset();
             theThread = new Thread(new ThreadStart(delegate() { ImageRenderer(url); }));
             theThread.SetApartmentState(ApartmentState.STA);
             theThread.IsBackground = true;
             theThread.Start();
+            mre.WaitOne();
         }
 
         private void CallImageReadyListener(object state)
@@ -168,21 +178,13 @@ namespace ApplyRoutesPlugin.MapProviders
             cache_map[url] = ce;
             to_do.Add(ce);
             rwl.ReleaseWriterLock();
-            mre.Set();
             return null;
         }
 
-        private bool CheckImgs()
+        public void PageLoaded(object o)
         {
-            foreach (HtmlElement elt in webBrowser.Document.Images)
-            {
-                if (elt.GetAttribute("hideWhileLoading") == "True")
-                {
-                    if (elt.GetAttribute("loaded") != "True")
-                        return false;
-                }
-            }
-            return true;
+            string s = o.ToString();
+            LoadComplete(s);
         }
 
         private bool inqueue = false;
@@ -209,12 +211,19 @@ namespace ApplyRoutesPlugin.MapProviders
             else
             {
                 DateTime time = DateTime.Now;
-                if (webBrowser.Document != null)
+                Uri url = new Uri(ce.url);
+                string req1 = url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+                string req2 = webBrowser.Url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+
+                if (req1 != req2)
+                {
+                    webBrowser.Navigate(url);
+                }
+                else
                 {
                     string hash = ce.url.Substring(ce.url.LastIndexOf("#") + 1);
                     webBrowser.Document.InvokeScript("doGetPage", new Object[] { (Object)hash });
                 }
-                webBrowser.Navigate(ce.url);
 
                 while (true)
                 {
@@ -231,7 +240,7 @@ namespace ApplyRoutesPlugin.MapProviders
                     }
                     rwl.ReleaseReaderLock();
                     if (a) break;
-                    if (loaded && CheckImgs())
+                    if (loaded)
                     {
                         DoComplete(ce);
                         break;
@@ -275,22 +284,28 @@ namespace ApplyRoutesPlugin.MapProviders
             }
             else
             {
-                IHTMLElementRender render = (IHTMLElementRender)elt.DomElement;
-                if (render != null)
+                IHTMLElementRender render = elt.DomElement as IHTMLElementRender;
+                bmp = new Bitmap(ce.pixRect.Width, ce.pixRect.Height);
+                IViewObject viewobj = webBrowser.Document.DomDocument as IViewObject;
+                if (viewobj != null)
                 {
-                    bmp = new Bitmap(ce.pixRect.Width, ce.pixRect.Height);
-                    if (true)
-                    {
-                        Graphics g = Graphics.FromImage(bmp);
-                        IntPtr hdc = g.GetHdc();
-                        render.DrawToDC(hdc);
-                        g.ReleaseHdc(hdc);
-                    }
-                    else
-                    {
-                        ((Control)webBrowser).DrawToBitmap(bmp, new Rectangle(0, 0, ce.pixRect.Width, ce.pixRect.Height));
-                    }
+                    Graphics g = Graphics.FromImage(bmp);
+                    IntPtr hdc = g.GetHdc();
+                    viewobj.Draw(8, 1, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, hdc, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, 0);
+                    g.ReleaseHdc(hdc);
                 }
+                else if (render != null)
+                {
+                    Graphics g = Graphics.FromImage(bmp);
+                    IntPtr hdc = g.GetHdc();
+                    render.DrawToDC(hdc);
+                    g.ReleaseHdc(hdc);
+                }
+                else
+                {
+                    ((Control)webBrowser).DrawToBitmap(bmp, new Rectangle(0, 0, ce.pixRect.Width, ce.pixRect.Height));
+                }
+
             }
 
             rwl.AcquireWriterLock(1000);
@@ -306,9 +321,8 @@ namespace ApplyRoutesPlugin.MapProviders
             return;
         }
 
-        private void LoadComplete(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void LoadComplete(string url)
         {
-            string url = e.Url.OriginalString;
             if (url.EndsWith("&"))
             {
                 url = url.Substring(0, url.LastIndexOf("&"));
@@ -343,8 +357,9 @@ namespace ApplyRoutesPlugin.MapProviders
             webBrowser.ScrollBarsEnabled = false;
             webBrowser.BringToFront();
             webBrowser.Show();
+            webBrowser.ScriptErrorsSuppressed = true;
 
-            webBrowser.DocumentCompleted += LoadComplete;
+            webBrowser.ObjectForScripting = new ObjectForScriptingClass(this); 
 
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = 200;
@@ -353,6 +368,7 @@ namespace ApplyRoutesPlugin.MapProviders
                 ProcessQueue();
             };
 
+            mre.Set();
             timer.Start();
             Application.Run();
         }
@@ -378,7 +394,11 @@ namespace ApplyRoutesPlugin.MapProviders
         public string Url
         {
             get { return url; }
-            set { url = value; }
+            set
+            {
+                url = value;
+                imageCache.Refresh();
+            }
         }
 
         public string Title
@@ -583,5 +603,25 @@ namespace ApplyRoutesPlugin.MapProviders
         private string url;
         private string name;
         private Guid guid;
+    }
+
+    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+    public class ObjectForScriptingClass
+    {
+        public ObjectForScriptingClass(GMapImageCache o)
+        {
+            owner = o;
+        }
+
+        public void PageLoaded(object o)
+        {
+            owner.PageLoaded(o);
+        }
+
+        public bool wantsPageLoaded = true;
+        public bool wantsMapLoaded = false;
+
+        private GMapImageCache owner;
     }
 }

@@ -148,4 +148,19 @@
   <data name="MCL_SplitsMCL_Text" xml:space="preserve">
     <value>Manage Splits</value>
   </data>
+  <data name="Edit_SendToRouteControl_Text" xml:space="preserve">
+    <value>AR - Send To Routes</value>
+  </data>
+  <data name="Route_Control_Title" xml:space="preserve">
+    <value>AR - Routes</value>
+  </data>
+  <data name="Route_EndTime_Text" xml:space="preserve">
+    <value>End: </value>
+  </data>
+  <data name="Route_StartTime_Text" xml:space="preserve">
+    <value>Start: </value>
+  </data>
+  <data name="Edit_JoinRoutesAction_Text" xml:space="preserve">
+    <value>AR - Join Activities</value>
+  </data>
 </root>
