@@ -178,4 +178,28 @@
   <data name="Generic_Two_Text" xml:space="preserve">
     <value>Two</value>
   </data>
+  <data name="ApplyRouteForm_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CreateRouteForm_Activity" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="CreateRouteForm_Route" xml:space="preserve">
+    <value>Route</value>
+  </data>
+  <data name="SettingsControl_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="SettingsControl_URL" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UpdateEquipment_Brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="UpdateEquipment_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="UpdateEquipment_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

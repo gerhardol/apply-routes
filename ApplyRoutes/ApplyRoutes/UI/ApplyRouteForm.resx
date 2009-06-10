@@ -117,421 +117,418 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="okBtn.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="maxDistLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 13</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="routeLbl.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="numActLbl.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;ignoreGPSActChk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;applyTimesLinearlyChk.Name" xml:space="preserve">
-    <value>applyTimesLinearlyChk</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="numActTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="numActTxt.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="routeLbl.Text" xml:space="preserve">
-    <value>Route To Apply</value>
-  </data>
-  <data name="&gt;&gt;avgDistLbl.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;routeList.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TreeList, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="ignoreGPSActChk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 189</value>
-  </data>
-  <data name="&gt;&gt;minDistLbl.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="applyTimesLinearlyChk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 252</value>
-  </data>
-  <data name="&gt;&gt;cancelBtn.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;minDistLbl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="avgDistTxt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 31</value>
-  </data>
-  <data name="preserveDistChk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 229</value>
-  </data>
-  <data name="cancelBtn.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="routeLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;routeList.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;avgDistTxt.Name" xml:space="preserve">
-    <value>avgDistTxt</value>
-  </data>
-  <data name="ignoreGPSActChk.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;applyTimesLinearlyChk.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;applyTimesLinearlyChk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="minDistLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 13</value>
-  </data>
-  <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;maxDistTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="minDistTxt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>133, 31</value>
-  </data>
-  <data name="preserveDistChk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 17</value>
-  </data>
-  <data name="&gt;&gt;maxDistTxt.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="numActTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 19</value>
-  </data>
-  <data name="&gt;&gt;routeLbl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;routeLbl.Name" xml:space="preserve">
-    <value>routeLbl</value>
-  </data>
-  <data name="routeList.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;numActTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;maxDistLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="minDistLbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="applyTimesLinearlyChk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 17</value>
-  </data>
-  <data name="&gt;&gt;minDistTxt.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;avgDistTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;maxDistTxt.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="numActLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 12</value>
-  </data>
-  <data name="minDistTxt.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="routeLbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;routeLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;maxDistTxt.Name" xml:space="preserve">
-    <value>maxDistTxt</value>
-  </data>
-  <data name="&gt;&gt;ignoreGPSActChk.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="ignoreGPSActChk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 37</value>
-  </data>
-  <data name="minDistTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="avgDistTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="preserveDistChk.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="avgDistLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;okBtn.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;okBtn.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="maxDistLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>483, 246</value>
-  </data>
-  <data name="applyTimesLinearlyChk.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="numActTxt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>133, 12</value>
-  </data>
-  <data name="avgDistTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 19</value>
-  </data>
-  <data name="minDistTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 19</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ApplyRouteForm</value>
-  </data>
-  <data name="&gt;&gt;minDistTxt.Name" xml:space="preserve">
-    <value>minDistTxt</value>
-  </data>
-  <data name="&gt;&gt;avgDistLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;preserveDistChk.Name" xml:space="preserve">
-    <value>preserveDistChk</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Apply Route</value>
-  </data>
-  <data name="&gt;&gt;ignoreGPSActChk.Name" xml:space="preserve">
-    <value>ignoreGPSActChk</value>
-  </data>
-  <data name="maxDistLbl.Text" xml:space="preserve">
-    <value>Max Dist:</value>
-  </data>
-  <data name="numActLbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="applyTimesLinearlyChk.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;maxDistLbl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="maxDistLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>404, 34</value>
-  </data>
-  <data name="numActLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="maxDistTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="&gt;&gt;cancelBtn.Name" xml:space="preserve">
-    <value>cancelBtn</value>
-  </data>
-  <data name="&gt;&gt;numActLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="maxDistLbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="preserveDistChk.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="&gt;&gt;numActTxt.Name" xml:space="preserve">
-    <value>numActTxt</value>
-  </data>
-  <data name="&gt;&gt;routeList.Name" xml:space="preserve">
-    <value>routeList</value>
-  </data>
-  <data name="routeList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>133, 56</value>
-  </data>
-  <data name="&gt;&gt;numActTxt.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;maxDistLbl.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;minDistTxt.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;maxDistLbl.Name" xml:space="preserve">
-    <value>maxDistLbl</value>
-  </data>
   <data name="routeList.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="applyTimesLinearlyChk.Text" xml:space="preserve">
-    <value>Apply Times Linearly</value>
-  </data>
-  <data name="numActLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 13</value>
-  </data>
-  <data name="avgDistLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 13</value>
-  </data>
-  <data name="avgDistLbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="maxDistLbl.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;preserveDistChk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="avgDistLbl.Text" xml:space="preserve">
-    <value>Avg Dist:</value>
-  </data>
-  <data name="&gt;&gt;applyTimesLinearlyChk.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="minDistLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>79, 34</value>
-  </data>
-  <data name="okBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="minDistLbl.Text" xml:space="preserve">
-    <value>Min Dist:</value>
-  </data>
-  <data name="preserveDistChk.Text" xml:space="preserve">
-    <value>Preserve distances</value>
-  </data>
-  <data name="&gt;&gt;preserveDistChk.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;avgDistTxt.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="routeList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 56</value>
   </data>
   <data name="routeList.Size" type="System.Drawing.Size, System.Drawing">
     <value>425, 170</value>
   </data>
-  <data name="maxDistTxt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>458, 31</value>
+  <data name="routeList.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
-  <data name="&gt;&gt;minDistLbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;routeList.Name" xml:space="preserve">
+    <value>routeList</value>
   </data>
-  <data name="&gt;&gt;routeLbl.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;routeList.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TreeList, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="ignoreGPSActChk.Text" xml:space="preserve">
-    <value>Ignore activities with GPS data</value>
-  </data>
-  <data name="routeLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>46, 133</value>
-  </data>
-  <data name="&gt;&gt;okBtn.Name" xml:space="preserve">
-    <value>okBtn</value>
-  </data>
-  <data name="&gt;&gt;ignoreGPSActChk.Parent" xml:space="preserve">
+  <data name="&gt;&gt;routeList.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;numActLbl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="okBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>571, 285</value>
-  </data>
-  <data name="&gt;&gt;numActLbl.Name" xml:space="preserve">
-    <value>numActLbl</value>
-  </data>
-  <data name="numActLbl.Text" xml:space="preserve">
-    <value>Num Activities:</value>
-  </data>
-  <data name="minDistLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;avgDistTxt.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;avgDistLbl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cancelBtn.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;minDistLbl.Name" xml:space="preserve">
-    <value>minDistLbl</value>
-  </data>
-  <data name="&gt;&gt;avgDistLbl.Name" xml:space="preserve">
-    <value>avgDistLbl</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="&gt;&gt;preserveDistChk.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="avgDistTxt.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="avgDistLbl.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="maxDistTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 19</value>
+  <data name="&gt;&gt;routeList.ZOrder" xml:space="preserve">
+    <value>14</value>
   </data>
   <data name="okBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>376, 246</value>
   </data>
-  <data name="&gt;&gt;minDistTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  <data name="okBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="&gt;&gt;numActTxt.Parent" xml:space="preserve">
+  <data name="okBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="okBtn.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;okBtn.Name" xml:space="preserve">
+    <value>okBtn</value>
+  </data>
+  <data name="&gt;&gt;okBtn.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;okBtn.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;okBtn.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="maxDistTxt.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+  <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>483, 246</value>
   </data>
-  <data name="&gt;&gt;routeList.ZOrder" xml:space="preserve">
-    <value>14</value>
+  <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="cancelBtn.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.Name" xml:space="preserve">
+    <value>cancelBtn</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="numActLbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="numActLbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 12</value>
+  </data>
+  <data name="numActLbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 13</value>
+  </data>
+  <data name="numActLbl.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="numActLbl.Text" xml:space="preserve">
+    <value>Num Activities:</value>
+  </data>
+  <data name="numActLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;numActLbl.Name" xml:space="preserve">
+    <value>numActLbl</value>
+  </data>
+  <data name="&gt;&gt;numActLbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numActLbl.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;numActLbl.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
+  <data name="numActTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 12</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="numActTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="numActTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 19</value>
+  </data>
+  <data name="numActTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;numActTxt.Name" xml:space="preserve">
+    <value>numActTxt</value>
+  </data>
+  <data name="&gt;&gt;numActTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;numActTxt.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;numActTxt.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="minDistTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 31</value>
+  </data>
+  <data name="minDistTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="minDistTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 19</value>
+  </data>
+  <data name="minDistTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;minDistTxt.Name" xml:space="preserve">
+    <value>minDistTxt</value>
+  </data>
+  <data name="&gt;&gt;minDistTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;minDistTxt.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;minDistTxt.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="minDistLbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="minDistLbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>79, 34</value>
+  </data>
+  <data name="minDistLbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 13</value>
+  </data>
   <data name="minDistLbl.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="routeLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 13</value>
+  <data name="minDistLbl.Text" xml:space="preserve">
+    <value>Min Dist:</value>
+  </data>
+  <data name="minDistLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;minDistLbl.Name" xml:space="preserve">
+    <value>minDistLbl</value>
+  </data>
+  <data name="&gt;&gt;minDistLbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;minDistLbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;minDistLbl.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="avgDistTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 31</value>
+  </data>
+  <data name="avgDistTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="avgDistTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 19</value>
+  </data>
+  <data name="avgDistTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;avgDistTxt.Name" xml:space="preserve">
+    <value>avgDistTxt</value>
+  </data>
+  <data name="&gt;&gt;avgDistTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;avgDistTxt.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;avgDistTxt.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="avgDistLbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="avgDistLbl.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 34</value>
   </data>
+  <data name="avgDistLbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="avgDistLbl.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="avgDistLbl.Text" xml:space="preserve">
+    <value>Avg Dist:</value>
+  </data>
+  <data name="avgDistLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;avgDistLbl.Name" xml:space="preserve">
+    <value>avgDistLbl</value>
+  </data>
+  <data name="&gt;&gt;avgDistLbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;avgDistLbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;avgDistLbl.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="maxDistTxt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>458, 31</value>
+  </data>
+  <data name="maxDistTxt.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="maxDistTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 19</value>
+  </data>
+  <data name="maxDistTxt.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;maxDistTxt.Name" xml:space="preserve">
+    <value>maxDistTxt</value>
+  </data>
+  <data name="&gt;&gt;maxDistTxt.Type" xml:space="preserve">
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;maxDistTxt.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;maxDistTxt.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="maxDistLbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="maxDistLbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>404, 34</value>
+  </data>
+  <data name="maxDistLbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 13</value>
+  </data>
+  <data name="maxDistLbl.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="maxDistLbl.Text" xml:space="preserve">
+    <value>Max Dist:</value>
+  </data>
+  <data name="maxDistLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;maxDistLbl.Name" xml:space="preserve">
+    <value>maxDistLbl</value>
+  </data>
+  <data name="&gt;&gt;maxDistLbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;maxDistLbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;maxDistLbl.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="routeLbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 109</value>
+  </data>
+  <data name="routeLbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 37</value>
+  </data>
+  <data name="routeLbl.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="routeLbl.Text" xml:space="preserve">
+    <value>Route To Apply</value>
+  </data>
+  <data name="routeLbl.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;routeLbl.Name" xml:space="preserve">
+    <value>routeLbl</value>
+  </data>
+  <data name="&gt;&gt;routeLbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;routeLbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;routeLbl.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="ignoreGPSActChk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 158</value>
+  </data>
+  <data name="ignoreGPSActChk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 65</value>
+  </data>
+  <data name="ignoreGPSActChk.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="ignoreGPSActChk.Text" xml:space="preserve">
+    <value>Ignore activities with GPS data</value>
+  </data>
+  <data name="&gt;&gt;ignoreGPSActChk.Name" xml:space="preserve">
+    <value>ignoreGPSActChk</value>
+  </data>
+  <data name="&gt;&gt;ignoreGPSActChk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ignoreGPSActChk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ignoreGPSActChk.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="applyTimesLinearlyChk.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="applyTimesLinearlyChk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 252</value>
+  </data>
+  <data name="applyTimesLinearlyChk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 17</value>
+  </data>
+  <data name="applyTimesLinearlyChk.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="applyTimesLinearlyChk.Text" xml:space="preserve">
+    <value>Apply Times Linearly</value>
+  </data>
+  <data name="&gt;&gt;applyTimesLinearlyChk.Name" xml:space="preserve">
+    <value>applyTimesLinearlyChk</value>
+  </data>
+  <data name="&gt;&gt;applyTimesLinearlyChk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;applyTimesLinearlyChk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;applyTimesLinearlyChk.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="preserveDistChk.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="preserveDistChk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 229</value>
+  </data>
+  <data name="preserveDistChk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 17</value>
+  </data>
+  <data name="preserveDistChk.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="preserveDistChk.Text" xml:space="preserve">
+    <value>Preserve distances</value>
+  </data>
+  <data name="&gt;&gt;preserveDistChk.Name" xml:space="preserve">
+    <value>preserveDistChk</value>
+  </data>
+  <data name="&gt;&gt;preserveDistChk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;preserveDistChk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;preserveDistChk.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>571, 285</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Apply Route</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ApplyRouteForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

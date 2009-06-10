@@ -40,8 +40,8 @@ namespace ApplyRoutesPlugin.UI
             int w1 = width / 2;
             int w2 = width - w1;
 
-            this.activityRouteTree.Columns.Add(new TreeList.Column("ActivityName", "Activity", w2, StringAlignment.Near));
-            this.activityRouteTree.Columns.Add(new TreeList.Column("RouteName", "Route", w1, StringAlignment.Near));
+            this.activityRouteTree.Columns.Add(new TreeList.Column("ActivityName", Properties.Resources.CreateRouteForm_Activity, w2, StringAlignment.Near));
+            this.activityRouteTree.Columns.Add(new TreeList.Column("RouteName", Properties.Resources.CreateRouteForm_Route, w1, StringAlignment.Near));
             this.activityRouteTree.RowData = arpList;
             this.activityRouteTree.SelectedChanged += delegate(object sender, EventArgs e)
             {

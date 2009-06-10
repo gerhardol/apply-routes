@@ -50,9 +50,9 @@ namespace ApplyRoutesPlugin.UI
                 int w1 = width / 3;
                 int w2 = width - 2 * w1;
 
-                this.equipmentList.Columns.Add(new TreeList.Column("Brand", "Brand", w2, StringAlignment.Near));
-                this.equipmentList.Columns.Add(new TreeList.Column("Model", "Model", w1, StringAlignment.Near));
-                this.equipmentList.Columns.Add(new TreeList.Column("Type", "Type", w1, StringAlignment.Near));
+                this.equipmentList.Columns.Add(new TreeList.Column("Brand", Properties.Resources.UpdateEquipment_Brand, w2, StringAlignment.Near));
+                this.equipmentList.Columns.Add(new TreeList.Column("Model", Properties.Resources.UpdateEquipment_Model, w1, StringAlignment.Near));
+                this.equipmentList.Columns.Add(new TreeList.Column("Type", Properties.Resources.UpdateEquipment_Type, w1, StringAlignment.Near));
                 this.equipmentList.RowData = Plugin.GetApplication().Logbook.Equipment;
 
                 commonItems = CommonEquipment();

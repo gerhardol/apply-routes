@@ -28,25 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMapRouteControl));
             this.fitToPageBtn = new ZoneFiveSoftware.Common.Visuals.Button();
             this.mapTypePopup = new ZoneFiveSoftware.Common.Visuals.TextBox();
             this.mapTypeLbl = new System.Windows.Forms.Label();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.AllowWebBrowserDrop = false;
-            this.webBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser.Location = new System.Drawing.Point(0, 32);
-            this.webBrowser.Margin = new System.Windows.Forms.Padding(0);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.ScrollBarsEnabled = false;
-            this.webBrowser.Size = new System.Drawing.Size(503, 468);
-            this.webBrowser.TabIndex = 0;
             // 
             // fitToPageBtn
             // 
@@ -57,13 +44,10 @@
             this.fitToPageBtn.HyperlinkStyle = false;
             this.fitToPageBtn.ImageMargin = 2;
             this.fitToPageBtn.LeftImage = null;
-            this.fitToPageBtn.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.fitToPageBtn, "fitToPageBtn");
             this.fitToPageBtn.Name = "fitToPageBtn";
             this.fitToPageBtn.PushStyle = true;
             this.fitToPageBtn.RightImage = null;
-            this.fitToPageBtn.Size = new System.Drawing.Size(75, 23);
-            this.fitToPageBtn.TabIndex = 1;
-            this.fitToPageBtn.Text = "Fit to Page";
             this.fitToPageBtn.TextAlign = System.Drawing.StringAlignment.Center;
             this.fitToPageBtn.TextLeftMargin = 2;
             this.fitToPageBtn.TextRightMargin = 2;
@@ -72,45 +56,41 @@
             // 
             this.mapTypePopup.AcceptsReturn = false;
             this.mapTypePopup.AcceptsTab = false;
-            this.mapTypePopup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.mapTypePopup, "mapTypePopup");
             this.mapTypePopup.BackColor = System.Drawing.Color.White;
             this.mapTypePopup.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.mapTypePopup.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
-            this.mapTypePopup.Location = new System.Drawing.Point(367, 7);
+            this.mapTypePopup.MaxLength = 32767;
             this.mapTypePopup.Multiline = false;
             this.mapTypePopup.Name = "mapTypePopup";
             this.mapTypePopup.ReadOnly = false;
             this.mapTypePopup.ReadOnlyColor = System.Drawing.SystemColors.Control;
             this.mapTypePopup.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
-            this.mapTypePopup.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mapTypePopup.Size = new System.Drawing.Size(133, 19);
-            this.mapTypePopup.TabIndex = 2;
             this.mapTypePopup.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // mapTypeLbl
             // 
-            this.mapTypeLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapTypeLbl.AutoSize = true;
-            this.mapTypeLbl.Location = new System.Drawing.Point(309, 10);
+            resources.ApplyResources(this.mapTypeLbl, "mapTypeLbl");
             this.mapTypeLbl.Name = "mapTypeLbl";
-            this.mapTypeLbl.Size = new System.Drawing.Size(55, 13);
-            this.mapTypeLbl.TabIndex = 3;
-            this.mapTypeLbl.Text = "Map Type";
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.webBrowser, "webBrowser");
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScrollBarsEnabled = false;
             // 
             // GMapRouteControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.mapTypeLbl);
             this.Controls.Add(this.mapTypePopup);
             this.Controls.Add(this.fitToPageBtn);
             this.Controls.Add(this.webBrowser);
             this.Name = "GMapRouteControl";
-            this.Size = new System.Drawing.Size(503, 500);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

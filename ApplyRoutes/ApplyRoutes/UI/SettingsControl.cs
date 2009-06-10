@@ -82,8 +82,8 @@ namespace ApplyRoutesPlugin.UI
 
             int w1 = (mapProviderName.Right + mapProviderUrl.Left)/2 - mapProvidersList.Left;
             int w2 = mapProvidersList.Width - mapProvidersList.VScrollBar.Width - 2 - w1;
-            mapProvidersList.Columns.Add(new TreeList.Column("Title", "Title", w1, StringAlignment.Near));
-            mapProvidersList.Columns.Add(new TreeList.Column("Url", "Url", w2, StringAlignment.Near));
+            mapProvidersList.Columns.Add(new TreeList.Column("Title", Properties.Resources.SettingsControl_Title, w1, StringAlignment.Near));
+            mapProvidersList.Columns.Add(new TreeList.Column("Url", Properties.Resources.SettingsControl_URL, w2, StringAlignment.Near));
             mapProvidersList.RowData = ExtendMapProviders.GetMapProviders();
             mapProvidersList.CheckBoxes = true;
             foreach (GMapProvider p in ExtendMapProviders.GetMapProviders())
@@ -169,6 +169,19 @@ namespace ApplyRoutesPlugin.UI
 
         public void UICultureChanged(CultureInfo culture)
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsControl));
+            resources.ApplyResources(this.editMenuTabPage, "editMenuTabPage");
+            resources.ApplyResources(this.homePageLink, "homePageLink");
+            resources.ApplyResources(this.mapProviderResetBtn, "mapProviderResetBtn");
+            resources.ApplyResources(this.mapProvidersTabPage, "mapProvidersTabPage");
+            resources.ApplyResources(this.mapProviderUpdateBtn, "mapProviderUpdateBtn");
+            resources.ApplyResources(this.showApplyRoutesChk, "showApplyRoutesChk");
+            resources.ApplyResources(this.showCreateRoutesChk, "showCreateRoutesChk");
+            resources.ApplyResources(this.showJoinRoutesChk, "showJoinRoutesChk");
+            resources.ApplyResources(this.showSendToRoutesChk, "showSendToRoutesChk");
+            resources.ApplyResources(this.showUpdateEquipmentChk, "showUpdateEquipmentChk");
+            mapProvidersList.Columns[0].Text = Properties.Resources.SettingsControl_Title;
+            mapProvidersList.Columns[1].Text = Properties.Resources.SettingsControl_URL;
         }
 
         private void homePageLink_Click(object sender, EventArgs e)

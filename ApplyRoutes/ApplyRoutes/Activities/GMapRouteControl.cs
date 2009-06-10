@@ -480,6 +480,14 @@ namespace ApplyRoutesPlugin.Activities
 
         public void UICultureChanged(System.Globalization.CultureInfo culture)
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMapRouteControl));
+            resources.ApplyResources(this.fitToPageBtn, "fitToPageBtn");
+
+            // dont apply resources, because mapTypeLbl is anchored to the right
+            // but has its initial position set relative to the top left.
+            // if you re-apply resources after the parent window has changed
+            // size, it gets moved to the wrong location.
+            this.mapTypeLbl.Text = resources.GetString("mapTypeLbl.Text");
             Refresh();
         }
 

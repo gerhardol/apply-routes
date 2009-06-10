@@ -110,6 +110,7 @@
             // 
             // mapProviderResetBtn
             // 
+            resources.ApplyResources(this.mapProviderResetBtn, "mapProviderResetBtn");
             this.mapProviderResetBtn.BackColor = System.Drawing.Color.Transparent;
             this.mapProviderResetBtn.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(120)))));
             this.mapProviderResetBtn.CenterImage = null;
@@ -117,7 +118,6 @@
             this.mapProviderResetBtn.HyperlinkStyle = false;
             this.mapProviderResetBtn.ImageMargin = 2;
             this.mapProviderResetBtn.LeftImage = null;
-            resources.ApplyResources(this.mapProviderResetBtn, "mapProviderResetBtn");
             this.mapProviderResetBtn.Name = "mapProviderResetBtn";
             this.mapProviderResetBtn.PushStyle = true;
             this.mapProviderResetBtn.RightImage = null;
@@ -214,6 +214,7 @@
             this.editMenuTabPage.ResumeLayout(false);
             this.editMenuTabPage.PerformLayout();
             this.mapProvidersTabPage.ResumeLayout(false);
+            this.mapProvidersTabPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

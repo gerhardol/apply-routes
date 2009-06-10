@@ -64,7 +64,7 @@ namespace ApplyRoutesPlugin.UI
             this.ignoreGPSActChk.CheckedChanged += refreshHandler;
             this.routeList.SelectedChanged += refreshHandler;
 
-            this.routeList.Columns.Add(new TreeList.Column("Name", "Name", 100, StringAlignment.Near));
+            this.routeList.Columns.Add(new TreeList.Column("Name", Properties.Resources.ApplyRouteForm_Name, 100, StringAlignment.Near));
 
             List<IRoute> routes = new List<IRoute>();
             foreach (IRoute rt in Plugin.GetApplication().Logbook.Routes)
