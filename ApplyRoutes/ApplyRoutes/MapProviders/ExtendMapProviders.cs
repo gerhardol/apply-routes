@@ -100,7 +100,7 @@ namespace ApplyRoutesPlugin.MapProviders
             "msmaps:Hybrid", "MSLive-Hybrid",
             "msmaps:Hybrid-3d&gmrc", "MSLive-VE",
             "msmaps:Road", "MSLive-Road",
-            "geoportail.shtml:Hybrid&gmrc", "Geoportail - Mainland",
+            "geoportail.shtml:Hybrid", "Geoportail - Mainland",
             "openlayers:OpenStreetMapMapnik", "OpenLayers - Open Streetmap"
             };
 

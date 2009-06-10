@@ -56,7 +56,7 @@ namespace ApplyRoutesPlugin.Activities
             };
 
             selected_guid = guid;
-            mapTypePopup.Enabled = false;
+            mapTypePopup.Enabled = true;
             mti = SetupMapTypes();
 
             mapTypePopup.ButtonClick += delegate(object sender, EventArgs e)
