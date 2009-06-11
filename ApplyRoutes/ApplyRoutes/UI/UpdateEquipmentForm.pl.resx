@@ -89,13 +89,13 @@
     <value>Zmień pole &quot;nazwa&quot; wszystkich aktywności i tras</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>Do</value>
+    <value>Na</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Od</value>
+    <value>Z</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Do</value>
+    <value>Na</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Z</value>
