@@ -141,7 +141,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;routeList.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>17</value>
   </data>
   <data name="okBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>376, 246</value>
@@ -165,7 +165,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;okBtn.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>16</value>
   </data>
   <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>483, 246</value>
@@ -189,7 +189,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>15</value>
   </data>
   <data name="numActLbl.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -219,7 +219,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numActLbl.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>14</value>
   </data>
   <data name="numActTxt.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 12</value>
@@ -244,7 +244,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numActTxt.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="minDistTxt.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 31</value>
@@ -268,7 +268,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;minDistTxt.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="minDistLbl.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -298,7 +298,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;minDistLbl.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>12</value>
   </data>
   <data name="avgDistTxt.Location" type="System.Drawing.Point, System.Drawing">
     <value>293, 31</value>
@@ -322,7 +322,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;avgDistTxt.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="avgDistLbl.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -352,7 +352,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;avgDistLbl.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="maxDistTxt.Location" type="System.Drawing.Point, System.Drawing">
     <value>458, 31</value>
@@ -376,7 +376,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;maxDistTxt.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="maxDistLbl.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -406,7 +406,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;maxDistLbl.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="routeLbl.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 109</value>
@@ -433,7 +433,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;routeLbl.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="ignoreGPSActChk.Location" type="System.Drawing.Point, System.Drawing">
     <value>23, 158</value>
@@ -457,13 +457,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ignoreGPSActChk.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="applyTimesLinearlyChk.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="applyTimesLinearlyChk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 252</value>
+    <value>23, 229</value>
   </data>
   <data name="applyTimesLinearlyChk.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 17</value>
@@ -484,13 +484,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;applyTimesLinearlyChk.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="preserveDistChk.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="preserveDistChk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 229</value>
+    <value>23, 256</value>
   </data>
   <data name="preserveDistChk.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 17</value>
@@ -511,6 +511,87 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;preserveDistChk.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="preserve_dist_exactly_rad.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="preserve_dist_exactly_rad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>295, 255</value>
+  </data>
+  <data name="preserve_dist_exactly_rad.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 17</value>
+  </data>
+  <data name="preserve_dist_exactly_rad.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="preserve_dist_exactly_rad.Text" xml:space="preserve">
+    <value>Exactly</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_exactly_rad.Name" xml:space="preserve">
+    <value>preserve_dist_exactly_rad</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_exactly_rad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_exactly_rad.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_exactly_rad.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 256</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 17</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.Text" xml:space="preserve">
+    <value>Rounded</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_rounded_rad.Name" xml:space="preserve">
+    <value>preserve_dist_rounded_rad</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_rounded_rad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_rounded_rad.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_rounded_rad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 255</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 17</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.Text" xml:space="preserve">
+    <value>Scaled</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_scaled_rad.Name" xml:space="preserve">
+    <value>preserve_dist_scaled_rad</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_scaled_rad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_scaled_rad.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;preserve_dist_scaled_rad.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

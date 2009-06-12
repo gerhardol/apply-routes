@@ -44,6 +44,9 @@
             this.ignoreGPSActChk = new System.Windows.Forms.CheckBox();
             this.applyTimesLinearlyChk = new System.Windows.Forms.CheckBox();
             this.preserveDistChk = new System.Windows.Forms.CheckBox();
+            this.preserve_dist_exactly_rad = new System.Windows.Forms.RadioButton();
+            this.preserve_dist_rounded_rad = new System.Windows.Forms.RadioButton();
+            this.preserve_dist_scaled_rad = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // routeList
@@ -211,12 +214,36 @@
             this.preserveDistChk.Name = "preserveDistChk";
             this.preserveDistChk.UseVisualStyleBackColor = true;
             // 
+            // preserve_dist_exactly_rad
+            // 
+            resources.ApplyResources(this.preserve_dist_exactly_rad, "preserve_dist_exactly_rad");
+            this.preserve_dist_exactly_rad.Name = "preserve_dist_exactly_rad";
+            this.preserve_dist_exactly_rad.TabStop = true;
+            this.preserve_dist_exactly_rad.UseVisualStyleBackColor = true;
+            // 
+            // preserve_dist_rounded_rad
+            // 
+            resources.ApplyResources(this.preserve_dist_rounded_rad, "preserve_dist_rounded_rad");
+            this.preserve_dist_rounded_rad.Name = "preserve_dist_rounded_rad";
+            this.preserve_dist_rounded_rad.TabStop = true;
+            this.preserve_dist_rounded_rad.UseVisualStyleBackColor = true;
+            // 
+            // preserve_dist_scaled_rad
+            // 
+            resources.ApplyResources(this.preserve_dist_scaled_rad, "preserve_dist_scaled_rad");
+            this.preserve_dist_scaled_rad.Name = "preserve_dist_scaled_rad";
+            this.preserve_dist_scaled_rad.TabStop = true;
+            this.preserve_dist_scaled_rad.UseVisualStyleBackColor = true;
+            // 
             // ApplyRouteForm
             // 
             this.AcceptButton = this.okBtn;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
+            this.Controls.Add(this.preserve_dist_scaled_rad);
+            this.Controls.Add(this.preserve_dist_rounded_rad);
+            this.Controls.Add(this.preserve_dist_exactly_rad);
             this.Controls.Add(this.preserveDistChk);
             this.Controls.Add(this.applyTimesLinearlyChk);
             this.Controls.Add(this.ignoreGPSActChk);
@@ -255,5 +282,8 @@
         private System.Windows.Forms.CheckBox ignoreGPSActChk;
         private System.Windows.Forms.CheckBox applyTimesLinearlyChk;
         private System.Windows.Forms.CheckBox preserveDistChk;
+        private System.Windows.Forms.RadioButton preserve_dist_exactly_rad;
+        private System.Windows.Forms.RadioButton preserve_dist_rounded_rad;
+        private System.Windows.Forms.RadioButton preserve_dist_scaled_rad;
     }
 }
