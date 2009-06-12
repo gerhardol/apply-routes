@@ -386,15 +386,20 @@ namespace ApplyRoutesPlugin.MapProviders
     class GMapProvider : IMapProvider
     {
         #region IMapProvider Members
+        private static GMapImageCache imageCache = null;
+        static readonly object padlock = new object();
 
         public GMapProvider(string u, string n, Guid id)
         {
             url = u;
             name = n;
             guid = id;
-            if (imageCache == null)
+            lock (padlock)
             {
-                imageCache = new GMapImageCache(url);
+                if (imageCache == null)
+                {
+                    imageCache = new GMapImageCache(url);
+                }
             }
 
             enabled = true;
@@ -415,8 +420,6 @@ namespace ApplyRoutesPlugin.MapProviders
             get { return name; }
             set { name = value; }
         }
-
-        private static GMapImageCache imageCache = null;
 
         public void ClearDownloadQueue()
         {
