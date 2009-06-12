@@ -540,7 +540,7 @@ namespace ApplyRoutesPlugin.MapProviders
                     } else if (theUrl[theUrl.Length-1] != '&') {
                         theUrl += "&";
                     }
-                    theUrl += "strp" + uri.Fragment;
+                    theUrl += "strp=1" + uri.Fragment;
 
                     string pi;
                     Bitmap bmp = imageCache.GetMapImage(new Rectangle(tl2, sz), listener, zoom, theUrl, out pi);

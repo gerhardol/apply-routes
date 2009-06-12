@@ -93,7 +93,7 @@ namespace ApplyRoutesPlugin.Activities
             {
                 theUrl += "&";
             }
-            theUrl += "arrp" + uri.Fragment;
+            theUrl += "arrp=1" + uri.Fragment;
             uri = new Uri(theUrl);
             
             selected_guid = guid = newType.guid;
