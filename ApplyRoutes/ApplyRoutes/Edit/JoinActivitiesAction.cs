@@ -77,6 +77,8 @@ namespace ApplyRoutesPlugin.Edit
             {
                 return false;
             }
+
+            /*Determine whether ST can handle tracks longer than 65535 seconds */
             NumericTimeDataSeries ntd = new NumericTimeDataSeries();
             DateTime st = DateTime.FromBinary(0);
             ntd.Add(st, 0);
@@ -84,12 +86,31 @@ namespace ApplyRoutesPlugin.Edit
             ntd.Add(et, 0);
             if (ntd.EntryDateTime(ntd[1]) != et)
             {
+                /* It cant handle long tracks */
                 DateTime start = salist.Keys[0];
                 IActivity last = salist.Values[salist.Count - 1];
                 ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(last);
-                DateTime end = ai.EndTime;
 
-                TimeSpan span = end.Subtract(start);
+                TimeSpan span = TimeSpan.FromSeconds(0);
+                DateTime endTime = start;
+
+                /* Take account of overlaps between segments:
+                 *  if a segment starts before the previous one
+                 *  finished, we will have to adjust its start time,
+                 *  which will make the finished track longer.
+                 */
+                for (int i = 0; i < salist.Count; i++)
+                {
+                    IActivity activity = salist.Values[i];
+                    if (activity.StartTime < endTime)
+                    {
+                        span = span.Add(endTime.Subtract(activity.StartTime));
+                    }
+                    ai = ActivityInfoCache.Instance.GetInfo(activity);
+                    endTime = ai.EndTime;
+                }
+
+                span = span.Add(endTime.Subtract(start));
                 return span.TotalSeconds <= 65535;
             }
             else
@@ -98,19 +119,14 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
-        private void Append<T>(ITimeDataSeries<T> s, DateTime t, T value)
-        {
-            s.Add(t, value);
-        }
-
-        private void Append<T>(ITimeDataSeries<T> dst, ITimeDataSeries<T> src, ref DateTime end)
+        private void Append<T>(ITimeDataSeries<T> dst, ITimeDataSeries<T> src, TimeSpan adjust, ref DateTime end)
         {
             if (src != null)
             {
                 for (int i = 0; i < src.Count; i++)
                 {
                     ITimeValueEntry<T> tpt = src[i];
-                    DateTime when = src.EntryDateTime(tpt);
+                    DateTime when = src.EntryDateTime(tpt).Add(adjust);
                     dst.Add(when, tpt.Value);
                     if (when > end)
                     {
@@ -144,19 +160,24 @@ namespace ApplyRoutesPlugin.Edit
             DateTime endTime = first.StartTime;
 
             double dist = 0;
+            TimeSpan adjust = TimeSpan.FromSeconds(0);
 
             for (int i = 0; i < salist.Count; i++)
             {
                 IActivity activity = salist.Values[i];
                 ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
                 DateTime prevEnd = endTime;
+                if (activity.StartTime < prevEnd)
+                {
+                    adjust = adjust.Add(prevEnd.Subtract(activity.StartTime));
+                }
 
-                Append(route, activity.GPSRoute, ref endTime);
-                Append(ddt, activity.DistanceMetersTrack, ref endTime);
-                Append(cpmt, activity.CadencePerMinuteTrack, ref endTime);
-                Append(emt, activity.ElevationMetersTrack, ref endTime);
-                Append(hrt, activity.HeartRatePerMinuteTrack, ref endTime);
-                Append(pwt, activity.PowerWattsTrack, ref endTime);
+                Append(route, activity.GPSRoute, adjust, ref endTime);
+                Append(ddt, activity.DistanceMetersTrack, adjust, ref endTime);
+                Append(cpmt, activity.CadencePerMinuteTrack, adjust, ref endTime);
+                Append(emt, activity.ElevationMetersTrack, adjust, ref endTime);
+                Append(hrt, activity.HeartRatePerMinuteTrack, adjust, ref endTime);
+                Append(pwt, activity.PowerWattsTrack, adjust, ref endTime);
 
                 if (i > 0)
                 {
@@ -184,7 +205,7 @@ namespace ApplyRoutesPlugin.Edit
 
                     foreach (ILapInfo lap in activity.Laps)
                     {
-                        first.Laps.Add(lap.StartTime, lap.TotalTime);
+                        first.Laps.Add(lap.StartTime.Add(adjust), lap.TotalTime);
                         ILapInfo li = first.Laps[first.Laps.Count - 1];
                         li.AverageCadencePerMinute = lap.AverageCadencePerMinute;
                         li.AverageHeartRatePerMinute = lap.AverageHeartRatePerMinute;
