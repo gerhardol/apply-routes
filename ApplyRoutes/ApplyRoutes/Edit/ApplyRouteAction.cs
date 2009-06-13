@@ -59,10 +59,36 @@ namespace ApplyRoutesPlugin.Edit
         }
 
         private void ApplyRoute(IActivity activity, IRoute iroute,
-                bool forceApplyLinearly, IDistanceDataTrack aDist)
+                bool forceApplyLinearly, IDistanceDataTrack aDist, double laps)
         {
             ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
             IGPSRoute rt = iroute.GPSRoute;
+            IDistanceDataTrack dmt = rt.GetDistanceMetersTrack();
+            int i;
+
+            if (laps != 1)
+            {
+                IGPSRoute nrt = new GPSRoute();
+                TimeSpan offset = TimeSpan.FromSeconds(0);
+                int last = (int)Math.Floor(laps);
+                double rem = laps - last;
+                for (i = 0; i <= last; i++)
+                {
+                    for (int j = 0; j < rt.Count; j++)
+                    {
+                        ITimeValueEntry<IGPSPoint> itv = rt[j];
+                        if (i == last && dmt[j].Value / rt.TotalDistanceMeters >= rem)
+                        {
+                            break;
+                        }
+                        nrt.Add(rt.EntryDateTime(itv).Add(offset), itv.Value);
+                    }
+                    offset = offset.Add(TimeSpan.FromSeconds(rt.TotalElapsedSeconds));
+                }
+                rt = nrt;
+                dmt = rt.GetDistanceMetersTrack();
+            }
+            
             GPSRoute route = new GPSRoute();
             double numer = ai.Time.TotalSeconds;
             long totalElapsedSeconds = Plugin.GetTotalElapsedSeconds(rt);
@@ -71,18 +97,12 @@ namespace ApplyRoutesPlugin.Edit
                 numer = totalElapsedSeconds;
             }
             bool applyLinearly = forceApplyLinearly || totalElapsedSeconds == 0;
-            if (forceApplyLinearly)
-            {
-                aDist = null;
-            }
-            IDistanceDataTrack dmt = rt.GetDistanceMetersTrack();
             double timeScale = !applyLinearly ?
                 numer / totalElapsedSeconds :
                 numer / rt.TotalDistanceMeters;
 
             double distScale = aDist != null && dmt.Max > 0 ? aDist.Max / dmt.Max : 1;
 
-            int i;
             if (aDist != null)
             {
                 int i1,i2;
@@ -206,25 +226,47 @@ namespace ApplyRoutesPlugin.Edit
                         if (activity.GPSRoute == null || applyToAll)
                         {
                             IDistanceDataTrack adist = null;
-                            if (m.PreserveDistances)
+                            double laps = 1;
+                            if (m.PreserveDistances != ApplyRouteForm.PreserveDistEnum.kDontPreserveDistances)
                             {
                                 adist = activity.DistanceMetersTrack;
-                                if ((adist == null || adist.Count == 0) && activity.Laps.Count > 0)
+                                if ((adist == null || adist.Count == 0 || m.ApplyLinearly))
                                 {
                                     adist = new DistanceDataTrack();
-                                    float dist = 0;
-                                    adist.Add(activity.Laps[0].StartTime, 0);
-                                    for (int i = 0; i < activity.Laps.Count; i++)
+                                    adist.Add(activity.StartTime, 0);
+                                    if (activity.Laps.Count > 0)
                                     {
-                                        ILapInfo li = activity.Laps[i];
-                                        DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
+                                        float dist = 0;
+                                        for (int i = 0; i < activity.Laps.Count; i++)
+                                        {
+                                            ILapInfo li = activity.Laps[i];
+                                            DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
 
-                                        dist += li.TotalDistanceMeters;
-                                        adist.Add(t, dist);
+                                            if (!float.IsNaN(li.TotalDistanceMeters))
+                                            {
+                                                dist += li.TotalDistanceMeters;
+                                                adist.Add(t, dist);
+                                            }
+                                        }
+                                    }
+                                    ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
+                                    if (adist.Max < ai.DistanceMeters)
+                                    {
+                                        adist.Add(ai.EndTime, (float)ai.DistanceMeters);
                                     }
                                 }
+                                double elaps = adist.Max / routes[0].TotalDistanceMeters;
+                                if (m.PreserveDistances == ApplyRouteForm.PreserveDistEnum.kPreserveDistExactly)
+                                {
+                                    laps = elaps;
+                                }
+                                else if (m.PreserveDistances == ApplyRouteForm.PreserveDistEnum.kPreserveDistRounded)
+                                {
+                                    laps = Math.Round(elaps);
+                                    if (laps == 0) laps = 1;
+                                }
                             }
-                            ApplyRoute(activity, routes[0], m.ApplyLinearly, adist);
+                            ApplyRoute(activity, routes[0], m.ApplyLinearly, adist, laps);
                         }
                     }
                 }

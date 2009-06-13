@@ -47,6 +47,8 @@
             this.preserve_dist_exactly_rad = new System.Windows.Forms.RadioButton();
             this.preserve_dist_rounded_rad = new System.Windows.Forms.RadioButton();
             this.preserve_dist_scaled_rad = new System.Windows.Forms.RadioButton();
+            this.laps_txt = new ZoneFiveSoftware.Common.Visuals.TextBox();
+            this.Laps_lbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // routeList
@@ -235,12 +237,35 @@
             this.preserve_dist_scaled_rad.TabStop = true;
             this.preserve_dist_scaled_rad.UseVisualStyleBackColor = true;
             // 
+            // laps_txt
+            // 
+            this.laps_txt.AcceptsReturn = false;
+            this.laps_txt.AcceptsTab = false;
+            this.laps_txt.BackColor = System.Drawing.Color.White;
+            this.laps_txt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
+            this.laps_txt.ButtonImage = null;
+            resources.ApplyResources(this.laps_txt, "laps_txt");
+            this.laps_txt.MaxLength = 32767;
+            this.laps_txt.Multiline = false;
+            this.laps_txt.Name = "laps_txt";
+            this.laps_txt.ReadOnly = true;
+            this.laps_txt.ReadOnlyColor = System.Drawing.SystemColors.Control;
+            this.laps_txt.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
+            this.laps_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // Laps_lbl
+            // 
+            resources.ApplyResources(this.Laps_lbl, "Laps_lbl");
+            this.Laps_lbl.Name = "Laps_lbl";
+            // 
             // ApplyRouteForm
             // 
             this.AcceptButton = this.okBtn;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
+            this.Controls.Add(this.Laps_lbl);
+            this.Controls.Add(this.laps_txt);
             this.Controls.Add(this.preserve_dist_scaled_rad);
             this.Controls.Add(this.preserve_dist_rounded_rad);
             this.Controls.Add(this.preserve_dist_exactly_rad);
@@ -285,5 +310,7 @@
         private System.Windows.Forms.RadioButton preserve_dist_exactly_rad;
         private System.Windows.Forms.RadioButton preserve_dist_rounded_rad;
         private System.Windows.Forms.RadioButton preserve_dist_scaled_rad;
+        private ZoneFiveSoftware.Common.Visuals.TextBox laps_txt;
+        private System.Windows.Forms.Label Laps_lbl;
     }
 }

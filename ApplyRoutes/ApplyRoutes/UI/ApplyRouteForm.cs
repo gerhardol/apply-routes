@@ -36,6 +36,13 @@ namespace ApplyRoutesPlugin.UI
 
     public partial class ApplyRouteForm : Form
     {
+        public enum PreserveDistEnum {
+            kDontPreserveDistances,
+            kPreserveDistScaled,
+            kPreserveDistRounded,
+            kPreserveDistExactly
+        };
+
         public ApplyRouteForm(IList<IActivity> activities)
         {
             InitializeComponent();
@@ -56,13 +63,20 @@ namespace ApplyRoutesPlugin.UI
             this.ignoreGPSActChk.Enabled = hasGPS;
             this.ignoreGPSActChk.CheckState = CheckState.Checked;
             this.preserveDistChk.CheckState = hasDist ? CheckState.Checked : CheckState.Unchecked;
+            this.preserve_dist_scaled_rad.Checked = true;
 
             EventHandler refreshHandler = delegate(object sender, EventArgs e)
             {
                 RefreshPage();
             };
+
+            
             this.ignoreGPSActChk.CheckedChanged += refreshHandler;
             this.routeList.SelectedChanged += refreshHandler;
+            this.preserve_dist_exactly_rad.CheckedChanged += refreshHandler;
+            this.preserve_dist_rounded_rad.CheckedChanged += refreshHandler;
+            this.preserve_dist_scaled_rad.CheckedChanged += refreshHandler;
+            this.preserveDistChk.CheckedChanged += refreshHandler;
 
             this.routeList.Columns.Add(new TreeList.Column("Name", Properties.Resources.ApplyRouteForm_Name, 100, StringAlignment.Near));
 
@@ -87,7 +101,8 @@ namespace ApplyRoutesPlugin.UI
             int nGps = 0;
             int nToUpdate = 0;
             int nWithDist = 0;
-            foreach (IActivity activity in activities) {
+            foreach (IActivity activity in activities)
+            {
                 if (activity.GPSRoute != null && activity.GPSRoute.Count != 0)
                 {
                     nGps++;
@@ -107,6 +122,7 @@ namespace ApplyRoutesPlugin.UI
                     nWithDist++;
                 }
             }
+
             ignoreGPSActChk.Enabled = nGps > 0;
             preserveDistChk.Enabled = nWithDist > 0;
             numActTxt.Text = nToUpdate.ToString();
@@ -114,6 +130,29 @@ namespace ApplyRoutesPlugin.UI
             maxDistTxt.Text = max > 0 ? DistanceAsString(max) : "";
             avgDistTxt.Text = nToUpdate > 0 ? DistanceAsString(avg / nToUpdate) : "";
             okBtn.Enabled = nToUpdate > 0 && routeList.Selected.Count > 0;
+            preserve_dist_exactly_rad.Visible = preserveDistChk.Checked;
+            preserve_dist_rounded_rad.Visible = preserveDistChk.Checked;
+            preserve_dist_scaled_rad.Visible = preserveDistChk.Checked;
+            Boolean laps_visible = preserveDistChk.Checked && nToUpdate == 1 && routeList.Selected.Count > 0 && avg > 0;
+            Laps_lbl.Visible = laps_visible;
+            laps_txt.Visible = laps_visible;
+            if (laps_visible)
+            {
+                IRoute route = routeList.SelectedItems[0] as IRoute;
+
+                double laps = 1;
+                if (preserve_dist_exactly_rad.Checked)
+                {
+                    laps = Math.Round(avg / route.TotalDistanceMeters, 2);
+                    if (laps == 0) laps = 1;
+                }
+                else if (preserve_dist_rounded_rad.Checked)
+                {
+                    laps = Math.Round(avg / route.TotalDistanceMeters);
+                    if (laps < 1) laps = 1;
+                }
+                laps_txt.Text = laps.ToString();
+            }
         }
 
         public static string DistanceAsString(double adist)
@@ -138,7 +177,14 @@ namespace ApplyRoutesPlugin.UI
             avgDistTxt.ThemeChanged(visualTheme);
 
             Plugin.ThemeChanged(routeLbl, visualTheme);
-            Plugin.ThemeChanged(ignoreGPSActChk, visualTheme); 
+            Plugin.ThemeChanged(ignoreGPSActChk, visualTheme);
+            Plugin.ThemeChanged(preserveDistChk, visualTheme);
+            Plugin.ThemeChanged(preserve_dist_exactly_rad, visualTheme);
+            Plugin.ThemeChanged(preserve_dist_rounded_rad, visualTheme);
+            Plugin.ThemeChanged(preserve_dist_scaled_rad, visualTheme);
+            Plugin.ThemeChanged(Laps_lbl, visualTheme);
+            laps_txt.ThemeChanged(visualTheme);
+
             routeList.ThemeChanged(visualTheme);
 
             Plugin.ThemeChanged(okBtn, visualTheme);
@@ -160,9 +206,30 @@ namespace ApplyRoutesPlugin.UI
             get { return applyTimesLinearlyChk.Checked; }
         }
 
-        public bool PreserveDistances
+        public PreserveDistEnum PreserveDistances
         {
-            get { return preserveDistChk.Checked; }
+            get
+            {
+                if (preserveDistChk.Checked)
+                {
+                    if (preserve_dist_rounded_rad.Checked)
+                    {
+                        return PreserveDistEnum.kPreserveDistRounded;
+                    }
+                    else if (preserve_dist_exactly_rad.Checked)
+                    {
+                        return PreserveDistEnum.kPreserveDistExactly;
+                    }
+                    else
+                    {
+                        return PreserveDistEnum.kPreserveDistScaled;
+                    }
+                }
+                else
+                {
+                    return PreserveDistEnum.kDontPreserveDistances;
+                }
+            }
         }
                 
         public static IList<T> ConvertToListOf<T>(IList iList)  
