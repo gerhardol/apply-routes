@@ -91,6 +91,18 @@
   <data name="preserveDistChk.Text" xml:space="preserve">
     <value>Zachowaj dystans</value>
   </data>
+  <data name="preserve_dist_exactly_rad.Text" xml:space="preserve">
+    <value>Dokładny</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.Text" xml:space="preserve">
+    <value>Zaokrąglony</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.Text" xml:space="preserve">
+    <value>Skalowany</value>
+  </data>
+  <data name="Laps_lbl.Text" xml:space="preserve">
+    <value>Odcinki</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Zastosuj trasę</value>
   </data>
