@@ -147,7 +147,6 @@
             this.selectedCategoriesTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.selectedCategoriesTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.selectedCategoriesTxt, "selectedCategoriesTxt");
-            this.selectedCategoriesTxt.MaxLength = 32767;
             this.selectedCategoriesTxt.Multiline = false;
             this.selectedCategoriesTxt.Name = "selectedCategoriesTxt";
             this.selectedCategoriesTxt.ReadOnly = false;
@@ -173,7 +172,6 @@
             this.selectedLocationsTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.selectedLocationsTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.selectedLocationsTxt, "selectedLocationsTxt");
-            this.selectedLocationsTxt.MaxLength = 32767;
             this.selectedLocationsTxt.Multiline = false;
             this.selectedLocationsTxt.Name = "selectedLocationsTxt";
             this.selectedLocationsTxt.ReadOnly = false;
@@ -194,7 +192,6 @@
             this.selectedNamesTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.selectedNamesTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.selectedNamesTxt, "selectedNamesTxt");
-            this.selectedNamesTxt.MaxLength = 32767;
             this.selectedNamesTxt.Multiline = false;
             this.selectedNamesTxt.Name = "selectedNamesTxt";
             this.selectedNamesTxt.ReadOnly = false;
@@ -246,7 +243,6 @@
             this.toLocationTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.toLocationTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.toLocationTxt, "toLocationTxt");
-            this.toLocationTxt.MaxLength = 32767;
             this.toLocationTxt.Multiline = false;
             this.toLocationTxt.Name = "toLocationTxt";
             this.toLocationTxt.ReadOnly = false;
@@ -262,7 +258,6 @@
             this.fromLocationTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.fromLocationTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.fromLocationTxt, "fromLocationTxt");
-            this.fromLocationTxt.MaxLength = 32767;
             this.fromLocationTxt.Multiline = false;
             this.fromLocationTxt.Name = "fromLocationTxt";
             this.fromLocationTxt.ReadOnly = true;
@@ -288,7 +283,6 @@
             this.toNameTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.toNameTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.toNameTxt, "toNameTxt");
-            this.toNameTxt.MaxLength = 32767;
             this.toNameTxt.Multiline = false;
             this.toNameTxt.Name = "toNameTxt";
             this.toNameTxt.ReadOnly = false;
@@ -304,7 +298,6 @@
             this.fromNameTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.fromNameTxt.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.fromNameTxt, "fromNameTxt");
-            this.fromNameTxt.MaxLength = 32767;
             this.fromNameTxt.Multiline = false;
             this.fromNameTxt.Name = "fromNameTxt";
             this.fromNameTxt.ReadOnly = true;

@@ -60,7 +60,6 @@
             this.mapTypePopup.BackColor = System.Drawing.Color.White;
             this.mapTypePopup.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.mapTypePopup.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
-            this.mapTypePopup.MaxLength = 32767;
             this.mapTypePopup.Multiline = false;
             this.mapTypePopup.Name = "mapTypePopup";
             this.mapTypePopup.ReadOnly = false;

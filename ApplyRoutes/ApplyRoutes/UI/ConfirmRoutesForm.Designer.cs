@@ -108,7 +108,6 @@
             this.activityRoutePop.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.activityRoutePop.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
             resources.ApplyResources(this.activityRoutePop, "activityRoutePop");
-            this.activityRoutePop.MaxLength = 32767;
             this.activityRoutePop.Multiline = false;
             this.activityRoutePop.Name = "activityRoutePop";
             this.activityRoutePop.ReadOnly = true;
@@ -124,7 +123,6 @@
             this.activityText.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.activityText.ButtonImage = null;
             resources.ApplyResources(this.activityText, "activityText");
-            this.activityText.MaxLength = 32767;
             this.activityText.Multiline = false;
             this.activityText.Name = "activityText";
             this.activityText.ReadOnly = true;

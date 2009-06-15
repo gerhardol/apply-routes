@@ -122,7 +122,6 @@
             this.numActTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.numActTxt.ButtonImage = null;
             resources.ApplyResources(this.numActTxt, "numActTxt");
-            this.numActTxt.MaxLength = 32767;
             this.numActTxt.Multiline = false;
             this.numActTxt.Name = "numActTxt";
             this.numActTxt.ReadOnly = true;
@@ -138,7 +137,6 @@
             this.minDistTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.minDistTxt.ButtonImage = null;
             resources.ApplyResources(this.minDistTxt, "minDistTxt");
-            this.minDistTxt.MaxLength = 32767;
             this.minDistTxt.Multiline = false;
             this.minDistTxt.Name = "minDistTxt";
             this.minDistTxt.ReadOnly = true;
@@ -159,7 +157,6 @@
             this.avgDistTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.avgDistTxt.ButtonImage = null;
             resources.ApplyResources(this.avgDistTxt, "avgDistTxt");
-            this.avgDistTxt.MaxLength = 32767;
             this.avgDistTxt.Multiline = false;
             this.avgDistTxt.Name = "avgDistTxt";
             this.avgDistTxt.ReadOnly = true;
@@ -180,7 +177,6 @@
             this.maxDistTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.maxDistTxt.ButtonImage = null;
             resources.ApplyResources(this.maxDistTxt, "maxDistTxt");
-            this.maxDistTxt.MaxLength = 32767;
             this.maxDistTxt.Multiline = false;
             this.maxDistTxt.Name = "maxDistTxt";
             this.maxDistTxt.ReadOnly = true;
@@ -245,7 +241,6 @@
             this.laps_txt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.laps_txt.ButtonImage = null;
             resources.ApplyResources(this.laps_txt, "laps_txt");
-            this.laps_txt.MaxLength = 32767;
             this.laps_txt.Multiline = false;
             this.laps_txt.Name = "laps_txt";
             this.laps_txt.ReadOnly = true;

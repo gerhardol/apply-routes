@@ -150,7 +150,6 @@
             this.mapProviderUrl.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.mapProviderUrl.ButtonImage = null;
             resources.ApplyResources(this.mapProviderUrl, "mapProviderUrl");
-            this.mapProviderUrl.MaxLength = 32767;
             this.mapProviderUrl.Multiline = false;
             this.mapProviderUrl.Name = "mapProviderUrl";
             this.mapProviderUrl.ReadOnly = false;
@@ -166,7 +165,6 @@
             this.mapProviderName.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
             this.mapProviderName.ButtonImage = null;
             resources.ApplyResources(this.mapProviderName, "mapProviderName");
-            this.mapProviderName.MaxLength = 32767;
             this.mapProviderName.Multiline = false;
             this.mapProviderName.Name = "mapProviderName";
             this.mapProviderName.ReadOnly = false;
