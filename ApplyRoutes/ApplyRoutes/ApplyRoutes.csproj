@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\Zone Five Software\SportTracks 2.1\SportTracks.exe</StartProgram>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1151A834-EF8C-492D-ABCE-807B2A6A9C2D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ApplyRoutesPlugin</RootNamespace>
+    <AssemblyName>ApplyRoutes</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Data, Version=2.0.3170.32799, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\SportTracks 2.0\Common.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Common.Visuals, Version=2.0.3170.32804, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\SportTracks 2.0\Common.Visuals.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="osr_csharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\osr_csharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activities\GMapActivityDetail.cs" />
+    <Compile Include="Activities\GMapRouteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\GMapRouteControl.Designer.cs">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Edit\JoinActivitiesAction.cs" />
+    <Compile Include="Edit\UpdateEquipmentAction.cs" />
+    <Compile Include="Edit\MakeRouteAction.cs" />
+    <Compile Include="Edit\ExtendActions.cs" />
+    <Compile Include="Edit\ApplyRouteAction.cs" />
+    <Compile Include="MapProviders\ExtendMapProviders.cs" />
+    <Compile Include="MapProviders\GMapBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapProviders\GMapBrowser.Designer.cs">
+      <DependentUpon>GMapBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MapProviders\GMapProvider.cs" />
+    <Compile Include="Plugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\ExtendSettingsPages.cs" />
+    <Compile Include="UI\ConfirmRoutesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ConfirmRoutesForm.Designer.cs">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ApplyRouteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ApplyRouteForm.Designer.cs">
+      <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UpdateEquipmentForm.Designer.cs">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SettingsControl.Designer.cs">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\ExtendActivities.cs" />
+    <Compile Include="Views\ExtendViews.cs" />
+    <Compile Include="Views\SendToView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Activities\GMapRouteControl.es.resx">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\GMapRouteControl.fr.resx">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\GMapRouteControl.pl.resx">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\GMapRouteControl.resx">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapProviders\GMapBrowser.resx">
+      <DependentUpon>GMapBrowser.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.es.resx" />
+    <EmbeddedResource Include="Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="Properties\Resources.pl.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ApplyRouteForm.es.resx">
+      <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ApplyRouteForm.fr.resx">
+      <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ApplyRouteForm.pl.resx">
+      <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfirmRoutesForm.es.resx">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfirmRoutesForm.fr.resx">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfirmRoutesForm.pl.resx">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfirmRoutesForm.resx">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ApplyRouteForm.resx">
+      <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsControl.es.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsControl.fr.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsControl.pl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateEquipmentForm.es.resx">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateEquipmentForm.fr.resx">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateEquipmentForm.pl.resx">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateEquipmentForm.resx">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsControl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="plugin.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\DropDown8.png" />
+    <Content Include="Resources\Map_Waypoint.png" />
+    <Content Include="Resources\Map_Waypoint_Sel.png" />
+    <Content Include="Resources\Map_Waypoint_Hi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>del "$(ProjectDir)\$(ProjectName).st2plugin"
+"C:\Program Files\7-Zip\7z.exe" a -tzip "$(ProjectDir)$(ProjectName).st2plugin" "$(TargetPath)" "$(ProjectDir)plugin.xml" "$(TargetDir)/*/ApplyRoutes.resources.dll"
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

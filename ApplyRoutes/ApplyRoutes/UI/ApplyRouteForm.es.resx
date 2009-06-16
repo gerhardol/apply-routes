@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element msdata:IsDataSet="true" name="root">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" name="value" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string" />
+                <xsd:element minOccurs="0" msdata:Ordinal="2" name="comment" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute msdata:Ordinal="1" name="name" type="xsd:string" use="required" />
+              <xsd:attribute msdata:Ordinal="3" name="type" type="xsd:string" />
+              <xsd:attribute msdata:Ordinal="4" name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okBtn.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="cancelBtn.Text" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="numActLbl.Text" xml:space="preserve">
+    <value>Núm. Actividades:</value>
+  </data>
+  <data name="minDistLbl.Text" xml:space="preserve">
+    <value>Dist. Min.</value>
+  </data>
+  <data name="avgDistLbl.Text" xml:space="preserve">
+    <value>Dist. Prom.</value>
+  </data>
+  <data name="maxDistLbl.Text" xml:space="preserve">
+    <value>Dist. Max.</value>
+  </data>
+  <data name="routeLbl.Text" xml:space="preserve">
+    <value>Ruta a Aplicar</value>
+  </data>
+  <data name="ignoreGPSActChk.Text" xml:space="preserve">
+    <value>Ignorar acividades sin datos GPS</value>
+  </data>
+  <data name="applyTimesLinearlyChk.Text" xml:space="preserve">
+    <value>Aplicar tiempos linealmente</value>
+  </data>
+  <data name="preserveDistChk.Text" xml:space="preserve">
+    <value>Preservar distancias</value>
+  </data>
+  <data name="preserve_dist_exactly_rad.Text" xml:space="preserve">
+    <value>Exacto</value>
+  </data>
+  <data name="preserve_dist_rounded_rad.Text" xml:space="preserve">
+    <value>Redondeado</value>
+  </data>
+  <data name="preserve_dist_scaled_rad.Text" xml:space="preserve">
+    <value>Escalado</value>
+  </data>
+  <data name="Laps_lbl.Text" xml:space="preserve">
+    <value>Vuelta</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Aplicar Ruta</value>
+  </data>
+</root>

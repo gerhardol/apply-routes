@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element msdata:IsDataSet="true" name="root">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" name="value" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string" />
+                <xsd:element minOccurs="0" msdata:Ordinal="2" name="comment" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute msdata:Ordinal="1" name="name" type="xsd:string" use="required" />
+              <xsd:attribute msdata:Ordinal="3" name="type" type="xsd:string" />
+              <xsd:attribute msdata:Ordinal="4" name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Edit_ApplyRouteAction_Text" xml:space="preserve">
+    <value>AR - Zastosuj trasę</value>
+  </data>
+  <data name="Edit_ApplyRoutesPlugin_Text" xml:space="preserve">
+    <value>Wtyczka Zastosuj Trasy</value>
+  </data>
+  <data name="Edit_CreateRouteAction_Text" xml:space="preserve">
+    <value>AR - Stwórz trasy na podstawie aktywności</value>
+  </data>
+  <data name="Edit_RouteManipulation_Text" xml:space="preserve">
+    <value>Manipulacja tras</value>
+  </data>
+  <data name="Edit_UpdateEquipment_Text" xml:space="preserve">
+    <value>AR - Uaktualnij historię</value>
+  </data>
+  <data name="MCL_SplitsMCL_Text" xml:space="preserve">
+    <value>Zarządzaj okrążeniami</value>
+  </data>
+  <data name="Edit_SendToRouteControl_Text" xml:space="preserve">
+    <value>AR - Wyślij {0:S} {1:S} do Widoku Trasy</value>
+  </data>
+  <data name="Route_Control_Title" xml:space="preserve">
+    <value>AR - Trasy</value>
+  </data>
+  <data name="Route_EndTime_Text" xml:space="preserve">
+    <value>Koniec:</value>
+  </data>
+  <data name="Route_StartTime_Text" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="Edit_JoinRoutesAction_Text" xml:space="preserve">
+    <value>AR - Połącz {0:S} {1:S}</value>
+  </data>
+  <data name="Generic_Activities_Text" xml:space="preserve">
+    <value>Aktywności</value>
+  </data>
+  <data name="Generic_Activity_Text" xml:space="preserve">
+    <value>Aktywność</value>
+  </data>
+  <data name="Generic_One_Text" xml:space="preserve">
+    <value>Jedna</value>
+  </data>
+  <data name="Generic_Three_Text" xml:space="preserve">
+    <value>Trzy</value>
+  </data>
+  <data name="Generic_Two_Text" xml:space="preserve">
+    <value>Dwie</value>
+  </data>
+  <data name="ApplyRouteForm_Name" xml:space="preserve">
+    <value>Nazwa:</value>
+  </data>
+  <data name="CreateRouteForm_Activity" xml:space="preserve">
+    <value>Aktywność</value>
+  </data>
+  <data name="CreateRouteForm_Route" xml:space="preserve">
+    <value>Trasa</value>
+  </data>
+  <data name="SettingsControl_Title" xml:space="preserve">
+    <value>Tytuł</value>
+  </data>
+  <data name="SettingsControl_URL" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UpdateEquipment_Brand" xml:space="preserve">
+    <value>Firma</value>
+  </data>
+  <data name="UpdateEquipment_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="UpdateEquipment_Type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+</root>
