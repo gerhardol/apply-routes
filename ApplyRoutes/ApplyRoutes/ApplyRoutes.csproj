@@ -52,10 +52,12 @@
     <Reference Include="Common.Data, Version=2.0.3170.32799, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\SportTracks 2.0\Common.Data.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Common.Visuals, Version=2.0.3170.32804, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\SportTracks 2.0\Common.Visuals.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="osr_csharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
