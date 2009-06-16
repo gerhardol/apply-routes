@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element msdata:IsDataSet="true" name="root">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" name="value" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string" />
+                <xsd:element minOccurs="0" msdata:Ordinal="2" name="comment" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute msdata:Ordinal="1" name="name" type="xsd:string" use="required" />
+              <xsd:attribute msdata:Ordinal="3" name="type" type="xsd:string" />
+              <xsd:attribute msdata:Ordinal="4" name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okBtn.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="cancelBtn.Text" xml:space="preserve">
+    <value>Przerwij</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Zmień kategorię na:</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Dla wszystkich zaznaczonych aktywności/tras:</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Zmień miejsca na:</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Zmień nazwy na:</value>
+  </data>
+  <data name="renameTab.Text" xml:space="preserve">
+    <value>Zmien nazwe</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Zmien pole &quot;miejsce&quot; wszystkich aktywności i tras</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Zmień pole &quot;nazwa&quot; wszystkich aktywności i tras</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Na</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Na</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="globalRenameTab.Text" xml:space="preserve">
+    <value>Globalna zmiana nazwy</value>
+  </data>
+  <data name="updateEquipmentTab.Text" xml:space="preserve">
+    <value>Uaktualnij sprzęt</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Uaktualnij historię</value>
+  </data>
+</root>
