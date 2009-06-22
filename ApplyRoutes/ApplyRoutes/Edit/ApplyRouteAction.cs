@@ -230,7 +230,11 @@ namespace ApplyRoutesPlugin.Edit
                             if (m.PreserveDistances != ApplyRouteForm.PreserveDistEnum.kDontPreserveDistances)
                             {
                                 adist = activity.DistanceMetersTrack;
-                                if ((adist == null || adist.Count == 0 || m.ApplyLinearly))
+                                ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
+                                if ((adist == null ||
+                                     adist.Count < 2 ||
+                                     adist.Max <= 0 ||
+                                     m.ApplyLinearly))
                                 {
                                     adist = new DistanceDataTrack();
                                     adist.Add(activity.StartTime, 0);
@@ -249,7 +253,6 @@ namespace ApplyRoutesPlugin.Edit
                                             }
                                         }
                                     }
-                                    ActivityInfo ai = ActivityInfoCache.Instance.GetInfo(activity);
                                     if (adist.Max < ai.DistanceMeters)
                                     {
                                         adist.Add(ai.EndTime, (float)ai.DistanceMeters);
