@@ -59,11 +59,6 @@
       <HintPath>References\SportTracks 2.0\Common.Visuals.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="osr_csharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\osr_csharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -228,6 +223,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GDAL11013Wrapper\GDAL11013Wrapper.csproj">
+      <Project>{4AF01154-ACDD-48FA-B024-FD7F1A28BF9F}</Project>
+      <Name>GDAL11013Wrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GDAL111Wrapper\GDAL111Wrapper.csproj">
+      <Project>{5569A885-15F2-4C28-9B88-1426D340D15D}</Project>
+      <Name>GDAL111Wrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -240,7 +245,8 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>del "$(ProjectDir)\$(ProjectName).st2plugin"
-"C:\Program Files\7-Zip\7z.exe" a -tzip "$(ProjectDir)$(ProjectName).st2plugin" "$(TargetPath)" "$(ProjectDir)plugin.xml" "$(TargetDir)/*/ApplyRoutes.resources.dll"
-</PostBuildEvent>
+copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationName)\GDAL111Wrapper.dll" $(OutDir)
+copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationName)\GDAL11013Wrapper.dll" $(OutDir)
+"C:\Program Files\7-Zip\7z.exe" a -tzip "$(ProjectDir)$(ProjectName).st2plugin" "$(TargetPath)" "$(ProjectDir)plugin.xml" "$(TargetDir)/*/ApplyRoutes.resources.dll" "$(TargetDir)/*Wrapper.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

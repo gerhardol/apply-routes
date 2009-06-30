@@ -216,7 +216,7 @@ namespace ApplyRoutesPlugin.MapProviders
                 DateTime time = DateTime.Now;
                 Uri url = new Uri(ce.url);
                 string req1 = url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
-                string req2 = webBrowser.Url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
+                string req2 = webBrowser.Url != null ? webBrowser.Url.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped) : null;
 
                 if (req1 != req2)
                 {
@@ -448,7 +448,7 @@ namespace ApplyRoutesPlugin.MapProviders
             int maxX, maxY;
             if (proj_bounds != null)
             {
-                if (!useGDAL)
+                if (gdal_wrapper == null)
                 {
                     string msg = "This map requires the GDAL plugin to display in the Routes Panel.";
                     float left = drawRectangle.Left * .8f + drawRectangle.Right * .2f;
@@ -634,12 +634,16 @@ namespace ApplyRoutesPlugin.MapProviders
             double x, y;
             float res = proj_res[zm];
             double[] conv = new double[3];
-            try
+            GDAL111Wrapper.wrapper w1 = gdal_wrapper as GDAL111Wrapper.wrapper;
+            GDAL11013Wrapper.wrapper w2 = gdal_wrapper as GDAL11013Wrapper.wrapper;
+            if (w1 != null)
             {
-                toMap.TransformPoint(conv, where.LongitudeDegrees, where.LatitudeDegrees, 0);
+                w1.transform_to_map(conv, where.LongitudeDegrees, where.LatitudeDegrees);
             }
-            catch
+            else if (w2 != null)
             {
+                w2.transform_to_map(conv, where.LongitudeDegrees, where.LatitudeDegrees);
+            } else {
                 conv[0] = where.LongitudeDegrees;
                 conv[1] = where.LatitudeDegrees;
             }
@@ -651,7 +655,7 @@ namespace ApplyRoutesPlugin.MapProviders
 
         private Point MercatorGPSToPixel(IGPSLocation where, double zoomLevel)
         {
-            if (useGDAL)
+            if (gdal_wrapper != null)
             {
                 return GDALGPSToPixel(where, zoomLevel);
             }
@@ -678,13 +682,22 @@ namespace ApplyRoutesPlugin.MapProviders
 
             double xin = where.X * res + proj_bounds[0];
             double yin = proj_bounds[3] - where.Y * res;
-            try
+            GDAL111Wrapper.wrapper w1 = gdal_wrapper as GDAL111Wrapper.wrapper;
+            GDAL11013Wrapper.wrapper w2 = gdal_wrapper as GDAL11013Wrapper.wrapper;
+            if (w1 != null)
             {
-                toDisplay.TransformPoint(conv, xin, yin, 0);
+                w1.transform_to_display(conv, xin, yin);
             }
-            catch
+            else if (w2 != null)
             {
+                w2.transform_to_display(conv, xin, yin);
             }
+            else
+            {
+                conv[0] = xin;
+                conv[1] = yin;
+            }
+
             x = conv[0];
             y = conv[1];
 
@@ -693,7 +706,7 @@ namespace ApplyRoutesPlugin.MapProviders
 
         private IGPSLocation MercatorPixelToGPS(Point where, double zoomLevel)
         {
-            if (useGDAL)
+            if (gdal_wrapper != null)
             {
                 return GDALPixelToGPS(where, zoomLevel);
             }
@@ -738,52 +751,9 @@ namespace ApplyRoutesPlugin.MapProviders
             set { enabled = value; }
         }
 
-        private OSGeo.OSR.SpatialReference MakeSR(string proj)
-        {
-            OSGeo.OSR.SpatialReference sr = null;
-            try
-            {
-                sr = new OSGeo.OSR.SpatialReference("");
-                Regex r = new Regex(@"EPSG:(\d+)");
-                Match m = r.Match(proj);
-                if (m.Success)
-                {
-                    sr.ImportFromEPSG(Convert.ToInt32(m.Groups[1].Value));
-                }
-                else
-                {
-                    sr.ImportFromProj4(proj);
-                }
-                if (sr.IsProjected() != 0)
-                {
-                    sr.ExportToProj4(out proj);
-                    proj = proj.Replace(" +wktext ", " ");
-                    sr = new OSGeo.OSR.SpatialReference("");
-//                    sr.SetProjCS("x");
-  //                  sr.SetWellKnownGeogCS("WGS84");
-                    sr.ImportFromProj4(proj);
-                }
-            }
-            catch
-            {
-                sr = null;
-            }
+        
 
-            return sr;
-        }
-
-        private OSGeo.OSR.CoordinateTransformation MakeCT(OSGeo.OSR.SpatialReference sr1, OSGeo.OSR.SpatialReference sr2)
-        {
-            OSGeo.OSR.CoordinateTransformation ct = null;
-            try
-            {
-                ct = new OSGeo.OSR.CoordinateTransformation(sr1, sr2);
-            }
-            catch
-            {
-            }
-            return ct;
-        }
+        
 
         private Regex pi_decode = new Regex(@"\{res:\[([-+0-9\.,e]+)\]\s*,\s*" +
                 @"bounds:\[([-+0-9\.,e]+)\]\s*,\s*" +
@@ -804,16 +774,12 @@ namespace ApplyRoutesPlugin.MapProviders
 
         private void SetGDALProjInfo(string displayProjection, string projection)
         {
-            OSGeo.OSR.SpatialReference disp = MakeSR(displayProjection);
-            OSGeo.OSR.SpatialReference map = MakeSR(projection);
-
-            if (disp != null && map != null)
+            Object o = GDAL111Wrapper.wrapper.make_wrapper(displayProjection, projection);
+            if (o == null)
             {
-                toMap = MakeCT(disp, map);
-                toDisplay = MakeCT(map, disp);
-
-                useGDAL = toMap != null && toDisplay != null;
+                o = GDAL11013Wrapper.wrapper.make_wrapper(displayProjection, projection);
             }
+            gdal_wrapper = o;
         }
 
         private bool SetProjInfo(string proj_info)
@@ -825,8 +791,8 @@ namespace ApplyRoutesPlugin.MapProviders
             proj_bounds = null;
             proj_tile = null;
 
-            bool ret = useGDAL;
-            useGDAL = false;
+            bool ret = gdal_wrapper != null;
+            gdal_wrapper = null;
 
             Match m = pi_decode.Match(proj_info == null ? "" : proj_info);
             if (!m.Success)
@@ -852,11 +818,10 @@ namespace ApplyRoutesPlugin.MapProviders
         }
 
         private string proj_attrs = null;
-        private OSGeo.OSR.CoordinateTransformation toMap,toDisplay;
         private float[] proj_bounds;
         private float[] proj_res;
         private float[] proj_tile;
-        private bool useGDAL = false;
+        private Object gdal_wrapper = null;
 
         private bool enabled = true;
 
