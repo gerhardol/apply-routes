@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Windows.Forms;
+using System.Drawing;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ZoneFiveSoftware.Common.Visuals;
 using ApplyRoutesPlugin.MapProviders;
@@ -120,6 +121,38 @@ namespace ApplyRoutesPlugin
         {
             control.ForeColor = visualTheme.ControlText;
             control.BackColor = visualTheme.Control;
+        }
+
+        internal static void tab_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ITheme theme = Plugin.GetApplication().VisualTheme;
+            Brush backBrush;
+            Brush foreBrush = new SolidBrush(theme.ControlText);
+            TabControl tc = sender as TabControl;
+            if (tc == null) return;
+
+            if (e.Index == tc.SelectedIndex)
+            {
+                backBrush = new SolidBrush(theme.Control);
+            }
+            else
+            {
+                backBrush = new SolidBrush(theme.Window);
+            }
+
+            string tabName = tc.TabPages[e.Index].Text;
+            StringFormat sf = new StringFormat();
+            sf.Alignment = StringAlignment.Center;
+            e.Graphics.FillRectangle(backBrush, e.Bounds);
+            Rectangle r = e.Bounds;
+            r = new Rectangle(r.X, r.Y + 3, r.Width, r.Height - 3);
+            e.Graphics.DrawString(tabName, e.Font, foreBrush, r, sf);
+
+            sf.Dispose();
+            backBrush.Dispose();
+            foreBrush.Dispose();
+
+            e.DrawFocusRectangle();
         }
 
         public static void OpenListPopup<T>(ITheme theme, IList<T> items, System.Windows.Forms.Control control, string Id, T selected, ItemSelectHandler<T> selectHandler)

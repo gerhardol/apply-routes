@@ -473,6 +473,7 @@ namespace ApplyRoutesPlugin.Activities
 
         public void ThemeChanged(ITheme visualTheme)
         {
+            Plugin.ThemeChanged(this, visualTheme);
             Plugin.ThemeChanged(fitToPageBtn, visualTheme);
             Plugin.ThemeChanged(mapTypeLbl, visualTheme);
             mapTypePopup.ThemeChanged(visualTheme);
