@@ -111,7 +111,7 @@ namespace ApplyRoutesPlugin.Edit
                 GPSPoint.ValueInterpolator interp = new GPSPoint.ValueInterpolator();
 
                 double prev = -1;
-                for (i = i1 = i2 = 0; i1 < rt.Count-1 || i2 < aDist.Count-1; i++)
+                for (i = i1 = i2 = 0; i1 < rt.Count-1 || i2 < aDist.Count-1;)
                 {
                     IGPSPoint point = rt[i1].Value;
                     double rdist = dmt[i1].Value * distScale;
@@ -171,7 +171,7 @@ namespace ApplyRoutesPlugin.Edit
                         t = aDist.StartTime.AddSeconds(cur);
                     }
                     prev = cur;
-                    route.InsertAtPosition(i, t, point);
+                    route.InsertAtPosition(i++, t, point);
                 }
             }
             else
@@ -238,17 +238,16 @@ namespace ApplyRoutesPlugin.Edit
                                 {
                                     adist = new DistanceDataTrack();
                                     adist.Add(activity.StartTime, 0);
-                                    if (activity.Laps.Count > 0)
+                                    if (ai.RecordedLapDetailInfo.Count > 0)
                                     {
                                         float dist = 0;
-                                        for (int i = 0; i < activity.Laps.Count; i++)
+                                        for (int i = 0; i < ai.RecordedLapDetailInfo.Count; i++)
                                         {
-                                            ILapInfo li = activity.Laps[i];
-                                            DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
-
-                                            if (!float.IsNaN(li.TotalDistanceMeters))
+                                            LapDetailInfo ldi = ai.RecordedLapDetailInfo[i];
+                                            DateTime t = ldi.EndTime;
+                                            if (!float.IsNaN(ldi.LapDistanceMeters))
                                             {
-                                                dist += li.TotalDistanceMeters;
+                                                dist += ldi.LapDistanceMeters;
                                                 adist.Add(t, dist);
                                             }
                                         }
