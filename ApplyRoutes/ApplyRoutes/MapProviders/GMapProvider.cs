@@ -732,6 +732,7 @@ namespace ApplyRoutesPlugin.MapProviders
 
         public IGPSLocation PixelToGPS(IGPSLocation origin, double zoomLevel, Point pixel)
         {
+            if (origin == null) return origin;
             Point orgP = MercatorGPSToPixel(origin, zoomLevel);
             Point pos = new Point(orgP.X + pixel.X, orgP.Y + pixel.Y);
             IGPSLocation loc = MercatorPixelToGPS(pos, zoomLevel);
