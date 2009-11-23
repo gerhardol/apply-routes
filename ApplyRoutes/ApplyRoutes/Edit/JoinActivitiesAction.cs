@@ -136,6 +136,24 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
+        private void AppendOff(ITimeDataSeries<float> dst, ITimeDataSeries<float> src, TimeSpan adjust, ref DateTime end, float offset)
+        {
+            if (src != null)
+            {
+                for (int i = 0; i < src.Count; i++)
+                {
+                    ITimeValueEntry<float> tpt = src[i];
+                    float value = tpt.Value + offset;
+                    DateTime when = src.EntryDateTime(tpt).Add(adjust);
+                    dst.Add(when, value);
+                    if (when > end)
+                    {
+                        end = when;
+                    }
+                }
+            }
+        }
+
         public void Run(Rectangle rectButton)
         {
             if (activities == null || activities.Count <= 1)
@@ -173,7 +191,7 @@ namespace ApplyRoutesPlugin.Edit
                 }
 
                 Append(route, activity.GPSRoute, adjust, ref endTime);
-                Append(ddt, activity.DistanceMetersTrack, adjust, ref endTime);
+                AppendOff(ddt, activity.DistanceMetersTrack, adjust, ref endTime, ddt.Count > 0 ? ddt.Max : 0);
                 Append(cpmt, activity.CadencePerMinuteTrack, adjust, ref endTime);
                 Append(emt, activity.ElevationMetersTrack, adjust, ref endTime);
                 Append(hrt, activity.HeartRatePerMinuteTrack, adjust, ref endTime);
