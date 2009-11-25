@@ -71,20 +71,15 @@ namespace ApplyRoutesPlugin.UI
             ThemeChanged(Plugin.GetApplication().VisualTheme);
         }
 
-        static public void ThemeChanged(Control control, ITheme visualTheme)
-        {
-            control.ForeColor = visualTheme.ControlText;
-            control.BackColor = visualTheme.Control;
-        }
-
         public void ThemeChanged(ITheme visualTheme)
         {
             activityRouteTree.ThemeChanged(visualTheme);
             activityRoutePop.ThemeChanged(visualTheme);
             activityText.ThemeChanged(visualTheme);
 
-            ThemeChanged(okBtn, visualTheme);
-            ThemeChanged(cancelBtn, visualTheme);
+            Plugin.ThemeChanged(this, visualTheme);
+            Plugin.ThemeChanged(okBtn, visualTheme);
+            Plugin.ThemeChanged(cancelBtn, visualTheme);
         }
 
         public void SetupActivityRoutePop()

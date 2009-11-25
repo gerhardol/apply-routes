@@ -167,6 +167,7 @@ namespace ApplyRoutesPlugin.UI
 
         public void ThemeChanged(ITheme visualTheme)
         {
+            Plugin.ThemeChanged(this, visualTheme);
             Plugin.ThemeChanged(numActLbl, visualTheme);
             numActTxt.ThemeChanged(visualTheme);
             Plugin.ThemeChanged(minDistLbl, visualTheme);

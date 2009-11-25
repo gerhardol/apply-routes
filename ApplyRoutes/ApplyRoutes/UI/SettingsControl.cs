@@ -39,7 +39,10 @@ namespace ApplyRoutesPlugin.UI
         {
             InitializeComponent();
             EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
-            
+
+            settingsTabs.DrawMode = TabDrawMode.OwnerDrawFixed;
+            settingsTabs.DrawItem += new DrawItemEventHandler(Plugin.tab_DrawItem);
+
             RefreshPage();
             
             ThemeChanged(Plugin.GetApplication().VisualTheme);
@@ -150,6 +153,8 @@ namespace ApplyRoutesPlugin.UI
 
         public void ThemeChanged(ITheme theme)
         {
+            Plugin.ThemeChanged(this, theme);
+
             Plugin.ThemeChanged(showApplyRoutesChk, theme);
             Plugin.ThemeChanged(showCreateRoutesChk, theme);
             Plugin.ThemeChanged(showUpdateEquipmentChk, theme);

@@ -41,6 +41,8 @@ namespace ApplyRoutesPlugin.UI
             InitializeComponent();
             Plugin.registerDefaultBtns(this);
 
+            updateTab.DrawMode = TabDrawMode.OwnerDrawFixed;
+            updateTab.DrawItem += new DrawItemEventHandler(Plugin.tab_DrawItem);
             this.activities = activities;
             this.routes = routes;
 
@@ -192,8 +194,13 @@ namespace ApplyRoutesPlugin.UI
             toLocationTxt.ThemeChanged(visualTheme);
             selectedCategoriesTxt.ThemeChanged(visualTheme);
 
+            Plugin.ThemeChanged(this, visualTheme);
+            Plugin.ThemeChanged(updateTab, visualTheme);
             Plugin.ThemeChanged(okBtn, visualTheme);
             Plugin.ThemeChanged(cancelBtn, visualTheme);
+            Plugin.ThemeChanged(updateEquipmentTab, visualTheme);
+            Plugin.ThemeChanged(renameTab, visualTheme);
+            Plugin.ThemeChanged(globalRenameTab, visualTheme);
         }
 
         public IList<IEquipmentItem> DiffList(IList<IEquipmentItem> list, IList<IEquipmentItem> sublist, bool sub)

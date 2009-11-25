@@ -27,6 +27,7 @@ using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
 
 using ApplyRoutesPlugin.UI;
+using System.Reflection;
 
 namespace ApplyRoutesPlugin.Edit
 {
@@ -136,8 +137,27 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
+        private void AppendOff(ITimeDataSeries<float> dst, ITimeDataSeries<float> src, TimeSpan adjust, ref DateTime end, float offset)
+        {
+            if (src != null)
+            {
+                for (int i = 0; i < src.Count; i++)
+                {
+                    ITimeValueEntry<float> tpt = src[i];
+                    float value = tpt.Value + offset;
+                    DateTime when = src.EntryDateTime(tpt).Add(adjust);
+                    dst.Add(when, value);
+                    if (when > end)
+                    {
+                        end = when;
+                    }
+                }
+            }
+        }
+
         public void Run(Rectangle rectButton)
         {
+                
             if (activities == null || activities.Count <= 1)
             {
                 return;
@@ -161,6 +181,7 @@ namespace ApplyRoutesPlugin.Edit
 
             double dist = 0;
             TimeSpan adjust = TimeSpan.FromSeconds(0);
+            bool hasCopy = false;
 
             for (int i = 0; i < salist.Count; i++)
             {
@@ -173,7 +194,7 @@ namespace ApplyRoutesPlugin.Edit
                 }
 
                 Append(route, activity.GPSRoute, adjust, ref endTime);
-                Append(ddt, activity.DistanceMetersTrack, adjust, ref endTime);
+                AppendOff(ddt, activity.DistanceMetersTrack, adjust, ref endTime, ddt.Count > 0 ? ddt.Max : 0);
                 Append(cpmt, activity.CadencePerMinuteTrack, adjust, ref endTime);
                 Append(emt, activity.ElevationMetersTrack, adjust, ref endTime);
                 Append(hrt, activity.HeartRatePerMinuteTrack, adjust, ref endTime);
@@ -188,7 +209,7 @@ namespace ApplyRoutesPlugin.Edit
                     first.TotalTimeEntered += activity.TotalTimeEntered;
                     if (first.Notes != "" && activity.Notes != "")
                     {
-                        //first.Notes += "\n--\n";
+                        first.Notes += "\r\n--\r\n";
                     }
                     first.Notes += activity.Notes;
                     if (activity.MaximumCadencePerMinuteEntered > first.MaximumCadencePerMinuteEntered)
@@ -215,7 +236,8 @@ namespace ApplyRoutesPlugin.Edit
                         li.TotalDistanceMeters = lap.TotalDistanceMeters;
                     }
 
-                    if (activity.StartTime > prevEnd) {
+                    if (activity.StartTime > prevEnd)
+                    {
                         first.TimerPauses.Add(new ValueRange<DateTime>(prevEnd, activity.StartTime));
                     }
 
@@ -224,7 +246,39 @@ namespace ApplyRoutesPlugin.Edit
                         first.TimerPauses.Add(dtr);
                     }
 
-                    Plugin.GetApplication().Logbook.Activities.Remove(activity);
+                    if (!hasCopy)
+                    {
+                        /*
+                         * If we didnt manage to make a copy (for whatever reason - perhaps
+                         * ST changed the CopyTo method) its better to delete the
+                         * remaining laps
+                         */
+                        Plugin.GetApplication().Logbook.Activities.Remove(activity);
+                    }
+                }
+                else
+                {
+                    Type type = first.GetType();
+                    IActivity tmp = (IActivity)Activator.CreateInstance(type);
+                    MethodInfo theMethod = type.GetMethod("CopyTo");
+                    if (tmp != null && theMethod != null)
+                    {
+                        hasCopy = true;
+                        theMethod.Invoke(null, new object [] {
+                                first, tmp
+                        });
+                        first = tmp;
+                        Plugin.GetApplication().Logbook.Activities.Add(first);
+                    }
+                    String note = Plugin.NumberedActivityText(Properties.Resources.Edit_JoinedActivities_Text,
+                            salist.Count);
+
+                    if (first.Notes != "")
+                    {
+                        note += "\r\n--\r\n";
+                    }
+
+                    first.Notes = note + first.Notes;
                 }
                 dist += ai.DistanceMeters;
             }
