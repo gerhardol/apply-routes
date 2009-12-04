@@ -18,26 +18,29 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Text;
-using System.Xml;
-using System.Windows.Forms;
-using ZoneFiveSoftware.Common.Data.Fitness;
-using ZoneFiveSoftware.Common.Visuals;
-using ZoneFiveSoftware.Common.Data.GPS;
-using ZoneFiveSoftware.Common.Data;
-using ApplyRoutesPlugin.MapProviders;
-using System.Text.RegularExpressions;
-using System.Security.Permissions;
-using ZoneFiveSoftware.Common.Visuals.Fitness;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Security.Permissions;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+
+using ApplyRoutesPlugin.MapProviders;
 using ApplyRoutesPlugin.UI;
+using ZoneFiveSoftware.Common.Data;
+using ZoneFiveSoftware.Common.Data.Fitness;
+using ZoneFiveSoftware.Common.Data.GPS;
+using ZoneFiveSoftware.Common.Visuals;
+using ZoneFiveSoftware.Common.Visuals.Fitness;
 
 namespace ApplyRoutesPlugin.Activities
 {
     using xmlnode = XmlElement;
-    using System.IO;
 
     public partial class GMapRouteControl : UserControl
     {
@@ -200,22 +203,49 @@ namespace ApplyRoutesPlugin.Activities
                 HtmlElement elt = webBrowser.Document.GetElementById("xml_iframe");
                 xmlnode athleteLog = null;
                 bool smoothing = false;
+                StringWriter sw = null;
 
                 root = null;
 
-                if (elt != null && activities != null)
+                int i = 0;
+                if (elt != null)
                 {
-                    smoothing = elt.GetAttribute("smoothing") != "";
-                    root = new XmlDocument();
-                    xmlnode fitnessWorkbook = CreateChild(root, "FitnessWorkbook", null);
-                    athleteLog = CreateChild(fitnessWorkbook, "AthleteLog", null);
                     ILogbook logbook = Plugin.GetApplication().Logbook;
-                    CreateChild(athleteLog, "Athlete", new string[] {
+                    smoothing = elt.GetAttribute("smoothing") != "";
+                    if (nact == ntot)
+                    {
+                        try
+                        {
+                            Module mod = Assembly.GetEntryAssembly().GetModule("SportTracks.exe");
+                            Type FitnessLogConvert = mod.GetType("ZoneFiveSoftware.SportTracks.Xml.ZoneFiveSoftware.FitnessLogConvert");
+                            Object wb = FitnessLogConvert.InvokeMember("ToFitnessWorkbook",
+                                        BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public,
+                                        null, null, new object[] { logbook, activities });
+                            if (wb != null)
+                            {
+                                XmlSerializer serializer = new XmlSerializer(wb.GetType());
+                                sw = new StringWriter();
+                                serializer.Serialize(sw, wb);
+                                i = ntot;
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    if (sw == null)
+                    {
+                        root = new XmlDocument();
+                        xmlnode fitnessWorkbook = CreateChild(root, "FitnessWorkbook", null);
+                        athleteLog = CreateChild(fitnessWorkbook, "AthleteLog", null);
+                        CreateChild(athleteLog, "Athlete", new string[] {
                             "Id", logbook.Athlete.ReferenceId,
                             "Name", logbook.Athlete.Name
                         });
+                    }
                 }
-                for (int i = 0; i < ntot; i++)
+                for ( ; i < ntot; i++)
                 {
                     IActivity activity = i < nact ? activities[i] : null;
                     IRoute route = i >= nact ? routes[i - nact] : null;
@@ -228,68 +258,82 @@ namespace ApplyRoutesPlugin.Activities
 
                     string refid = activity != null ? activity.ReferenceId : route.ReferenceId;
 
+                    bool isact = activity != null;
                     ActivityInfo ai = activity != null ? ActivityInfoCache.Instance.GetInfo(activity) : null;
-                    if (root != null && activity != null)
+                    if (root != null)
                     {
                         xmlnode act = CreateChild(athleteLog, "Activity", new string[] {
-                                "StartTime", XmlDateString(activity.StartTime),
-                                "Id", activity.ReferenceId
+                                "StartTime", XmlDateString(isact?activity.StartTime:groute.StartTime),
+                                "Id", refid
                         });
-                        CreateChild(act, "Metadata", new string[] {
-                            "Source", activity.Metadata.Source,
-                            "Modified", XmlDateString(activity.Metadata.Modified)
-                        });
+                        if (activity != null)
+                        {
+                            CreateChild(act, "Metadata", new string[] {
+                                "Source", activity.Metadata.Source,
+                                "Modified", XmlDateString(activity.Metadata.Modified)
+                            });
+                        }
                         CreateChild(act, "Duration", new string[] {
-                            "TotalSeconds", ((int)ai.Time.TotalSeconds).ToString() });
+                            "TotalSeconds", ((int)(isact?ai.Time:route.TotalTime).TotalSeconds).ToString() });
                         CreateChild(act, "Elevation", new string[] {
-                            "AscendMeters", activity.TotalAscendMetersEntered.ToString(),
-                            "DescendMeters", activity.TotalDescendMetersEntered.ToString()
+                            "AscendMeters", (isact?activity.TotalAscendMetersEntered:0).ToString(),
+                            "DescendMeters", (isact?activity.TotalDescendMetersEntered:0).ToString()
                         });
                         CreateChild(act, "Calories", new string[] {
-                                "TotalCal", activity.TotalCalories.ToString()
+                                "TotalCal", (isact?activity.TotalCalories:0).ToString()
                         });
 
-                        if (activity.Name != "")
+                        String aname = isact ? activity.Name : route.Name;
+                        if (aname != "")
                         {
                             xmlnode name = CreateChild(act, "Name", null);
-                            CreateChild(name, "", new string[] { activity.Name });
+                            CreateChild(name, "", new string[] { aname });
                         }
 
-                        if (activity.Notes != "")
+                        String anotes = isact ? activity.Notes : route.Notes;
+                        if (anotes != "")
                         {
                             xmlnode notes = CreateChild(act, "Notes", null);
-                            CreateChild(notes, "", new string[] { activity.Notes });
+                            CreateChild(notes, "", new string[] { anotes });
                         }
 
-                        if (activity.Laps != null && activity.Laps.Count > 0)
+                        if (isact && ai.RecordedLapDetailInfo != null && ai.RecordedLapDetailInfo.Count > 0)
                         {
                             xmlnode laps = CreateChild(act, "Laps", null);
-                            foreach (ILapInfo li in activity.Laps)
+                            foreach (LapDetailInfo li in ai.RecordedLapDetailInfo)
                             {
                                 CreateChild(laps, "Lap", new string[] {
                                     "StartTime", XmlDateString(li.StartTime),
-                                    "DurationSeconds", li.TotalTime.TotalSeconds.ToString() });
+                                    "DurationSeconds", li.LapElapsed.TotalSeconds.ToString() });
                             }
                         }
-                        
-                        CreateChild(act, "Weather", new string[] {
-                            "Conditions", activity.Weather.Conditions.ToString(),
-                            "Temp", activity.Weather.TemperatureCelsius.ToString()
-                        });
-                        CreateChild(act, "Category", new string[] {
-                            "Id", activity.Category.ReferenceId,
-                            "Name", activity.Category.Name
-                        });
-                        CreateChild(act, "Location", new string[] {
-                            "Name", activity.Location
-                        });
-                        xmlnode equip = CreateChild(act, "EquipmentUsed", null);
-                        foreach (IEquipmentItem eq in activity.EquipmentUsed)
+
+                        if (isact)
                         {
-                            CreateChild(equip, "EquipmentItem", new string[] {
-                                "Id", eq.ReferenceId,
-                                "Name", eq.Name
+                            CreateChild(act, "Weather", new string[] {
+                                "Conditions", activity.Weather.Conditions.ToString(),
+                                "Temp", activity.Weather.TemperatureCelsius.ToString()
                             });
+
+                            CreateChild(act, "Category", new string[] {
+                                "Id", activity.Category.ReferenceId,
+                                "Name", activity.Category.Name
+                            });
+                        }
+                        CreateChild(act, "Location", new string[] {
+                            "Name", isact?activity.Location:route.Location
+                        });
+
+                        if (isact)
+                        {
+                            xmlnode equip = CreateChild(act, "EquipmentUsed", null);
+                            foreach (IEquipmentItem eq in activity.EquipmentUsed)
+                            {
+                                CreateChild(equip, "EquipmentItem", new string[] {
+                                    "Id", eq.ReferenceId,
+                                    "Name", eq.Name
+                                });
+                            }
                         }
                         xmlnode track = CreateChild(act, "Track", new string[] {
                             "StartTime", XmlDateString(groute.StartTime)
@@ -314,24 +358,27 @@ namespace ApplyRoutesPlugin.Activities
                             attrs.Add(FloatToCoord(p.LatitudeDegrees));
                             attrs.Add("lon");
                             attrs.Add(FloatToCoord(p.LongitudeDegrees));
-                            if (!smoothing)
+                            if (!smoothing || !isact)
                             {
                                 attrs.Add("ele");
                                 attrs.Add(FloatToCoord(p.ElevationMeters));
                             }
                         }
-                        if (smoothing)
+                        if (smoothing && isact)
                         {
                             AddFloatTrack(trackpts, smoothing, activity.ElevationMetersTrack,
                                 ai.SmoothedElevationTrack, "ele");
                         }
-                        AddFloatTrack(trackpts, smoothing, activity.HeartRatePerMinuteTrack, ai.SmoothedHeartRateTrack, "hr");
-                        AddFloatTrack(trackpts, smoothing, activity.CadencePerMinuteTrack, ai.SmoothedCadenceTrack, "cadence");
-                        AddFloatTrack(trackpts, smoothing, activity.PowerWattsTrack, ai.SmoothedPowerTrack, "power");
-                        AddFloatTrack(trackpts, smoothing, activity.DistanceMetersTrack, null, "dist");
-                        if (smoothing)
+                        if (isact)
                         {
-                            AddFloatTrack(trackpts, smoothing, null, ai.SmoothedSpeedTrack, "speed");
+                            AddFloatTrack(trackpts, smoothing, activity.HeartRatePerMinuteTrack, ai.SmoothedHeartRateTrack, "hr");
+                            AddFloatTrack(trackpts, smoothing, activity.CadencePerMinuteTrack, ai.SmoothedCadenceTrack, "cadence");
+                            AddFloatTrack(trackpts, smoothing, activity.PowerWattsTrack, ai.SmoothedPowerTrack, "power");
+                            AddFloatTrack(trackpts, smoothing, activity.DistanceMetersTrack, null, "dist");
+                            if (smoothing)
+                            {
+                                AddFloatTrack(trackpts, smoothing, null, ai.SmoothedSpeedTrack, "speed");
+                            }
                         }
                         foreach (long tm in trackpts.Keys)
                         {
@@ -341,7 +388,7 @@ namespace ApplyRoutesPlugin.Activities
                             CreateChild(track, "pt", sl);
                         }
 
-                        if (activity.DistanceMarkersMeters != null && activity.DistanceMarkersMeters.Count > 0)
+                        if (isact && activity.DistanceMarkersMeters != null && activity.DistanceMarkersMeters.Count > 0)
                         {
                             xmlnode dmm = CreateChild(act, "DistanceMarkers", null);
                             foreach (float m in activity.DistanceMarkersMeters)
@@ -388,9 +435,11 @@ namespace ApplyRoutesPlugin.Activities
 
                 if (root != null)
                 {
-                    StringWriter sw = new StringWriter();
+                    sw = new StringWriter();
                     root.Save(sw);
                     root = null;
+                }
+                if (sw != null) {
                     webBrowser.Document.InvokeScript("add_polyline_from_xml", new Object[] { sw.ToString() });
                 }
                 else if (n > s && e > w)
