@@ -42,16 +42,23 @@
             this.mapProviderUrl = new ZoneFiveSoftware.Common.Visuals.TextBox();
             this.mapProviderName = new ZoneFiveSoftware.Common.Visuals.TextBox();
             this.mapProvidersList = new ZoneFiveSoftware.Common.Visuals.TreeList();
+            this.uploadTabPage = new System.Windows.Forms.TabPage();
+            this.uploadHeadingLbl = new System.Windows.Forms.Label();
+            this.uploadResetBtn = new ZoneFiveSoftware.Common.Visuals.Button();
+            this.uploadUrlLbl = new System.Windows.Forms.Label();
+            this.uploadUrlTxt = new ZoneFiveSoftware.Common.Visuals.TextBox();
             this.homePageLink = new System.Windows.Forms.LinkLabel();
             this.settingsTabs.SuspendLayout();
             this.editMenuTabPage.SuspendLayout();
             this.mapProvidersTabPage.SuspendLayout();
+            this.uploadTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // settingsTabs
             // 
             this.settingsTabs.Controls.Add(this.editMenuTabPage);
             this.settingsTabs.Controls.Add(this.mapProvidersTabPage);
+            this.settingsTabs.Controls.Add(this.uploadTabPage);
             resources.ApplyResources(this.settingsTabs, "settingsTabs");
             this.settingsTabs.Name = "settingsTabs";
             this.settingsTabs.SelectedIndex = 0;
@@ -195,6 +202,58 @@
             this.mapProvidersList.ShowLines = false;
             this.mapProvidersList.ShowPlusMinus = false;
             // 
+            // uploadTabPage
+            // 
+            this.uploadTabPage.Controls.Add(this.uploadHeadingLbl);
+            this.uploadTabPage.Controls.Add(this.uploadResetBtn);
+            this.uploadTabPage.Controls.Add(this.uploadUrlLbl);
+            this.uploadTabPage.Controls.Add(this.uploadUrlTxt);
+            resources.ApplyResources(this.uploadTabPage, "uploadTabPage");
+            this.uploadTabPage.Name = "uploadTabPage";
+            this.uploadTabPage.UseVisualStyleBackColor = true;
+            // 
+            // uploadHeadingLbl
+            // 
+            resources.ApplyResources(this.uploadHeadingLbl, "uploadHeadingLbl");
+            this.uploadHeadingLbl.Name = "uploadHeadingLbl";
+            // 
+            // uploadResetBtn
+            // 
+            resources.ApplyResources(this.uploadResetBtn, "uploadResetBtn");
+            this.uploadResetBtn.BackColor = System.Drawing.Color.Transparent;
+            this.uploadResetBtn.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))), ((int)(((byte)(120)))));
+            this.uploadResetBtn.CenterImage = null;
+            this.uploadResetBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.uploadResetBtn.HyperlinkStyle = false;
+            this.uploadResetBtn.ImageMargin = 2;
+            this.uploadResetBtn.LeftImage = null;
+            this.uploadResetBtn.Name = "uploadResetBtn";
+            this.uploadResetBtn.PushStyle = true;
+            this.uploadResetBtn.RightImage = null;
+            this.uploadResetBtn.TextAlign = System.Drawing.StringAlignment.Center;
+            this.uploadResetBtn.TextLeftMargin = 2;
+            this.uploadResetBtn.TextRightMargin = 2;
+            // 
+            // uploadUrlLbl
+            // 
+            resources.ApplyResources(this.uploadUrlLbl, "uploadUrlLbl");
+            this.uploadUrlLbl.Name = "uploadUrlLbl";
+            // 
+            // uploadUrlTxt
+            // 
+            this.uploadUrlTxt.AcceptsReturn = false;
+            this.uploadUrlTxt.AcceptsTab = false;
+            this.uploadUrlTxt.BackColor = System.Drawing.Color.White;
+            this.uploadUrlTxt.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
+            this.uploadUrlTxt.ButtonImage = null;
+            resources.ApplyResources(this.uploadUrlTxt, "uploadUrlTxt");
+            this.uploadUrlTxt.Multiline = false;
+            this.uploadUrlTxt.Name = "uploadUrlTxt";
+            this.uploadUrlTxt.ReadOnly = false;
+            this.uploadUrlTxt.ReadOnlyColor = System.Drawing.SystemColors.Control;
+            this.uploadUrlTxt.ReadOnlyTextColor = System.Drawing.SystemColors.ControlLight;
+            this.uploadUrlTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
             // homePageLink
             // 
             resources.ApplyResources(this.homePageLink, "homePageLink");
@@ -213,6 +272,8 @@
             this.editMenuTabPage.PerformLayout();
             this.mapProvidersTabPage.ResumeLayout(false);
             this.mapProvidersTabPage.PerformLayout();
+            this.uploadTabPage.ResumeLayout(false);
+            this.uploadTabPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,6 +295,11 @@
         private ZoneFiveSoftware.Common.Visuals.Button mapProviderResetBtn;
         private System.Windows.Forms.CheckBox showSendToRoutesChk;
         private System.Windows.Forms.CheckBox showJoinRoutesChk;
+        private System.Windows.Forms.TabPage uploadTabPage;
+        private System.Windows.Forms.Label uploadUrlLbl;
+        private ZoneFiveSoftware.Common.Visuals.TextBox uploadUrlTxt;
+        private ZoneFiveSoftware.Common.Visuals.Button uploadResetBtn;
+        private System.Windows.Forms.Label uploadHeadingLbl;
 
     }
 }

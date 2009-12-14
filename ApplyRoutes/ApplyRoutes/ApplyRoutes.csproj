@@ -74,6 +74,7 @@
       <DependentUpon>GMapRouteControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Edit\JoinActivitiesAction.cs" />
+    <Compile Include="Edit\RRUploadAction.cs" />
     <Compile Include="Edit\UpdateEquipmentAction.cs" />
     <Compile Include="Edit\MakeRouteAction.cs" />
     <Compile Include="Edit\ExtendActions.cs" />
@@ -208,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\DropDown8.png" />
+    <Content Include="Resources\ApplyRoutes.ico" />
     <Content Include="Resources\Map_Waypoint.png" />
     <Content Include="Resources\Map_Waypoint_Sel.png" />
     <Content Include="Resources\Map_Waypoint_Hi.png" />

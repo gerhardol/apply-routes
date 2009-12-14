@@ -532,7 +532,16 @@ namespace ApplyRoutesPlugin.MapProviders
                         zoom,
                         cpt.X, cpt.Y
                         });
-                    
+
+                    if (url.LastIndexOf('#') == -1)
+                    {
+                        url += "#&";
+                    }
+                    else if (url[url.Length - 1] != '&')
+                    {
+                        url += "&";
+                    }
+
                     Uri uri = new Uri(url+hash);
                     string theUrl = uri.GetComponents(UriComponents.HttpRequestUrl, UriFormat.UriEscaped);
                     if (theUrl.IndexOf("?") == -1) {

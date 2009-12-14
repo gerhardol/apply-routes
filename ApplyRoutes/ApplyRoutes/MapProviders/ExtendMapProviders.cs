@@ -100,7 +100,7 @@ namespace ApplyRoutesPlugin.MapProviders
             "msmaps:Hybrid", "MSLive-Hybrid",
             "msmaps:Hybrid-3d&gmrc", "MSLive-VE",
             "msmaps:Road", "MSLive-Road",
-            "geoportail.shtml:Hybrid", "Geoportail - Mainland",
+            "geoportail.html:Hybrid", "Geoportail",
             "openlayers:OpenStreetMapMapnik", "OpenLayers - Open Streetmap"
             };
 
@@ -151,10 +151,11 @@ namespace ApplyRoutesPlugin.MapProviders
                     }
 
                     XmlNodeList mapProviders = mapProviderList.ChildNodes;
-                    SortedList<string,int> guidMap = new SortedList<string,int>();
-                    
+                    SortedList<string, int> guidMap = new SortedList<string, int>();
+
                     int i = 0;
-                    foreach (string guid in guids) {
+                    foreach (string guid in guids)
+                    {
                         guidMap[guid] = i++;
                     }
                     i = 0;
@@ -190,6 +191,13 @@ namespace ApplyRoutesPlugin.MapProviders
                         }
                         i++;
                     }
+                }
+                XmlNodeList uploadUrls = pluginNode.GetElementsByTagName("UploadUrl");
+                if (uploadUrls.Count == 1)
+                {
+                    XmlNode uurl = uploadUrls[0];
+                    XmlAttribute att = uurl.Attributes["Url"];
+                    UploadURL = att.Value;
                 }
             }
         }
@@ -229,6 +237,16 @@ namespace ApplyRoutesPlugin.MapProviders
                     mapProviderList.AppendChild(mp);
                 }
             }
+
+            if (uploadUrl != null)
+            {
+                XmlNode uurl = xmlDoc.CreateElement("UploadUrl");
+
+                att = xmlDoc.CreateAttribute("Url");
+                att.Value = uploadUrl;
+                uurl.Attributes.Append(att);
+                pluginNode.AppendChild(uurl);
+            }
         }
 
         private static IList<GMapProvider> providers = null;
@@ -258,5 +276,14 @@ namespace ApplyRoutesPlugin.MapProviders
                 "9cc306e9-585e-11dd-ae16-0800200c9a66"
             };
         private static List<MapProviderInfo> mpiList = null;
+
+        private static String defaultUploadUrl = "http://replayroutes.com/upload.html";
+        public static String UploadURL
+        {
+            get { return uploadUrl == null ? defaultUploadUrl : uploadUrl; }
+            set { uploadUrl = value == null || value == defaultUploadUrl ? null : value; }
+        }
+
+        private static String uploadUrl = null;
     }
 }

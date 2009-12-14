@@ -203,6 +203,9 @@
     <value>Type</value>
   </data>
   <data name="Edit_JoinedActivities_Text" xml:space="preserve">
-    <value>{0:5} {1:5} Joined by Apply Routes</value>
+    <value>{0:S} {1:S} Joined by Apply Routes</value>
+  </data>
+  <data name="Edit_RRUpload_Text" xml:space="preserve">
+    <value>AR - Upload  {0:S} {1:S} To ReplayRoutes</value>
   </data>
 </root>

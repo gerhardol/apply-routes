@@ -44,7 +44,14 @@ namespace ApplyRoutesPlugin.UI
             settingsTabs.DrawItem += new DrawItemEventHandler(Plugin.tab_DrawItem);
 
             RefreshPage();
-            
+
+            uploadUrlTxt.Text = ExtendMapProviders.UploadURL;
+
+            uploadUrlTxt.TextChanged += delegate(object sender, EventArgs e)
+            {
+                ExtendMapProviders.UploadURL = uploadUrlTxt.Text;
+            };
+
             ThemeChanged(Plugin.GetApplication().VisualTheme);
 
             EventHandler chkChange = delegate(object sender, EventArgs e)
@@ -170,12 +177,18 @@ namespace ApplyRoutesPlugin.UI
             Plugin.ThemeChanged(this.settingsTabs, theme);
             Plugin.ThemeChanged(this.editMenuTabPage, theme);
             Plugin.ThemeChanged(this.mapProvidersTabPage, theme);
+            Plugin.ThemeChanged(this.uploadTabPage, theme);
+
+            Plugin.ThemeChanged(uploadHeadingLbl, theme);
+            Plugin.ThemeChanged(uploadUrlLbl, theme);
+            uploadUrlTxt.ThemeChanged(theme);
         }
 
         public void UICultureChanged(CultureInfo culture)
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsControl));
             resources.ApplyResources(this.editMenuTabPage, "editMenuTabPage");
+            resources.ApplyResources(this.uploadTabPage, "uploadTabPage");
             resources.ApplyResources(this.homePageLink, "homePageLink");
             resources.ApplyResources(this.mapProviderResetBtn, "mapProviderResetBtn");
             resources.ApplyResources(this.mapProvidersTabPage, "mapProvidersTabPage");
@@ -185,6 +198,8 @@ namespace ApplyRoutesPlugin.UI
             resources.ApplyResources(this.showJoinRoutesChk, "showJoinRoutesChk");
             resources.ApplyResources(this.showSendToRoutesChk, "showSendToRoutesChk");
             resources.ApplyResources(this.showUpdateEquipmentChk, "showUpdateEquipmentChk");
+            resources.ApplyResources(this.uploadHeadingLbl, "uploadHeadingLbl");
+            resources.ApplyResources(this.uploadUrlLbl, "uploadUrlLbl");
             mapProvidersList.Columns[0].Text = Properties.Resources.SettingsControl_Title;
             mapProvidersList.Columns[1].Text = Properties.Resources.SettingsControl_URL;
         }
@@ -204,13 +219,14 @@ namespace ApplyRoutesPlugin.UI
     }
     public class EditMenuSettingsInfo
     {
-        public EditMenuSettingsInfo(bool sar, bool scr, bool sue, bool sst, bool sjr)
+        public EditMenuSettingsInfo(bool sar, bool scr, bool sue, bool sst, bool sjr, bool srr)
         {
             showApplyRoutes = sar;
             showCreateRoutes = scr;
             showUpdateEquipment = sue;
             showSendToRoutes = sst;
             showJoinRoutes = sjr;
+            showRRUpload = srr;
         }
 
         public static EditMenuSettingsInfo Get()
@@ -225,11 +241,11 @@ namespace ApplyRoutesPlugin.UI
                 }
                 if (data != null && data.Length == 3)
                 {
-                    emsi = new EditMenuSettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0, true, true);
+                    emsi = new EditMenuSettingsInfo(data[0] != 0, data[1] != 0, data[2] != 0, true, true, true);
                 }
                 else
                 {
-                    emsi = new EditMenuSettingsInfo(true, true, false, true, true);
+                    emsi = new EditMenuSettingsInfo(true, true, false, true, true, true);
                 }
             }
             return emsi;
@@ -242,6 +258,7 @@ namespace ApplyRoutesPlugin.UI
             XmlAttribute sue = pluginNode.Attributes["showUpdateEquipment"];
             XmlAttribute sst = pluginNode.Attributes["showSendToRoutes"];
             XmlAttribute sjr = pluginNode.Attributes["showJoinRoutes"];
+            XmlAttribute srr = pluginNode.Attributes["showRRUpload"];
 
 
             bool sarb = sar == null || sar.Value == "1";
@@ -249,8 +266,9 @@ namespace ApplyRoutesPlugin.UI
             bool sueb = sue != null && sue.Value == "1";
             bool sstb = sst == null || sst.Value == "1";
             bool sjrb = sjr == null || sjr.Value == "1";
+            bool srrb = srr == null || srr.Value == "1";
 
-            emsi = new EditMenuSettingsInfo(sarb, scrb, sueb, sstb, sjrb);
+            emsi = new EditMenuSettingsInfo(sarb, scrb, sueb, sstb, sjrb, srrb);
         }
 
         private static XmlAttribute GetOrCreate(XmlDocument xmlDoc, XmlNode node, string name)
@@ -271,6 +289,7 @@ namespace ApplyRoutesPlugin.UI
             XmlAttribute sue = GetOrCreate(xmlDoc, pluginNode, "showUpdateEquipment");
             XmlAttribute sst = GetOrCreate(xmlDoc, pluginNode, "showSendToRoutes");
             XmlAttribute sjr = GetOrCreate(xmlDoc, pluginNode, "showJoinRoutes");
+            XmlAttribute srr = GetOrCreate(xmlDoc, pluginNode, "showRRUpload");
 
             EditMenuSettingsInfo e = Get();
             sar.Value = e.showApplyRoutes ? "1" : "0";
@@ -278,6 +297,7 @@ namespace ApplyRoutesPlugin.UI
             sue.Value = e.showUpdateEquipment ? "1" : "0";
             sst.Value = e.showSendToRoutes ? "1" : "0";
             sjr.Value = e.showJoinRoutes ? "1" : "0";
+            srr.Value = e.showRRUpload ? "1" : "0";
         }
 
         public bool showApplyRoutes;
@@ -285,6 +305,7 @@ namespace ApplyRoutesPlugin.UI
         public bool showUpdateEquipment;
         public bool showSendToRoutes;
         public bool showJoinRoutes;
+        public bool showRRUpload;
 
         private static EditMenuSettingsInfo emsi = null;
     };

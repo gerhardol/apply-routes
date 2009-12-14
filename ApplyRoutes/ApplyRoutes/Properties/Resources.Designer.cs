@@ -122,7 +122,7 @@ namespace ApplyRoutesPlugin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0:5} {1:5} Joined by Apply Routes.
+        ///   Looks up a localized string similar to {0:S} {1:S} Joined by Apply Routes.
         /// </summary>
         internal static string Edit_JoinedActivities_Text {
             get {
@@ -145,6 +145,15 @@ namespace ApplyRoutesPlugin.Properties {
         internal static string Edit_RouteManipulation_Text {
             get {
                 return ResourceManager.GetString("Edit_RouteManipulation_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AR - Upload  {0:S} {1:S} To ReplayRoutes.
+        /// </summary>
+        internal static string Edit_RRUpload_Text {
+            get {
+                return ResourceManager.GetString("Edit_RRUpload_Text", resourceCulture);
             }
         }
         
