@@ -52,6 +52,12 @@ namespace ApplyRoutesPlugin.UI
                 ExtendMapProviders.UploadURL = uploadUrlTxt.Text;
             };
 
+            uploadResetBtn.Click += delegate(object sender, EventArgs e)
+            {
+                ExtendMapProviders.UploadURL = null;
+                uploadUrlTxt.Text = ExtendMapProviders.UploadURL;
+            };
+
             ThemeChanged(Plugin.GetApplication().VisualTheme);
 
             EventHandler chkChange = delegate(object sender, EventArgs e)
@@ -182,6 +188,7 @@ namespace ApplyRoutesPlugin.UI
             Plugin.ThemeChanged(uploadHeadingLbl, theme);
             Plugin.ThemeChanged(uploadUrlLbl, theme);
             uploadUrlTxt.ThemeChanged(theme);
+            Plugin.ThemeChanged(uploadResetBtn, theme);
         }
 
         public void UICultureChanged(CultureInfo culture)
@@ -200,6 +207,7 @@ namespace ApplyRoutesPlugin.UI
             resources.ApplyResources(this.showUpdateEquipmentChk, "showUpdateEquipmentChk");
             resources.ApplyResources(this.uploadHeadingLbl, "uploadHeadingLbl");
             resources.ApplyResources(this.uploadUrlLbl, "uploadUrlLbl");
+            resources.ApplyResources(this.uploadResetBtn, "uploadResetBtn");
             mapProvidersList.Columns[0].Text = Properties.Resources.SettingsControl_Title;
             mapProvidersList.Columns[1].Text = Properties.Resources.SettingsControl_URL;
         }
