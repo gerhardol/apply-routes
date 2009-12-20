@@ -62,8 +62,10 @@ namespace ApplyRoutesPlugin.Edit
         {
             GMapBrowser browser = new GMapBrowser(ExtendMapProviders.UploadURL);
             browser.Browser.ObjectForScripting = new RRObjectForScriptingClass(this, browser.Browser);
+            browser.Browser.IsWebBrowserContextMenuEnabled = true;
 
             browser.ShowDialog();
+            browser.Dispose();
         }
 
         public string Title
@@ -119,4 +121,6 @@ namespace ApplyRoutesPlugin.Edit
         private RRUploadAction owner;
         private WebBrowser browser;
     }
+
 }
+

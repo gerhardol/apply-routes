@@ -156,6 +156,7 @@ namespace ApplyRoutesPlugin.Edit
 
                     }
                 }
+                m.Dispose();
             }
         }
 

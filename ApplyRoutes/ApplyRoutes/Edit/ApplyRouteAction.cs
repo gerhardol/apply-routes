@@ -273,6 +273,7 @@ namespace ApplyRoutesPlugin.Edit
                     }
                 }
             }
+            m.Dispose();
         }
 
         public string Title
