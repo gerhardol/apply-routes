@@ -64,12 +64,6 @@
   <data name="editMenuTabPage.Text" xml:space="preserve">
     <value>Menu Modifier</value>
   </data>
-  <data name="mapProviderResetBtn.Text" xml:space="preserve">
-    <value>Reéinialiser défauts.</value>
-  </data>
-  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
-    <value>Mise à jour Fournisseurs</value>
-  </data>
   <data name="mapProvidersTabPage.Text" xml:space="preserve">
     <value>Fournisseurs de cartes</value>
   </data>
@@ -87,6 +81,12 @@
   </data>
   <data name="showUpdateEquipmentChk.Text" xml:space="preserve">
     <value>Afficher 'Mise à jour Historique...' dans menu Modifier Activités</value>
+  </data>
+  <data name="mapProviderResetBtn.Text" xml:space="preserve">
+    <value>Reéinialiser défauts.</value>
+  </data>
+  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
+    <value>Mise à jour Fournisseurs</value>
   </data>
   <data name="homePageLink.Text" xml:space="preserve">
     <value>Page d'accueil d' &quot;Apply Routes&quot; </value>
