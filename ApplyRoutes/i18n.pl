@@ -73,7 +73,10 @@ foreach my$sname (keys %{$db->{sections}}) {
         }
 
         foreach my$d (@{$sxml->{"data"}}) {
-            if (defined $section->{$d->{name}} && defined $section->{$d->{name}}[$i]) {
+            if (defined $section->{$d->{name}} &&
+                defined $section->{$d->{name}}[$i] &&
+                $section->{$d->{name}}[$i] ne "")
+            {
                 my$o = dclone($d);
                 $o->{value}[0] = $section->{$d->{name}}[$i];
                 push @{$res->{"data"}}, $o;
