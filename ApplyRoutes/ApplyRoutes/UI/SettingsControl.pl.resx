@@ -64,20 +64,14 @@
   <data name="editMenuTabPage.Text" xml:space="preserve">
     <value>Menu edycja</value>
   </data>
+  <data name="mapProviderResetBtn.Text" xml:space="preserve">
+    <value>Resetuj do standardowych</value>
+  </data>
+  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
+    <value>Uaktulanij dostawcę</value>
+  </data>
   <data name="mapProvidersTabPage.Text" xml:space="preserve">
     <value>Dostawcy map</value>
-  </data>
-  <data name="uploadHeadingLbl.Text" xml:space="preserve">
-    <value>Podaj adres url dla Powtórz Trasy </value>
-  </data>
-  <data name="uploadResetBtn.Text" xml:space="preserve">
-    <value>Reset ustawień</value>
-  </data>
-  <data name="uploadUrlLbl.Text" xml:space="preserve">
-    <value>URL do wczytania</value>
-  </data>
-  <data name="uploadTabPage.Text" xml:space="preserve">
-    <value>Wczytaj</value>
   </data>
   <data name="showJoinRoutesChk.Text" xml:space="preserve">
     <value>Pokaż 'Połącz aktywności' w menu Edycja</value>
@@ -93,12 +87,6 @@
   </data>
   <data name="showUpdateEquipmentChk.Text" xml:space="preserve">
     <value>Pokaż 'Uaktualnij historię...' w menu Edycja</value>
-  </data>
-  <data name="mapProviderResetBtn.Text" xml:space="preserve">
-    <value>Resetuj do standardowych</value>
-  </data>
-  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
-    <value>Uaktulanij dostawcę</value>
   </data>
   <data name="homePageLink.Text" xml:space="preserve">
     <value>Strona główna &quot;Apply Routes&quot;</value>

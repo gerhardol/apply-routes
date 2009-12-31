@@ -131,10 +131,4 @@
   <data name="UpdateEquipment_Type" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="Edit_JoinedActivities_Text" xml:space="preserve">
-    <value>{0:S} {1:S} Dodanych przez Zastosuj Trasy</value>
-  </data>
-  <data name="Edit_RRUpload_Text" xml:space="preserve">
-    <value>AR - wczytanuych  {0:S} {1:S} do Powtórz Trasy</value>
-  </data>
 </root>

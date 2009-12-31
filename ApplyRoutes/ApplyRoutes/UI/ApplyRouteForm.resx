@@ -135,7 +135,7 @@
     <value>routeList</value>
   </data>
   <data name="&gt;&gt;routeList.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TreeList, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TreeList, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;routeList.Parent" xml:space="preserve">
     <value>$this</value>
@@ -159,7 +159,7 @@
     <value>okBtn</value>
   </data>
   <data name="&gt;&gt;okBtn.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;okBtn.Parent" xml:space="preserve">
     <value>$this</value>
@@ -183,7 +183,7 @@
     <value>cancelBtn</value>
   </data>
   <data name="&gt;&gt;cancelBtn.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cancelBtn.Parent" xml:space="preserve">
     <value>$this</value>
@@ -238,7 +238,7 @@
     <value>numActTxt</value>
   </data>
   <data name="&gt;&gt;numActTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;numActTxt.Parent" xml:space="preserve">
     <value>$this</value>
@@ -262,7 +262,7 @@
     <value>minDistTxt</value>
   </data>
   <data name="&gt;&gt;minDistTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;minDistTxt.Parent" xml:space="preserve">
     <value>$this</value>
@@ -316,7 +316,7 @@
     <value>avgDistTxt</value>
   </data>
   <data name="&gt;&gt;avgDistTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;avgDistTxt.Parent" xml:space="preserve">
     <value>$this</value>
@@ -370,7 +370,7 @@
     <value>maxDistTxt</value>
   </data>
   <data name="&gt;&gt;maxDistTxt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;maxDistTxt.Parent" xml:space="preserve">
     <value>$this</value>
@@ -610,7 +610,7 @@
     <value>laps_txt</value>
   </data>
   <data name="&gt;&gt;laps_txt.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.0.3170.32804, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;laps_txt.Parent" xml:space="preserve">
     <value>$this</value>
@@ -659,34 +659,6 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>571, 285</value>
-  </data>
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAQAEAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAA////AADAvwAA//8AAICAAADf3wAAn6AAAO/vAACQkAAAz88AALCwAADn5gAAx8cAALi3AAD2
-        9gAAl5cAAKmpAADV1QAAi4sAAKSkAADb2wAAk5QAAMPDAAC7uwAAnZwAAPn5AADy8gAArKwAALOzAADh
-        4gAAmpoAAI2NAADd3QAAoqIAANHRAADJyQAArq4AAL69AACSkgAAlZUAAJiZAACengAAwcEAALy9AAD+
-        /gAA9fUAAPDwAACMjAAAj48AAODgAAChoQAA1NQAAKOjAADOzgAAra0AAMTEAACysgAAwsIAAL28AADm
-        5gAA4eEAAJmZAADc3QAAnZ0AAKCgAADV1AAAt7cAAL6+AAC9vQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAJhU9KQAAAAAAAAAAAAASKTYNRCtCGwAAAAAAAAAIEEMJFDw8FDU6AAAAAAAvEDc+
-        LgMDAywHIAAAAAASBgIgGQMDAwMDAAAAAAAAHwoiGgMDAwMDAAAAAAAAJg8XBQMDAwMDAAAAAAAAAC8Y
-        KjsDAwMDAwAAAAAAAAAvPzkLAwMDAwAAAAAAAAAAJihEMQMDAwMDAAAAAAAAAAAwOEEtAwMDAwMAAAAA
-        AAAAEjQWPCwDQwQ7AAAAAAAAAAAIJCMdDgQABAMAAAAAAAAAACckFhFDBEM8MwwAAAAAAAAACBMcJRYW
-        RDghAAAAAAAAAAAADx5AMiEAAAAAAPw/AADwDwAA4AcAAMAHAACAHwAAgD8AAAB/AAAAfwAAAP8AAAB/
-        AACAPwAAgD8AAMAfAADgBwAA8AcAAPwfAAA=
-</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Apply Route</value>

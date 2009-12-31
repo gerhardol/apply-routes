@@ -71,10 +71,6 @@ namespace ApplyRoutesPlugin.Edit
             {
                 actions.Add(new JoinActivitiesAction(activities));
             }
-            if (info.showRRUpload)
-            {
-                actions.Add(new RRUploadAction(activities));
-            }
 
             if (actions.Count == 0)
             {

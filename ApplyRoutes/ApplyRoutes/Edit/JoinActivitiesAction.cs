@@ -170,13 +170,6 @@ namespace ApplyRoutesPlugin.Edit
             }
 
             IActivity first = salist.Values[0];
-            Type lapType = first.Laps[0].GetType();
-            PropertyInfo lapRest = lapType.GetProperty("Rest");
-            PropertyInfo lapNotes = lapType.GetProperty("Notes");
-            if (lapRest != null && !(lapRest.CanRead && lapRest.CanWrite))
-                lapRest = null;
-            if (lapNotes != null && !(lapNotes.CanRead && lapNotes.CanWrite))
-                lapNotes = null;
             first.QueueEvents = true;
             GPSRoute route = new GPSRoute();
             DistanceDataTrack ddt = new DistanceDataTrack();
@@ -231,37 +224,16 @@ namespace ApplyRoutesPlugin.Edit
                         first.DistanceMarkersMeters.Add((float)(dist + d));
                     }
 
-                    if (activity.Laps.Count > 0)
+                    foreach (ILapInfo lap in activity.Laps)
                     {
-                        foreach (ILapInfo lap in activity.Laps)
-                        {
-                            first.Laps.Add(lap.StartTime.Add(adjust), lap.TotalTime);
-                            ILapInfo li = first.Laps[first.Laps.Count - 1];
-                            li.AverageCadencePerMinute = lap.AverageCadencePerMinute;
-                            li.AverageHeartRatePerMinute = lap.AverageHeartRatePerMinute;
-                            li.AveragePowerWatts = lap.AveragePowerWatts;
-                            li.ElevationChangeMeters = lap.ElevationChangeMeters;
-                            li.TotalCalories = lap.TotalCalories;
-                            li.TotalDistanceMeters = lap.TotalDistanceMeters;
-                            if (lapRest != null)
-                            {
-                                lapRest.SetValue(li, lapRest.GetValue(lap, null), null);
-                            }
-                            if (lapNotes != null)
-                            {
-                                lapNotes.SetValue(li, lapNotes.GetValue(lap, null), null);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        first.Laps.Add(activity.StartTime.Add(adjust), ai.EndTime.Subtract(activity.StartTime));
+                        first.Laps.Add(lap.StartTime.Add(adjust), lap.TotalTime);
                         ILapInfo li = first.Laps[first.Laps.Count - 1];
-                        li.AverageCadencePerMinute = ai.AverageCadence;
-                        li.AverageHeartRatePerMinute = ai.AverageHeartRate;
-                        li.AveragePowerWatts = ai.AveragePower;
-                        li.TotalCalories = activity.TotalCalories;
-                        li.TotalDistanceMeters = (float)ai.DistanceMeters;
+                        li.AverageCadencePerMinute = lap.AverageCadencePerMinute;
+                        li.AverageHeartRatePerMinute = lap.AverageHeartRatePerMinute;
+                        li.AveragePowerWatts = lap.AveragePowerWatts;
+                        li.ElevationChangeMeters = lap.ElevationChangeMeters;
+                        li.TotalCalories = lap.TotalCalories;
+                        li.TotalDistanceMeters = lap.TotalDistanceMeters;
                     }
 
                     if (activity.StartTime > prevEnd)

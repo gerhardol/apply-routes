@@ -64,6 +64,12 @@
   <data name="editMenuTabPage.Text" xml:space="preserve">
     <value>Editar Menus</value>
   </data>
+  <data name="mapProviderResetBtn.Text" xml:space="preserve">
+    <value>Reestablecer Valores</value>
+  </data>
+  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
+    <value>Actulaizar Proveedor</value>
+  </data>
   <data name="mapProvidersTabPage.Text" xml:space="preserve">
     <value>Proveedores de Mapas</value>
   </data>
@@ -81,12 +87,6 @@
   </data>
   <data name="showUpdateEquipmentChk.Text" xml:space="preserve">
     <value>Mostrar 'Actualizar Historial...' en menu Editar Actividad</value>
-  </data>
-  <data name="mapProviderResetBtn.Text" xml:space="preserve">
-    <value>Reestablecer Valores</value>
-  </data>
-  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
-    <value>Actulaizar Proveedor</value>
   </data>
   <data name="homePageLink.Text" xml:space="preserve">
     <value>Página del plugin Apply Routes</value>
