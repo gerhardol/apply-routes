@@ -24,6 +24,7 @@ using ZoneFiveSoftware.Common.Visuals;
 using ApplyRoutesPlugin.MapProviders;
 using System.Security.Permissions;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ApplyRoutesPlugin.Edit
 {
@@ -113,6 +114,23 @@ namespace ApplyRoutesPlugin.Edit
         public void ReadyForUpload()
         {
             owner.ReadyForUpload(browser);
+        }
+
+        public void visit_link(object address)
+        {
+            try
+            {
+                String loc = address.ToString();
+                if (loc.StartsWith("http://"))
+                {
+                    ProcessStartInfo procStartInfo = new ProcessStartInfo(loc);
+                    Process.Start(procStartInfo);
+                }
+            }
+            catch // (Exception ex)
+            {
+                MessageBox.Show("Exception encountered launching browser", "Launching other application", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
         }
 
         public bool wantsPageLoaded = false;
