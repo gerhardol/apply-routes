@@ -169,14 +169,29 @@ namespace ApplyRoutesPlugin.Edit
                 return;
             }
 
+            Type lapType = null;
+            PropertyInfo lapRest = null;
+            PropertyInfo lapNotes = null;
+            foreach (IActivity a in salist.Values)
+            {
+                if (a.Laps.Count > 0)
+                {
+                    lapType = a.Laps[0].GetType();
+                    break;
+                }
+            }
+
+            if (lapType != null)
+            {
+                lapRest = lapType.GetProperty("Rest");
+                lapNotes = lapType.GetProperty("Notes");
+                if (lapRest != null && !(lapRest.CanRead && lapRest.CanWrite))
+                    lapRest = null;
+                if (lapNotes != null && !(lapNotes.CanRead && lapNotes.CanWrite))
+                    lapNotes = null;
+            }
+
             IActivity first = salist.Values[0];
-            Type lapType = first.Laps[0].GetType();
-            PropertyInfo lapRest = lapType.GetProperty("Rest");
-            PropertyInfo lapNotes = lapType.GetProperty("Notes");
-            if (lapRest != null && !(lapRest.CanRead && lapRest.CanWrite))
-                lapRest = null;
-            if (lapNotes != null && !(lapNotes.CanRead && lapNotes.CanWrite))
-                lapNotes = null;
             first.QueueEvents = true;
             GPSRoute route = new GPSRoute();
             DistanceDataTrack ddt = new DistanceDataTrack();

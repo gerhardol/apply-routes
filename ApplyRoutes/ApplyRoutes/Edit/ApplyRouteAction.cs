@@ -156,7 +156,7 @@ namespace ApplyRoutesPlugin.Edit
                     {
                         break;
                     }
-                    double cur = t.Subtract(activity.StartTime).TotalSeconds;
+                    double cur = t.Subtract(aDist.StartTime).TotalSeconds;
                     if (cur <= prev)
                     {
                         continue;
@@ -168,8 +168,8 @@ namespace ApplyRoutesPlugin.Edit
                         {
                             continue;
                         }
-                        t = aDist.StartTime.AddSeconds(cur);
                     }
+                    t = activity.StartTime.AddSeconds(cur);
                     prev = cur;
                     route.InsertAtPosition(i++, t, point);
                 }
@@ -198,10 +198,11 @@ namespace ApplyRoutesPlugin.Edit
                 ILapInfo li = activity.Laps[i];
                 DateTime t = li.StartTime.AddSeconds(li.TotalTime.TotalSeconds);
                 float old_dist = dist;
+                double delta = t.Subtract(activity.StartTime).TotalSeconds;
 
-                dist = t.Subtract(dmt.StartTime).TotalSeconds >= dmtTotalElapsedSeconds ?
-                        route.TotalDistanceMeters :
-                        dmt.GetInterpolatedValue(t).Value;
+                dist = delta >= dmtTotalElapsedSeconds ?
+                        route.TotalDistanceMeters : delta >= 0 ?
+                        dmt.GetInterpolatedValue(t).Value : 0;
 
                 li.TotalDistanceMeters = dist - old_dist;
             }
