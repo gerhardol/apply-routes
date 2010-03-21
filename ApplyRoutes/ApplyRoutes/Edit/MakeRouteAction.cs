@@ -19,6 +19,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 using ZoneFiveSoftware.Common.Data;
 using ZoneFiveSoftware.Common.Data.Fitness;
@@ -50,7 +51,7 @@ namespace ApplyRoutesPlugin.Edit
 
         public string RouteName
         {
-            get { return Route.Name; }
+            get { return Route != null ? Route.Name : ""; }
         }
 
         public string ActivityName
@@ -108,24 +109,32 @@ namespace ApplyRoutesPlugin.Edit
             if (activities != null)
             {
                 List<ActivityRoutePair> list = new List<ActivityRoutePair>();
+                StringCollection usedRoutes = new StringCollection();
+
                 foreach (IActivity activity in activities)
                 {
-                    if (activity.GPSRoute != null && activity.Name != "")
+                    if (activity.GPSRoute != null)
                     {
                         IList<IRoute> routes = Plugin.GetApplication().Logbook.Routes;
                         IRoute theRoute = null;
                         foreach (IRoute route in routes)
                         {
-                            if (route.Name == activity.Name)
+                            if (!usedRoutes.Contains(route.ReferenceId))
                             {
-                                theRoute = route;
-                                break;
+                                if (route.Name == activity.Name)
+                                {
+                                    theRoute = route;
+                                    break;
+                                }
+                                if (route.GPSRoute == null || route.GPSRoute.Count <= 1)
+                                {
+                                    theRoute = route;
+                                }
                             }
-                            if ((route.Name == "" || route.Name == "New route") &&
-                                route.GPSRoute == null)
-                            {
-                                theRoute = route;
-                            }
+                        }
+                        if (theRoute != null)
+                        {
+                            usedRoutes.Add(theRoute.ReferenceId);
                         }
                         ActivityRoutePair arp = new ActivityRoutePair(activity, theRoute);
                         list.Add(arp);
@@ -150,8 +159,14 @@ namespace ApplyRoutesPlugin.Edit
                             }
                             theRoute.GPSRoute = new GPSRoute(activity.GPSRoute);
                             theRoute.Location = activity.Location;
-                            theRoute.Name = activity.Name;
-                            theRoute.Notes = activity.Notes;
+                            if (activity.Name != "")
+                            {
+                                theRoute.Name = activity.Name;
+                            }
+                            if (activity.Notes != "")
+                            {
+                                theRoute.Notes = activity.Notes;
+                            }
                         }
 
                     }
