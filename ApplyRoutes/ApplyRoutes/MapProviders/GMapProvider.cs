@@ -23,7 +23,7 @@ using System.Drawing;
 using ZoneFiveSoftware.Common.Data.GPS;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using mshtml;
+//using mshtml;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.ComponentModel;

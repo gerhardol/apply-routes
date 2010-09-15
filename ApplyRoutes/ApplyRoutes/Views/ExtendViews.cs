@@ -30,7 +30,10 @@ namespace ApplyRoutesPlugin.Views
 
         public IList<IView> Views
         {
-            get { return new IView[] { GMapActivityDetail.Singleton }; }
+            get { 
+				return Plugin.IsRunningOnMono() ? null :
+					new IView[] { GMapActivityDetail.Singleton }; 
+			}
         }
 
         #endregion

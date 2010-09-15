@@ -429,7 +429,6 @@ namespace ApplyRoutesPlugin.Activities
 
                         string refid = activity != null ? activity.ReferenceId : route.ReferenceId;
 
-                        bool isact = activity != null;
                         ActivityInfo ai = activity != null ? ActivityInfoCache.Instance.GetInfo(activity) : null;
 
 

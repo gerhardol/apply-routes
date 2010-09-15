@@ -204,6 +204,11 @@ namespace ApplyRoutesPlugin
                 return 0;
             }
         }
+		
+		public static bool IsRunningOnMono()
+		{
+				return Type.GetType("Mono.Runtime") != null;
+		}
 
         #region Private members
         private static IApplication application;

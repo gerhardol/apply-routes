@@ -63,7 +63,7 @@ namespace ApplyRoutesPlugin.Edit
             {
                 actions.Add(new UpdateEquipmentAction(activities, null));
             }
-            if (info.showSendToRoutes)
+            if (info.showSendToRoutes && !Plugin.IsRunningOnMono())
             {
                 actions.Add(new SendToView(activities, null));
             }

@@ -29,6 +29,9 @@ namespace ApplyRoutesPlugin.MapProviders
     {
         public static IList<GMapProvider> GetMapProviders()
         {
+			if (Plugin.IsRunningOnMono()) {
+				return null;
+			}
             if (mpiList == null)
             {
                 ResetDefaults();
