@@ -21,6 +21,12 @@ using System.ComponentModel;
 using System.Text;
 using ZoneFiveSoftware.Common.Data.Fitness;
 using ZoneFiveSoftware.Common.Visuals;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ZoneFiveSoftware.Common.Visuals.Util;
+using ZoneFiveSoftware.Common.Data;
+#endif
+using ApplyRoutesPlugin.Activities;
 using ApplyRoutesPlugin.MapProviders;
 using System.Security.Permissions;
 using System.Windows.Forms;
@@ -30,13 +36,18 @@ namespace ApplyRoutesPlugin.Edit
 {
     public class RRUploadAction : IAction
     {
-        private IList<IActivity> activities;
-
-        public RRUploadAction(IList<IActivity> activities)
+#if !ST_2_1
+        public RRUploadAction(IDailyActivityView aview, IActivityReportsView rview)
+        {
+            this.dailyView = aview;
+            this.reportView = rview;
+        }
+#else
+        public RRUploadAction(IList<IActivity> activities, IList<IRoute> dummy)
         {
             this.activities = activities;
         }
-
+#endif
         #region IAction Members
 
         public bool Enabled
@@ -49,9 +60,17 @@ namespace ApplyRoutesPlugin.Edit
             get { return false; }
         }
 
+        public IList<string> MenuPath
+        {
+            get
+            {
+                return new List<string>();
+            }
+        }
+        
         public System.Drawing.Image Image
         {
-            get { return null; }
+            get { return Properties.Resources.ApplyRoutes.ToBitmap(); }
         }
 
         public void Refresh()
@@ -78,6 +97,14 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
+        public bool Visible
+        {
+            get
+            {
+                if (activities.Count > 0) return true;
+                return false;
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -98,6 +125,41 @@ namespace ApplyRoutesPlugin.Edit
         {
             String xml = ApplyRoutesPlugin.Activities.GMapRouteControl.GetXMLForActivities(activities, null, false);
             webBrowser.Document.InvokeScript("st_upload", new Object[] { xml });
+        }
+#if !ST_2_1
+        private IDailyActivityView dailyView = null;
+        private IActivityReportsView reportView = null;
+#endif
+        private IList<IActivity> _activities = null;
+        private IList<IActivity> activities
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_activities == null)
+                {
+                    if (dailyView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(dailyView.SelectionProvider.SelectedItems);
+                    }
+                    else if (reportView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(reportView.SelectionProvider.SelectedItems);
+                    }
+                    else
+                    {
+                        return new List<IActivity>();
+                    }
+                }
+#endif
+                return _activities;
+            }
+            set
+            {
+                _activities = value;
+            }
         }
     }
     

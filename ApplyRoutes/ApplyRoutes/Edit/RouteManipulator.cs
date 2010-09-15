@@ -24,6 +24,10 @@ using ZoneFiveSoftware.Common.Data;
 using ZoneFiveSoftware.Common.Data.Fitness;
 using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ZoneFiveSoftware.Common.Visuals.Util;
+#endif
 
 using ApplyRoutesPlugin.UI;
 
@@ -31,11 +35,18 @@ namespace ApplyRoutesPlugin.Edit
 {
     class RouteManipulator : IAction
     {
-        public RouteManipulator(IList<IActivity> activities)
+#if !ST_2_1
+        public RouteManipulator(IDailyActivityView aview, IActivityReportsView rview)
+        {
+            this.dailyView = aview;
+            this.reportView = rview;
+        }
+#else
+        public RouteManipulator(IList<IActivity> activities, IList<IRoute> dummy)
         {
             this.activities = activities;
         }
-
+#endif
         #region IAction Members
 
         public bool Enabled
@@ -56,6 +67,14 @@ namespace ApplyRoutesPlugin.Edit
             get { return CommonResources.Images.Edit16; }
         }
 
+        public IList<string> MenuPath
+        {
+            get
+            {
+                return new List<string>();
+            }
+        }
+
         public void Refresh()
         {
         }
@@ -68,8 +87,8 @@ namespace ApplyRoutesPlugin.Edit
 
                 treePop.Tree.Columns.Add(new TreeList.Column("Title"));
                 treePop.Tree.RowData = new IAction[] {
-                        new ApplyRouteAction(activities),
-                        new MakeRouteAction(activities)
+                        new ApplyRouteAction(activities, null),
+                        new MakeRouteAction(activities, null)
                 };
 
                 treePop.ItemSelected += delegate(object sender, TreeListPopup.ItemSelectedEventArgs e)
@@ -88,6 +107,15 @@ namespace ApplyRoutesPlugin.Edit
         public string Title
         {
             get { return Properties.Resources.Edit_RouteManipulation_Text; }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                if (activities.Count > 0) return true;
+                return false;
+            }
         }
 
         #endregion
@@ -114,6 +142,40 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
-        private IList<IActivity> activities = null;
+#if !ST_2_1
+        private IDailyActivityView dailyView = null;
+        private IActivityReportsView reportView = null;
+#endif
+        private IList<IActivity> _activities = null;
+        private IList<IActivity> activities
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_activities == null)
+                {
+                    if (dailyView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(dailyView.SelectionProvider.SelectedItems);
+                    }
+                    else if (reportView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(reportView.SelectionProvider.SelectedItems);
+                    }
+                    else
+                    {
+                        return new List<IActivity>();
+                    }
+                }
+#endif
+                return _activities;
+            }
+            set
+            {
+                _activities = value;
+            }
+        }
     }
 }

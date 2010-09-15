@@ -46,6 +46,14 @@ namespace ApplyRoutesPlugin.Activities
     {
         //private XmlDocument root = null;
 
+#if !ST_2_1
+        private IDailyActivityView m_view = null;
+        public GMapRouteControl(IDailyActivityView view)
+            : this()
+        {
+            m_view = view;
+        }
+#endif
         public GMapRouteControl()
         {
             InitializeComponent();
@@ -494,7 +502,9 @@ namespace ApplyRoutesPlugin.Activities
             {
                 Match m = Regex.Match(mp.Url, "[#&]t=([-a-zA-Z_0-9]+)&");
                 bool isSat = m.Success && m.Groups[1].Value == "SATELLITE";
-                if (mp.Enabled || isSat)
+                //OSM is also available from standard ST plugin, but has unique features in ActivityPage
+                bool isOSM = m.Success && m.Groups[1].Value == "OpenStreetMapMapnik";
+                if (mp.Enabled || isSat || isOSM)
                 {
                     MapTypeInfo mti = new MapTypeInfo();
                     mti.title = mp.Title;
@@ -568,7 +578,6 @@ namespace ApplyRoutesPlugin.Activities
 
         public void RefreshPage()
         {
-
         }
 
         public IList<IActivity> Activities

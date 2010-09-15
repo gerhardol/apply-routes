@@ -25,6 +25,10 @@ using ZoneFiveSoftware.Common.Data;
 using ZoneFiveSoftware.Common.Data.Fitness;
 using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ZoneFiveSoftware.Common.Visuals.Util;
+#endif
 
 using ApplyRoutesPlugin.UI;
 using System.Windows.Forms;
@@ -65,10 +69,18 @@ namespace ApplyRoutesPlugin.Edit
 
     class MakeRouteAction : IAction
     {
-        public MakeRouteAction(IList<IActivity> activities)
+#if !ST_2_1
+        public MakeRouteAction(IDailyActivityView aview, IActivityReportsView rview)
+        {
+            this.dailyView = aview;
+            this.reportView = rview;
+        }
+#else
+        public MakeRouteAction(IList<IActivity> activities, IList<IRoute> dummy)
         {
             this.activities = activities;
         }
+#endif
 
         #region IAction Members
 
@@ -97,7 +109,15 @@ namespace ApplyRoutesPlugin.Edit
 
         public Image Image
         {
-            get { return null; }
+            get { return Properties.Resources.ApplyRoutes.ToBitmap(); }
+        }
+
+        public IList<string> MenuPath
+        {
+            get
+            {
+                return new List<string>();
+            }
         }
 
         public void Refresh()
@@ -115,7 +135,7 @@ namespace ApplyRoutesPlugin.Edit
                 {
                     if (activity.GPSRoute != null)
                     {
-                        IList<IRoute> routes = Plugin.GetApplication().Logbook.Routes;
+                        IEnumerable<IRoute> routes = Plugin.GetApplication().Logbook.Routes;
                         IRoute theRoute = null;
                         foreach (IRoute route in routes)
                         {
@@ -180,6 +200,14 @@ namespace ApplyRoutesPlugin.Edit
             get { return Properties.Resources.Edit_CreateRouteAction_Text; }
         }
 
+        public bool Visible
+        {
+            get
+            {
+                if (activities.Count > 0) return true;
+                return false;
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -196,6 +224,40 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
-        private IList<IActivity> activities = null;
+#if !ST_2_1
+        private IDailyActivityView dailyView = null;
+        private IActivityReportsView reportView = null;
+#endif
+        private IList<IActivity> _activities = null;
+        private IList<IActivity> activities
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_activities == null)
+                {
+                    if (dailyView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(dailyView.SelectionProvider.SelectedItems);
+                    }
+                    else if (reportView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(reportView.SelectionProvider.SelectedItems);
+                    }
+                    else
+                    {
+                        return new List<IActivity>();
+                    }
+                }
+#endif
+                return _activities;
+            }
+            set
+            {
+                _activities = value;
+            }
+        }
     }
 }

@@ -1,70 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files\Zone Five Software\SportTracks 2.1\SportTracks.exe</StartProgram>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1151A834-EF8C-492D-ABCE-807B2A6A9C2D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ApplyRoutesPlugin</RootNamespace>
     <AssemblyName>ApplyRoutes</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <PluginId>a2dcf469-3d83-4690-8702-a21cd18ff7b3</PluginId>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\..\..\..\..\..\All Users\Application Data\ZoneFiveSoftware\SportTracks\2.0\Plugins\Installed\a2dcf469-3d83-4690-8702-a21cd18ff7b3\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Common.Data, Version=2.0.3170.32799, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\SportTracks 2.0\Common.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Common.Visuals, Version=2.0.3170.32804, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\SportTracks 2.0\Common.Visuals.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
+  <Import Project="..\Common\Common-References.csproj" />
   <ItemGroup>
     <Compile Include="Activities\GMapActivityDetail.cs" />
     <Compile Include="Activities\GMapRouteControl.cs">
@@ -73,13 +18,21 @@
     <Compile Include="Activities\GMapRouteControl.Designer.cs">
       <DependentUpon>GMapRouteControl.cs</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Edit\JoinActivitiesAction.cs" />
     <Compile Include="Edit\RRUploadAction.cs">
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Edit\UpdateEquipmentAction.cs" />
     <Compile Include="Edit\MakeRouteAction.cs" />
     <Compile Include="Edit\ExtendActions.cs" />
     <Compile Include="Edit\ApplyRouteAction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GUIDs.cs" />
+    <Compile Include="MapProviders\GMapProjection.cs" />
     <Compile Include="MapProviders\ExtendMapProviders.cs" />
     <Compile Include="MapProviders\GMapBrowser.cs">
       <SubType>Form</SubType>
@@ -88,6 +41,12 @@
       <DependentUpon>GMapBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="MapProviders\GMapProvider.cs" />
+    <EmbeddedResource Include="MapProviders\GMapBrowser.resx">
+      <DependentUpon>GMapBrowser.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -96,6 +55,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\ExtendSettingsPages.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="UI\ConfirmRoutesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,8 +84,6 @@
     <Compile Include="Activities\ExtendActivities.cs" />
     <Compile Include="Views\ExtendViews.cs" />
     <Compile Include="Views\SendToView.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Activities\GMapRouteControl.es.resx">
       <DependentUpon>GMapRouteControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -139,10 +98,8 @@
       <DependentUpon>GMapRouteControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapProviders\GMapBrowser.resx">
-      <DependentUpon>GMapBrowser.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.es.resx" />
     <EmbeddedResource Include="Properties\Resources.fr.resx" />
     <EmbeddedResource Include="Properties\Resources.pl.resx" />
@@ -206,9 +163,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="plugin.xml" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\DropDown.png" />
     <Content Include="Resources\DropDown8.png" />
     <Content Include="Resources\ApplyRoutes.ico" />
     <Content Include="Resources\Map_Waypoint.png" />
@@ -225,7 +180,7 @@
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition=" ('$(Configuration)' == 'ST2.1Release') or ('$(Configuration)' == 'ST2.1Debug') ">
     <ProjectReference Include="..\GDAL11013Wrapper\GDAL11013Wrapper.csproj">
       <Project>{4AF01154-ACDD-48FA-B024-FD7F1A28BF9F}</Project>
       <Name>GDAL11013Wrapper</Name>
@@ -235,10 +190,47 @@
       <Name>GDAL111Wrapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup Condition=" ('$(Configuration)' == 'ST3.0Release') or ('$(Configuration)' == 'ST3.0Debug') ">
+    <ProjectReference Include="..\GDAL113Wrapper\GDAL113Wrapper.csproj">
+      <Project>{9576A524-9104-4677-AD33-4699CE9F26B6}</Project>
+      <Name>GDAL113Wrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -246,10 +238,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>del "$(ProjectDir)\$(ProjectName).st2plugin"
-copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationName)\GDAL111Wrapper.dll" $(OutDir)
-copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationName)\GDAL11013Wrapper.dll" $(OutDir)
-"C:\Program Files\7-Zip\7z.exe" a -tzip "$(ProjectDir)$(ProjectName).st2plugin" "$(TargetPath)" "$(ProjectDir)plugin.xml" "$(TargetDir)/*/ApplyRoutes.resources.dll" "$(TargetDir)/*Wrapper.dll"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

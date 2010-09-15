@@ -47,7 +47,7 @@ namespace ApplyRoutesPlugin.Settings
 
         public Guid Id
         {
-            get { return Plugin.thePlugin.Id; }
+            get { return GUIDs.Settings; }
         }
 
         public IList<ISettingsPage> SubPages

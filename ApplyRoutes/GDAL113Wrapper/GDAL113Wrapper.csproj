@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5569A885-15F2-4C28-9B88-1426D340D15D}</ProjectGuid>
+    <ProjectGuid>{9576A524-9104-4677-AD33-4699CE9F26B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GDAL111Wrapper</RootNamespace>
-    <AssemblyName>GDAL111Wrapper</AssemblyName>
+    <RootNamespace>GDAL113Wrapper</RootNamespace>
+    <AssemblyName>GDAL113Wrapper</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -65,9 +65,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
@@ -89,6 +86,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <!--  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

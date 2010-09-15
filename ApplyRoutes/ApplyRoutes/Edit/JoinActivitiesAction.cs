@@ -25,6 +25,10 @@ using ZoneFiveSoftware.Common.Data;
 using ZoneFiveSoftware.Common.Data.Fitness;
 using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ZoneFiveSoftware.Common.Visuals.Util;
+#endif
 
 using ApplyRoutesPlugin.UI;
 using System.Reflection;
@@ -33,11 +37,18 @@ namespace ApplyRoutesPlugin.Edit
 {
     class JoinActivitiesAction : IAction
     {
-        public JoinActivitiesAction(IList<IActivity> activities)
+#if !ST_2_1
+        public JoinActivitiesAction(IDailyActivityView aview, IActivityReportsView rview)
+        {
+            this.dailyView = aview;
+            this.reportView = rview;
+        }
+#else
+        public JoinActivitiesAction(IList<IActivity> activities, IList<IRoute> dummy)
         {
             this.activities = activities;
         }
-
+#endif
         #region IAction Members
 
         public bool Enabled
@@ -52,7 +63,15 @@ namespace ApplyRoutesPlugin.Edit
 
         public Image Image
         {
-            get { return null; }
+            get { return Properties.Resources.ApplyRoutes.ToBitmap(); }
+        }
+
+        public IList<string> MenuPath
+        {
+            get
+            {
+                return new List<string>();
+            }
         }
 
         public void Refresh()
@@ -79,6 +98,7 @@ namespace ApplyRoutesPlugin.Edit
                 return false;
             }
 
+#if ST_2_1
             /*Determine whether ST can handle tracks longer than 65535 seconds */
             NumericTimeDataSeries ntd = new NumericTimeDataSeries();
             DateTime st = DateTime.FromBinary(0);
@@ -114,6 +134,7 @@ namespace ApplyRoutesPlugin.Edit
                 span = span.Add(endTime.Subtract(start));
                 return span.TotalSeconds <= 65535;
             }
+#endif
             else
             {
                 return true;
@@ -191,19 +212,46 @@ namespace ApplyRoutesPlugin.Edit
                     lapNotes = null;
             }
 
-            IActivity first = salist.Values[0];
-            first.QueueEvents = true;
+            IActivity result =
+#if ST_2_1
+                 salist.Values[0];
+           result.QueueEvents = true;
+            bool hasCopy = false;
+                    Type type = result.GetType();
+                    IActivity tmp = (IActivity)Activator.CreateInstance(type);
+                    MethodInfo theMethod = type.GetMethod("CopyTo");
+                    if (tmp != null && theMethod != null)
+                    {
+                        hasCopy = true;
+                        theMethod.Invoke(null, new object [] {
+                                result, tmp
+                        });
+                        result = tmp;
+                        Plugin.GetApplication().Logbook.Activities.Add(result);
+                    }
+#else
+              Plugin.GetApplication().Logbook.Activities.AddCopy(salist.Values[0]);
+#endif
+            String note = Plugin.NumberedActivityText(Properties.Resources.Edit_JoinedActivities_Text,
+                    salist.Count);
+
+            if (result.Notes != "")
+            {
+                note += "\r\n--\r\n";
+            }
+
+            result.Notes += note;
+
             GPSRoute route = new GPSRoute();
             DistanceDataTrack ddt = new DistanceDataTrack();
             NumericTimeDataSeries cpmt = new NumericTimeDataSeries();
             NumericTimeDataSeries emt = new NumericTimeDataSeries();
             NumericTimeDataSeries hrt = new NumericTimeDataSeries();
             NumericTimeDataSeries pwt = new NumericTimeDataSeries();
-            DateTime endTime = first.StartTime;
+            DateTime endTime = result.StartTime;
 
             double dist = 0;
             TimeSpan adjust = TimeSpan.FromSeconds(0);
-            bool hasCopy = false;
 
             for (int i = 0; i < salist.Count; i++)
             {
@@ -224,34 +272,34 @@ namespace ApplyRoutesPlugin.Edit
 
                 if (i > 0)
                 {
-                    first.TotalAscendMetersEntered += activity.TotalAscendMetersEntered;
-                    first.TotalCalories += activity.TotalCalories;
-                    first.TotalDescendMetersEntered += activity.TotalDescendMetersEntered;
-                    first.TotalDistanceMetersEntered += activity.TotalDistanceMetersEntered;
-                    first.TotalTimeEntered += activity.TotalTimeEntered;
-                    if (first.Notes != "" && activity.Notes != "")
+                    result.TotalAscendMetersEntered += activity.TotalAscendMetersEntered;
+                    result.TotalCalories += activity.TotalCalories;
+                    result.TotalDescendMetersEntered += activity.TotalDescendMetersEntered;
+                    result.TotalDistanceMetersEntered += activity.TotalDistanceMetersEntered;
+                    result.TotalTimeEntered += activity.TotalTimeEntered;
+                    if (result.Notes != "" && activity.Notes != "")
                     {
-                        first.Notes += "\r\n--\r\n";
+                        result.Notes += "\r\n--\r\n";
                     }
-                    first.Notes += activity.Notes;
-                    if (activity.MaximumCadencePerMinuteEntered > first.MaximumCadencePerMinuteEntered)
-                        first.MaximumCadencePerMinuteEntered = activity.MaximumCadencePerMinuteEntered;
-                    if (activity.MaximumHeartRatePerMinuteEntered > first.MaximumHeartRatePerMinuteEntered)
-                        first.MaximumHeartRatePerMinuteEntered = activity.MaximumHeartRatePerMinuteEntered;
-                    if (activity.MaximumPowerWattsEntered > first.MaximumPowerWattsEntered)
-                        first.MaximumPowerWattsEntered = activity.MaximumPowerWattsEntered;
+                    result.Notes += activity.Notes;
+                    if (activity.MaximumCadencePerMinuteEntered > result.MaximumCadencePerMinuteEntered)
+                        result.MaximumCadencePerMinuteEntered = activity.MaximumCadencePerMinuteEntered;
+                    if (activity.MaximumHeartRatePerMinuteEntered > result.MaximumHeartRatePerMinuteEntered)
+                        result.MaximumHeartRatePerMinuteEntered = activity.MaximumHeartRatePerMinuteEntered;
+                    if (activity.MaximumPowerWattsEntered > result.MaximumPowerWattsEntered)
+                        result.MaximumPowerWattsEntered = activity.MaximumPowerWattsEntered;
 
                     foreach (float d in activity.DistanceMarkersMeters)
                     {
-                        first.DistanceMarkersMeters.Add((float)(dist + d));
+                        result.DistanceMarkersMeters.Add((float)(dist + d));
                     }
 
                     if (activity.Laps.Count > 0)
                     {
                         foreach (ILapInfo lap in activity.Laps)
                         {
-                            first.Laps.Add(lap.StartTime.Add(adjust), lap.TotalTime);
-                            ILapInfo li = first.Laps[first.Laps.Count - 1];
+                            result.Laps.Add(lap.StartTime.Add(adjust), lap.TotalTime);
+                            ILapInfo li = result.Laps[result.Laps.Count - 1];
                             li.AverageCadencePerMinute = lap.AverageCadencePerMinute;
                             li.AverageHeartRatePerMinute = lap.AverageHeartRatePerMinute;
                             li.AveragePowerWatts = lap.AveragePowerWatts;
@@ -270,8 +318,8 @@ namespace ApplyRoutesPlugin.Edit
                     }
                     else
                     {
-                        first.Laps.Add(activity.StartTime.Add(adjust), ai.EndTime.Subtract(activity.StartTime));
-                        ILapInfo li = first.Laps[first.Laps.Count - 1];
+                        result.Laps.Add(activity.StartTime.Add(adjust), ai.EndTime.Subtract(activity.StartTime));
+                        ILapInfo li = result.Laps[result.Laps.Count - 1];
                         li.AverageCadencePerMinute = ai.AverageCadence;
                         li.AverageHeartRatePerMinute = ai.AverageHeartRate;
                         li.AveragePowerWatts = ai.AveragePower;
@@ -281,14 +329,15 @@ namespace ApplyRoutesPlugin.Edit
 
                     if (activity.StartTime > prevEnd)
                     {
-                        first.TimerPauses.Add(new ValueRange<DateTime>(prevEnd, activity.StartTime));
+                        result.TimerPauses.Add(new ValueRange<DateTime>(prevEnd, activity.StartTime));
                     }
 
                     foreach (IValueRange<DateTime> dtr in activity.TimerPauses)
                     {
-                        first.TimerPauses.Add(dtr);
+                        result.TimerPauses.Add(dtr);
                     }
 
+#if ST_2_1
                     if (!hasCopy)
                     {
                         /*
@@ -298,30 +347,7 @@ namespace ApplyRoutesPlugin.Edit
                          */
                         Plugin.GetApplication().Logbook.Activities.Remove(activity);
                     }
-                }
-                else
-                {
-                    Type type = first.GetType();
-                    IActivity tmp = (IActivity)Activator.CreateInstance(type);
-                    MethodInfo theMethod = type.GetMethod("CopyTo");
-                    if (tmp != null && theMethod != null)
-                    {
-                        hasCopy = true;
-                        theMethod.Invoke(null, new object [] {
-                                first, tmp
-                        });
-                        first = tmp;
-                        Plugin.GetApplication().Logbook.Activities.Add(first);
-                    }
-                    String note = Plugin.NumberedActivityText(Properties.Resources.Edit_JoinedActivities_Text,
-                            salist.Count);
-
-                    if (first.Notes != "")
-                    {
-                        note += "\r\n--\r\n";
-                    }
-
-                    first.Notes = note + first.Notes;
+#endif
                 }
                 dist += ai.DistanceMeters;
             }
@@ -333,13 +359,15 @@ namespace ApplyRoutesPlugin.Edit
             if (hrt.Count == 0) hrt = null;
             if (pwt.Count == 0) pwt = null;
 
-            first.GPSRoute = route;
-            first.DistanceMetersTrack = ddt;
-            first.CadencePerMinuteTrack = cpmt;
-            first.ElevationMetersTrack = emt;
-            first.HeartRatePerMinuteTrack = hrt;
-            first.PowerWattsTrack = pwt;
-            first.QueueEvents = false;
+            result.GPSRoute = route;
+            result.DistanceMetersTrack = ddt;
+            result.CadencePerMinuteTrack = cpmt;
+            result.ElevationMetersTrack = emt;
+            result.HeartRatePerMinuteTrack = hrt;
+            result.PowerWattsTrack = pwt;
+#if ST_2_1
+            result.QueueEvents = false;
+#endif
         }
 
         public string Title
@@ -350,6 +378,14 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
+        public bool Visible
+        {
+            get
+            {
+                if (activities.Count > 0) return true;
+                return false;
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -366,6 +402,40 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
-        private IList<IActivity> activities = null;
+#if !ST_2_1
+        private IDailyActivityView dailyView = null;
+        private IActivityReportsView reportView = null;
+#endif
+        private IList<IActivity> _activities = null;
+        private IList<IActivity> activities
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_activities == null)
+                {
+                    if (dailyView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(dailyView.SelectionProvider.SelectedItems);
+                    }
+                    else if (reportView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(reportView.SelectionProvider.SelectedItems);
+                    }
+                    else
+                    {
+                        return new List<IActivity>();
+                    }
+                }
+#endif
+                return _activities;
+            }
+            set
+            {
+                _activities = value;
+            }
+        }
     }
 }

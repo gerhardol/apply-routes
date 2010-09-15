@@ -19,13 +19,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
+#if ST_2_1
 using ZoneFiveSoftware.Common.Visuals.Fitness.GPS;
+#else
+using ZoneFiveSoftware.Common.Visuals.Mapping;
+#endif
 using System.Xml;
 using ApplyRoutesPlugin.Activities;
 
 namespace ApplyRoutesPlugin.MapProviders
 {
-    class ExtendMapProviders : IExtendMapProviders
+    class ExtendMapProviders : 
+#if ST_2_1
+        IExtendMapProviders
+#else
+        IExtendMapTileProviders
+#endif
     {
         public static IList<GMapProvider> GetMapProviders()
         {
@@ -36,10 +45,10 @@ namespace ApplyRoutesPlugin.MapProviders
             if (providers == null)
             {
                 providers = new List<GMapProvider>();
-                int i = 0;
+                //int i = 0;
                 foreach (MapProviderInfo info in mpiList)
                 {
-                    Guid id = new Guid("{" + guids[i++] + "}");
+                    Guid id = new Guid("{" + info.guid/*guids[i++]*/ + "}");
                     GMapProvider p = new GMapProvider(info.url, info.title, id);
                     p.Enabled = info.enabled;
                     providers.Add(p);
@@ -57,12 +66,20 @@ namespace ApplyRoutesPlugin.MapProviders
         }
         
         #region IExtendMapProviders Members
+#if ST_2_1
         public IList<IMapProvider> MapProviders
+#else
+        public IList<IMapTileProvider> MapTileProviders
+#endif
         {
             get
             {
                 GetMapProviders();
+#if ST_2_1
                 List<IMapProvider> ready = new List<IMapProvider>();
+#else
+                List<IMapTileProvider> ready = new List<IMapTileProvider>();
+#endif
                 foreach (GMapProvider mp in providers)
                 {
                     if (mp.Enabled && !mp.Url.EndsWith("&gmrc&"))
@@ -83,42 +100,49 @@ namespace ApplyRoutesPlugin.MapProviders
         private static void ResetDefaults()
         {
             mpiList = new List<MapProviderInfo>();
-
             string[] strings = new string[] {
-            "gmaps:HYBRID", "Hybrid",
-            "gmaps:MARS_ELEVATION", "Mars Elevation",
-            "gmaps:MARS_INFRARED", "Mars Infrared",
-            "gmaps:MARS_VISIBLE", "Mars Visible",
-            "gmaps:MOON_ELEVATION", "Moon Elevation",
-            "gmaps:MOON_VISIBLE", "Moon Visible",
-            "gmaps:NORMAL", "Street",
-            "gmaps:PHYSICAL", "Terrain",
-            "gmaps:SATELLITE", "Satellite",
-            "gmaps:SATELLITE_3D&gmrc", "Earth",
-            "gmaps:SKY_VISIBLE", "Sky Visible",
-            "msmaps:Aerial", "MSLive-Aerial",
-            "msmaps:Hybrid", "MSLive-Hybrid",
-            "msmaps:Hybrid-3d&gmrc", "MSLive-VE",
-            "msmaps:Road", "MSLive-Road",
-            "geoportail.html:Hybrid", "Geoportail",
-            "openlayers:OpenStreetMapMapnik", "OpenLayers - Open Streetmap"
+            "gmaps:HYBRID", "Hybrid", "true", "313f8830-bde2-11df-851a-0800200c9a66",
+            "gmaps:MARS_ELEVATION", "Mars Elevation", "false", "313f8831-bde2-11df-851a-0800200c9a66",
+            "gmaps:MARS_INFRARED", "Mars Infrared", "false", "313f8832-bde2-11df-851a-0800200c9a66",
+            "gmaps:MARS_VISIBLE", "Mars Visible", "false", "313f8833-bde2-11df-851a-0800200c9a66",
+            "gmaps:MOON_ELEVATION", "Moon Elevation", "false", "313f8834-bde2-11df-851a-0800200c9a66",
+            "gmaps:MOON_VISIBLE", "Moon Visible", "false", "313f8835-bde2-11df-851a-0800200c9a66",
+            "gmaps:NORMAL", "Street", "false", "313f8836-bde2-11df-851a-0800200c9a66",
+            "gmaps:PHYSICAL", "Terrain", "false", "313f8837-bde2-11df-851a-0800200c9a66",
+            "gmaps:SATELLITE", "Satellite", "false", "313f8838-bde2-11df-851a-0800200c9a66",
+            "gmaps:SATELLITE_3D&gmrc", "Earth", "true", "313f8839-bde2-11df-851a-0800200c9a66",
+            "gmaps:SKY_VISIBLE", "Sky Visible", "false", "313f883a-bde2-11df-851a-0800200c9a66",
+            "msmaps:Aerial", "MSLive-Aerial", "true", "313f883b-bde2-11df-851a-0800200c9a66",
+            "msmaps:Hybrid", "MSLive-Hybrid", "true", "313f883c-bde2-11df-851a-0800200c9a66",
+            "msmaps:Hybrid-3d&gmrc", "MSLive-VE", "true", "313f883d-bde2-11df-851a-0800200c9a66",
+            "msmaps:Road", "MSLive-Road", "true", "313f883e-bde2-11df-851a-0800200c9a66",
+            "geoportail.html:Hybrid", "Geoportail", "true", "313f883f-bde2-11df-851a-0800200c9a66",
+            "openlayers:OpenStreetMapMapnik", "OpenLayers - Open Streetmap", "false", "313f8840-bde2-11df-851a-0800200c9a66"
             };
 
-            int i = 0;
-            for (int j = 0; j < strings.GetLength(0); j += 2)
+            for (int j = 0; j < strings.GetLength(0); j += 4)
             {
                 MapProviderInfo info = new MapProviderInfo();
                 string k = strings[j];
                 string[] keys = k.Split(':');
-
+                bool enabled = true;
+                bool.TryParse(strings[j+2], out enabled);
+#if ST_2_1
+                if (k.Equals("gmaps:NORMAL") || k.Equals("gmaps:PHYSICAL") ||
+                    k.Equals("gmaps:SATELLITE") || k.Equals("openlayers:OpenStreetMapMapnik"))
+                {
+                    //These maps are handled in ST3, but may be needed in ST2
+                    enabled = true;
+                }
+#endif
                 info.title = "AR - " + strings[j+1];
                 if (!keys[0].Contains("."))
                 {
                     keys[0] += ".html";
                 }
                 info.url = "http://maps.myosotissp.com/" + keys[0] + "#t=" + keys[1] + "&";
-                info.guid = guids[i++];
-                info.enabled = true;
+                info.guid = strings[j + 3];//guids[i++];
+                info.enabled = enabled;
                 mpiList.Add(info);
             }
         }
@@ -174,7 +198,7 @@ namespace ApplyRoutesPlugin.MapProviders
                         else
                         {
                             info = mpiList[i];
-                            info.guid = guids[i];
+                            //info.guid = guids[i];
                         }
                         XmlAttribute titleAtt = mapProvider.Attributes["Title"];
                         XmlAttribute urlAtt = mapProvider.Attributes["Url"];

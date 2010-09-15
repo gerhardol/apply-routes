@@ -135,7 +135,7 @@
     <value>fitToPageBtn</value>
   </data>
   <data name="&gt;&gt;fitToPageBtn.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.Button, Common.Visuals, Version=3.0.3896.21583, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;fitToPageBtn.Parent" xml:space="preserve">
     <value>$this</value>
@@ -163,7 +163,7 @@
     <value>mapTypePopup</value>
   </data>
   <data name="&gt;&gt;mapTypePopup.Type" xml:space="preserve">
-    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=2.1.3326.18913, Culture=neutral, PublicKeyToken=null</value>
+    <value>ZoneFiveSoftware.Common.Visuals.TextBox, Common.Visuals, Version=3.0.3896.21583, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;mapTypePopup.Parent" xml:space="preserve">
     <value>$this</value>
