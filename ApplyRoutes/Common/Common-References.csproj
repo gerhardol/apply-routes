@@ -71,12 +71,12 @@
   <!-- The last conditional references are seen in VSE, the others will raise warnings -->  
   <!-- references to ST API 2.1 -->
   <ItemGroup Condition=" ('$(Configuration)' == 'ST2.1Release') or ('$(Configuration)' == 'ST2.1Debug') ">
-    <Reference Include="Common.Data, Version=2.1.3478.21402, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Common.Data, Version=2.1.3478.21402, Culture=neutral, processorArchitecture=MSIL, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramFiles)\Zone Five Software\SportTracks 2.1\Common.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Common.Visuals, Version=2.1.3478.21407, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Common.Visuals, Version=2.1.3478.21407, Culture=neutral, processorArchitecture=MSIL, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramFiles)\Zone Five Software\SportTracks 2.1\Common.Visuals.dll</HintPath>
       <Private>False</Private>
@@ -85,12 +85,12 @@
 
   <!-- references to ST API 3.0 -->
   <ItemGroup Condition=" ('$(Configuration)' == 'ST3.0Release') or ('$(Configuration)' == 'ST3.0Debug') ">
-    <Reference Include="Common.Data, Version=3.0.3769.30863, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Common.Data, Version=3.0.3769.30863, Culture=neutral, processorArchitecture=MSIL, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramFiles)\Zone Five Software\SportTracks 3\Common.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Common.Visuals, Version=3.0.3769.30868, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Common.Visuals, Version=3.0.3769.30868, Culture=neutral, processorArchitecture=MSIL, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramFiles)\Zone Five Software\SportTracks 3\Common.Visuals.dll</HintPath>
       <Private>False</Private>
@@ -153,7 +153,7 @@ set guid=$(PluginId)
 IF "%25guid%25"=="" GOTO END
 
 REM ST version, for plugin.xml file
-SET StVersion=3.0.3896
+SET StVersion=3.0.3910
 IF "$(StPluginVersion)"=="2" SET StVersion=2.1.3478
 
 REM 7-zip must be configured, hardcoded path used
