@@ -179,7 +179,7 @@ namespace ApplyRoutesPlugin.Edit
             IList<IAction> actions = new List<IAction>();
             EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
 
-            if (info.showSendToRoutes)
+            if (info.showSendToRoutes && !Plugin.IsRunningOnMono())
             {
                 actions.Add(new SendToView(aview, rview));
             }
@@ -238,7 +238,7 @@ namespace ApplyRoutesPlugin.Edit
         {
             IList<IAction> actions = new List<IAction>();
             EditMenuSettingsInfo info = EditMenuSettingsInfo.Get();
-            if (info.showSendToRoutes)
+            if (info.showSendToRoutes && !Plugin.IsRunningOnMono())
             {
                 actions.Add(new SendToView(null, view));
             }

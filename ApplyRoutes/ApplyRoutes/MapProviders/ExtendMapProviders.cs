@@ -42,7 +42,8 @@ namespace ApplyRoutesPlugin.MapProviders
             {
                 ResetDefaults();
             }
-            if (providers == null)
+ 
+           if (providers == null && ! Plugin.IsRunningOnMono())
             {
                 providers = new List<GMapProvider>();
                 //int i = 0;
