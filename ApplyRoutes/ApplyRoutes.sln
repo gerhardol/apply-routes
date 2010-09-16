@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplyRoutes", "ApplyRoutes\ApplyRoutes.csproj", "{1151A834-EF8C-492D-ABCE-807B2A6A9C2D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9576A524-9104-4677-AD33-4699CE9F26B6} = {9576A524-9104-4677-AD33-4699CE9F26B6}
@@ -11,8 +11,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDAL111Wrapper", "GDAL111Wrapper\GDAL111Wrapper.csproj", "{5569A885-15F2-4C28-9B88-1426D340D15D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDAL113Wrapper", "GDAL113Wrapper\GDAL113Wrapper.csproj", "{9576A524-9104-4677-AD33-4699CE9F26B6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lofas.SportsTracks.Hitta_SE_MapProvider", "..\..\sporttracks-nordic-mapproviders\Lofas.SportsTracks.Hitta_SE_MapProvider\Lofas.SportsTracks.Hitta_SE_MapProvider.csproj", "{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,14 +46,6 @@ Global
 		{9576A524-9104-4677-AD33-4699CE9F26B6}.ST3.0Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9576A524-9104-4677-AD33-4699CE9F26B6}.ST3.0Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9576A524-9104-4677-AD33-4699CE9F26B6}.ST3.0Release|Any CPU.Build.0 = Release|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST2.1Debug|Any CPU.ActiveCfg = ST2.1Debug|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST2.1Debug|Any CPU.Build.0 = ST2.1Debug|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST2.1Release|Any CPU.ActiveCfg = ST2.1Release|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST2.1Release|Any CPU.Build.0 = ST2.1Release|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST3.0Debug|Any CPU.ActiveCfg = ST3.0Debug|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST3.0Debug|Any CPU.Build.0 = ST3.0Debug|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST3.0Release|Any CPU.ActiveCfg = ST3.0Release|Any CPU
-		{029C4C45-BA8E-4BB4-828D-34717ACE9DBA}.ST3.0Release|Any CPU.Build.0 = ST3.0Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
