@@ -167,8 +167,14 @@ set StTarget="$(StPluginPath)\Update\%25guid%25\$(ProjectName)"
 IF NOT EXIST %25StTarget%25 mkdir %25StTarget%25
 REM XCOPY depreciated in Vista, use for XP compatibility
 XCOPY  $(TargetDir)*.* "%25StTarget%25" /I/Y/Q/E &lt;NUL:
+
+IF NOT "$(StPluginVersion)"=="3" GOTO END GDAL3
+copy "$(SolutionDir)\GDAL113Wrapper\bin\$(ConfigurationName)\GDAL113Wrapper.dll" "%25StTarget%25"
+:GDAL3
+IF NOT "$(StPluginVersion)"=="2" GOTO END GDAL2
 copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationName)\GDAL111Wrapper.dll" "%25StTarget%25"
 copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationName)\GDAL11013Wrapper.dll" "%25StTarget%25"
+:GDAL2
 
 set Release=No
 IF "$(ConfigurationName)"=="ST2.1Release" set Release=Yes
