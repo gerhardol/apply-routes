@@ -33,6 +33,13 @@
 	<StPluginVersion>3</StPluginVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" (('$(Configuration)' == 'ST3.0Debug') or ('$(Configuration)' == 'ST2.1Debug')) ">
+    <ConfigurationType>Debug</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" (('$(Configuration)' == 'ST3.0Release') or ('$(Configuration)' == 'ST2.1Release')) ">
+    <ConfigurationType>Release</ConfigurationType>
+  </PropertyGroup>
+
   <PropertyGroup>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
@@ -138,13 +145,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-<!--
   <PropertyGroup>
     <PreBuildEvent>rem adapt date format to local, to avoid errors (compiling with Design open in VSE 2010?)
-if exist "$(TargetPath)"*".locked" del "$(TargetPath)"*".locked"
-if exist "$(TargetPath)" move "$(TargetPath)" "$(TargetPath)."%25date:~5,2%25%25date:~8,2%25%25date:~10,4%25_@_%25time:~1,1%25h%25time:~3,2%25m%25time:~6,2%25s.locked</PreBuildEvent>
+REM if exist "$(TargetPath)"*".locked" del "$(TargetPath)"*".locked"
+REM if exist "$(TargetPath)" move "$(TargetPath)" "$(TargetPath)."%25date:~5,2%25%25date:~8,2%25%25date:~10,4%25_@_%25time:~1,1%25h%25time:~3,2%25m%25time:~6,2%25s.locked</PreBuildEvent>
   </PropertyGroup>
--->
  <PropertyGroup>
     <PostBuildEvent>:: This part is in the Common part of the properties
 :: Avoid editing from VSE
@@ -169,23 +174,20 @@ REM XCOPY depreciated in Vista, use for XP compatibility
 XCOPY  $(TargetDir)*.* "%25StTarget%25" /I/Y/Q/E &lt;NUL:
 
 IF NOT "$(StPluginVersion)"=="3" GOTO END GDAL3
-copy "$(SolutionDir)\GDAL113Wrapper\bin\$(ConfigurationName)\GDAL113Wrapper.dll" "%25StTarget%25"
+copy "$(SolutionDir)\GDAL113Wrapper\bin\$(ConfigurationType)\GDAL113Wrapper.dll" "%25StTarget%25"
 :GDAL3
 IF NOT "$(StPluginVersion)"=="2" GOTO END GDAL2
-copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationName)\GDAL111Wrapper.dll" "%25StTarget%25"
-copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationName)\GDAL11013Wrapper.dll" "%25StTarget%25"
+copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationType)\GDAL111Wrapper.dll" "%25StTarget%25"
+copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationType)\GDAL11013Wrapper.dll" "%25StTarget%25"
 :GDAL2
 
-set Release=No
-IF "$(ConfigurationName)"=="ST2.1Release" set Release=Yes
-IF "$(ConfigurationName)"=="ST3.0Release" set Release=Yes
-IF NOT "%25Release%25"=="Yes" GOTO END
-IF NOT EXIST "%25programfiles%25\7-zip\7z.exe" GOTO END
+IF NOT "$(ConfigurationType)"=="Release" GOTO END
 
 REM generate the plugin.xml file
 ECHO ^&lt;?xml version="1.0" encoding="utf-8" ?^&gt; &gt;  "$(TargetDir)\plugin.xml"
 ECHO ^&lt;plugin id="%25guid%25" minimumCommonVersion="%25StVersion%25" /^&gt; &gt;&gt; "$(TargetDir)\plugin.xml"
 
+IF NOT EXIST "%25programfiles%25\7-zip\7z.exe" GOTO END
 DEL "%25stPlgFile%25"
 "%25programfiles%25\7-zip\7z" a -r -tzip "%25stPlgFile%25"  "$(TargetDir)*"  -x!*.st2plugin -x!*.tmp -x!*.pdb -x!$(ProjectName).xml
 
