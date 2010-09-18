@@ -102,18 +102,7 @@ namespace ApplyRoutesPlugin.UI
             mapProvidersList.Columns.Add(new TreeList.Column("Url", Properties.Resources.SettingsControl_URL, w2, StringAlignment.Near));
             mapProvidersList.RowData = ExtendMapProviders.GetMapProviders();
             mapProvidersList.CheckBoxes = true;
-            foreach (GMapProvider p in ExtendMapProviders.GetMapProviders())
-            {
-                mapProvidersList.SetChecked(p, p.Enabled);
-            }
-            mapProvidersList.CheckedChanged += delegate(object sender, TreeList.ItemEventArgs e)
-            {
-                GMapProvider item = e.Item as GMapProvider;
-                if (item != null)
-                {
-                    item.Enabled = mapProvidersList.CheckedElements.Contains(item);
-                }
-            };
+            UpdateMapProviderListCheckBoxes();
 #if ST_2_1
             mapProvidersList.SelectedChanged += delegate(object sender, EventArgs e)
 #else
@@ -150,6 +139,7 @@ namespace ApplyRoutesPlugin.UI
                 ExtendMapProviders.ApplyDefaults();
                 mapProvidersList.Invalidate();
                 GMapRouteControl.ResetMapTypes();
+                UpdateMapProviderListCheckBoxes();
             };
 
             mapProviderUpdateBtn.Enabled = false;
@@ -216,6 +206,24 @@ namespace ApplyRoutesPlugin.UI
             mapProvidersList.Columns[1].Text = Properties.Resources.SettingsControl_URL;
         }
 
+        private void mapProvidersList_CheckedChanged(object sender, TreeList.ItemEventArgs e)
+        {
+            GMapProvider item = e.Item as GMapProvider;
+            if (item != null)
+            {
+                item.Enabled = mapProvidersList.CheckedElements.Contains(item);
+            }
+        }
+        private void UpdateMapProviderListCheckBoxes()
+        {
+            mapProvidersList.CheckedChanged -= mapProvidersList_CheckedChanged;
+            foreach (GMapProvider p in ExtendMapProviders.GetMapProviders())
+            {
+                mapProvidersList.SetChecked(p, p.Enabled);
+            }
+            mapProvidersList.CheckedChanged += mapProvidersList_CheckedChanged;
+        }
+        
         private void homePageLink_Click(object sender, EventArgs e)
         {
             try
