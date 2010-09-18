@@ -113,10 +113,10 @@ namespace ApplyRoutesPlugin.MapProviders
             "gmaps:SATELLITE", "Satellite", "false", "313f8838-bde2-11df-851a-0800200c9a66",
             "gmaps:SATELLITE_3D&gmrc", "Earth", "true", "313f8839-bde2-11df-851a-0800200c9a66",
             "gmaps:SKY_VISIBLE", "Sky Visible", "false", "313f883a-bde2-11df-851a-0800200c9a66",
-            "msmaps:Aerial", "MSLive-Aerial", "true", "313f883b-bde2-11df-851a-0800200c9a66",
-            "msmaps:Hybrid", "MSLive-Hybrid", "true", "313f883c-bde2-11df-851a-0800200c9a66",
-            "msmaps:Hybrid-3d&gmrc", "MSLive-VE", "true", "313f883d-bde2-11df-851a-0800200c9a66",
-            "msmaps:Road", "MSLive-Road", "true", "313f883e-bde2-11df-851a-0800200c9a66",
+            "msmaps:Aerial", "Bing-Aerial", "true", "313f883b-bde2-11df-851a-0800200c9a66",
+            "msmaps:Hybrid", "Bing-Hybrid", "true", "313f883c-bde2-11df-851a-0800200c9a66",
+            "msmaps:Hybrid-3d&gmrc", "Bing-3D", "true", "313f883d-bde2-11df-851a-0800200c9a66",
+            "msmaps:Road", "Bing-Road", "true", "313f883e-bde2-11df-851a-0800200c9a66",
             "geoportail.html:Hybrid", "Geoportail", "true", "313f883f-bde2-11df-851a-0800200c9a66",
             "openlayers:OpenStreetMapMapnik", "OpenLayers - Open Streetmap", "false", "313f8840-bde2-11df-851a-0800200c9a66"
             };
@@ -132,7 +132,7 @@ namespace ApplyRoutesPlugin.MapProviders
                 if (k.Equals("gmaps:NORMAL") || k.Equals("gmaps:PHYSICAL") ||
                     k.Equals("gmaps:SATELLITE") || k.Equals("openlayers:OpenStreetMapMapnik"))
                 {
-                    //These maps are handled in ST3, but may be needed in ST2
+                    //These maps are included in ST3, but may be needed in ST2
                     enabled = true;
                 }
 #endif
