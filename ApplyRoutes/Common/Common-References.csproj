@@ -38,13 +38,21 @@
   </PropertyGroup>
   <PropertyGroup Condition=" (('$(Configuration)' == 'ST3.0Release') or ('$(Configuration)' == 'ST2.1Release')) ">
     <ConfigurationType>Release</ConfigurationType>
+	<!--First attempt of script, minor checks-->
+    <CustomCommands>
+<CustomCommands>
+ 	        <Command type="AfterBuild" command="rm &quot;$(ProjectDir)/$(ProjectName).st2plugin" externalConsole="true" pauseExternalConsole="true" />
+ 	        <Command type="AfterBuild" command="cp $(SolutionDir)/GDAL111Wrapper/bin/$(ConfigurationName)/GDAL111Wrapper.dll $(OutDir)" externalConsole="true" pauseExternalConsole="true" />
+</CustomCommands>
+ </CustomCommands>
   </PropertyGroup>
 
   <PropertyGroup>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
  
-  <!-- Configurations -->
+
+ <!-- Configurations -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ST2.1Release|AnyCPU' ">
     <DefineConstants>$(DefineConstants);TRACE;ST_2_1</DefineConstants>
     <DebugType>pdbonly</DebugType>

@@ -38,18 +38,17 @@ namespace ApplyRoutesPlugin.MapProviders
     {
         public static IList<GMapProvider> GetMapProviders()
         {
-            if (mpiList == null)
+            if (mpiList == null || mpiList.Count==0)
             {
                 ResetDefaults();
             }
  
-           if (providers == null && ! Plugin.IsRunningOnMono())
+           if ((providers == null || providers.Count != mpiList.Count) && ! Plugin.IsRunningOnMono())
             {
                 providers = new List<GMapProvider>();
-                //int i = 0;
                 foreach (MapProviderInfo info in mpiList)
                 {
-                    Guid id = new Guid("{" + info.guid/*guids[i++]*/ + "}");
+                    Guid id = new Guid("{" + info.guid + "}");
                     GMapProvider p = new GMapProvider(info.url, info.title, id);
                     p.Enabled = info.enabled;
                     providers.Add(p);
@@ -88,10 +87,7 @@ namespace ApplyRoutesPlugin.MapProviders
                         ready.Add(mp);
                     }
                 }
-                if (ready.Count == 0)
-                {
-                    ready = null;
-                }
+                //Note: If list is empty, do not return null
 
                 return ready;
             }
@@ -142,7 +138,7 @@ namespace ApplyRoutesPlugin.MapProviders
                     keys[0] += ".html";
                 }
                 info.url = "http://maps.myosotissp.com/" + keys[0] + "#t=" + keys[1] + "&";
-                info.guid = strings[j + 3];//guids[i++];
+                info.guid = strings[j + 3];
                 info.enabled = enabled;
                 mpiList.Add(info);
             }
@@ -150,14 +146,10 @@ namespace ApplyRoutesPlugin.MapProviders
 
         public static void ApplyDefaults()
         {
-            ResetDefaults();
-            for (int i = 0; i < mpiList.Count; i++) {
-                GMapProvider p = providers[i];
-                MapProviderInfo info = mpiList[i];
-                p.Title = info.title;
-                p.Url = info.url;
-                p.Enabled = info.enabled;
-            }
+            //There has been reports that providers is corrupted here, reset both mpiList and providers
+            mpiList = null;
+            providers = null;
+            GetMapProviders();
         }
 
         public static void ReadOptions(XmlDocument xmlDoc, XmlNamespaceManager nsmgr, XmlElement pluginNode)
@@ -165,6 +157,7 @@ namespace ApplyRoutesPlugin.MapProviders
             ResetDefaults();
             if (pluginNode != null)
             {
+                bool resetDefaults = false;
                 XmlNodeList mapProviderLists = pluginNode.GetElementsByTagName("MapProviders");
                 if (mapProviderLists.Count == 1)
                 {
@@ -179,9 +172,10 @@ namespace ApplyRoutesPlugin.MapProviders
                     SortedList<string, int> guidMap = new SortedList<string, int>();
 
                     int i = 0;
-                    foreach (string guid in guids)
+                    for (i = 0; i < mpiList.Count; i++)
                     {
-                        guidMap[guid] = i++;
+                        MapProviderInfo info = mpiList[i];
+                        guidMap[info.guid] = i;
                     }
                     i = 0;
                     foreach (XmlNode mapProvider in mapProviders)
@@ -198,8 +192,9 @@ namespace ApplyRoutesPlugin.MapProviders
                         }
                         else
                         {
-                            info = mpiList[i];
-                            //info.guid = guids[i];
+                            //guid in Preferences does not match the hardcoded list in the code
+                            resetDefaults = true;
+                            break;
                         }
                         XmlAttribute titleAtt = mapProvider.Attributes["Title"];
                         XmlAttribute urlAtt = mapProvider.Attributes["Url"];
@@ -217,6 +212,10 @@ namespace ApplyRoutesPlugin.MapProviders
                         i++;
                     }
                 }
+                if (resetDefaults)
+                {
+                    ResetDefaults();
+                }
                 XmlNodeList uploadUrls = pluginNode.GetElementsByTagName("UploadUrl");
                 if (uploadUrls.Count == 1)
                 {
@@ -225,6 +224,7 @@ namespace ApplyRoutesPlugin.MapProviders
                     UploadURL = att.Value;
                 }
             }
+
         }
                 
         public static void WriteOptions(XmlDocument xmlDoc, XmlElement pluginNode)
@@ -275,31 +275,6 @@ namespace ApplyRoutesPlugin.MapProviders
         }
 
         private static IList<GMapProvider> providers = null;
-        private static string[] guids = 
-            { 
-                "1e6dc0f1-6dca-4d13-8c33-de6e2d200e5b",
-                "9b4a949b-0605-477f-83f2-0b3b868d9430",
-                "803a66e5-64d5-4c2f-a564-5146ed895cfa",
-                "9207f188-3b77-44ec-8686-81c137953ce5",
-                "4e168491-9a85-459e-8147-7d87ebf097fb",
-                "19c701d4-fafe-490b-ba8c-b06314974fec",
-                "098c028b-2284-4e44-8f3a-ba45e91c8fc1",
-                "456dd429-f27a-4e8b-87e8-a78028829409",
-                "9becc678-2982-4b9d-a297-a080dde9f910",
-                "f294c1f3-e272-4de6-8638-c0ce1f6d8abe",
-                "39b2a8e5-ef1c-4929-b058-dd3809f838d8",
-                "866e253c-a312-47a1-9064-78de1178e254",
-                "9cc306e0-585e-11dd-ae16-0800200c9a66",
-                "9cc306e1-585e-11dd-ae16-0800200c9a66",
-                "9cc306e2-585e-11dd-ae16-0800200c9a66",
-                "9cc306e3-585e-11dd-ae16-0800200c9a66",
-                "9cc306e4-585e-11dd-ae16-0800200c9a66",
-                "9cc306e5-585e-11dd-ae16-0800200c9a66",
-                "9cc306e6-585e-11dd-ae16-0800200c9a66",
-                "9cc306e7-585e-11dd-ae16-0800200c9a66",
-                "9cc306e8-585e-11dd-ae16-0800200c9a66",
-                "9cc306e9-585e-11dd-ae16-0800200c9a66"
-            };
         private static List<MapProviderInfo> mpiList = null;
 
         private static String defaultUploadUrl = "http://replayroutes.com/upload.html";

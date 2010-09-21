@@ -139,6 +139,7 @@ namespace ApplyRoutesPlugin.UI
                 ExtendMapProviders.ApplyDefaults();
                 mapProvidersList.Invalidate();
                 GMapRouteControl.ResetMapTypes();
+                mapProvidersList.RowData = ExtendMapProviders.GetMapProviders();
                 UpdateMapProviderListCheckBoxes();
             };
 

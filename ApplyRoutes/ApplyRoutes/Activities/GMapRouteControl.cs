@@ -641,8 +641,8 @@ namespace ApplyRoutesPlugin.Activities
         private IList<IRoute> routes = null;
         private bool ready = false;
         private bool changed = false;
-        private string selected_guid = "";
-        private static string guid = "";
+        private string selected_guid = ""; //ActivityPage, for used guid (map)
+        private static string guid = ""; //ActivityPage, saved in Preferences (may not exist in active maps)
 
         static float GetInterpolatedValue(INumericTimeDataSeries s, DateTime when)
         {
