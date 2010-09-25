@@ -24,12 +24,12 @@
 
   <PropertyGroup Condition=" ('$(PluginId)' != '') and (('$(Configuration)' == 'ST2.1Release') or ('$(Configuration)' == 'ST2.1Debug')) ">
     <StartProgram>$(ProgramFiles)\Zone Five Software\SportTracks 2.1\SportTracks.exe</StartProgram>
-	<StPluginPath>%25ALLUSERSPROFILE%25\ZoneFiveSoftware\SportTracks\2.0\Plugins</StPluginPath>
+	<StPluginPath>ZoneFiveSoftware\SportTracks\2.0\Plugins</StPluginPath>
 	<StPluginVersion>2</StPluginVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" ('$(PluginId)' != '') and (('$(Configuration)' == 'ST3.0Release') or ('$(Configuration)' == 'ST3.0Debug')) ">
     <StartProgram>$(ProgramFiles)\Zone Five Software\SportTracks 3\SportTracks.exe</StartProgram>
-	<StPluginPath>%25ALLUSERSPROFILE%25\ZoneFiveSoftware\SportTracks\3\Plugins</StPluginPath>
+	<StPluginPath>ZoneFiveSoftware\SportTracks\3\Plugins</StPluginPath>
 	<StPluginVersion>3</StPluginVersion>
   </PropertyGroup>
 
@@ -176,18 +176,22 @@ set stPlgFile=$(ProjectDir)$(ProjectName)-0.2.x.st$(StPluginVersion)plugin
 REM To move a .st2plugin to common area, create environment variable (or set it below)
 REM set stPlgoutdir=g:\Users\go\dev\web
 
-set StTarget="$(StPluginPath)\Update\%25guid%25\$(ProjectName)"
+set APPDATA=%25ALLUSERSPROFILE%25
+IF EXIST "%25APPDATA%25\Application Data" set APPDATA=%25ALLUSERSPROFILE%25\Application Data
+set StTarget="%25APPDATA%25\$(StPluginPath)\Update\%25guid%25\$(ProjectName)"
 IF NOT EXIST %25StTarget%25 mkdir %25StTarget%25
 REM XCOPY depreciated in Vista, use for XP compatibility
-XCOPY  $(TargetDir)*.* "%25StTarget%25" /I/Y/Q/E &lt;NUL:
+XCOPY  "$(TargetDir)*.*" %25StTarget%25 /I/Y/Q/E &lt;NUL:
 
-IF NOT "$(StPluginVersion)"=="3" GOTO END GDAL3
-copy "$(SolutionDir)\GDAL113Wrapper\bin\$(ConfigurationType)\GDAL113Wrapper.dll" "%25StTarget%25"
+IF NOT "$(StPluginVersion)"=="3" GOTO GDAL3
+copy "$(SolutionDir)\GDAL113Wrapper\bin\$(ConfigurationType)\GDAL113Wrapper.dll" %25StTarget%25
 :GDAL3
-IF NOT "$(StPluginVersion)"=="2" GOTO END GDAL2
-copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationType)\GDAL111Wrapper.dll" "%25StTarget%25"
-copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationType)\GDAL11013Wrapper.dll" "%25StTarget%25"
+IF NOT "$(StPluginVersion)"=="2" GOTO GDAL2
+copy "$(SolutionDir)\GDAL111Wrapper\bin\$(ConfigurationType)\GDAL111Wrapper.dll" %25StTarget%25
+copy "$(SolutionDir)\GDAL11013Wrapper\bin\$(ConfigurationType)\GDAL11013Wrapper.dll" %25StTarget%25
 :GDAL2
+
+dir %25StTarget%25
 
 IF NOT "$(ConfigurationType)"=="Release" GOTO END
 
@@ -200,6 +204,7 @@ DEL "%25stPlgFile%25"
 "%25programfiles%25\7-zip\7z" a -r -tzip "%25stPlgFile%25"  "$(TargetDir)*"  -x!*.st2plugin -x!*.tmp -x!*.pdb -x!$(ProjectName).xml
 
 IF "%25stPlgoutdir%25"=="" GOTO END
+echo copying to %25stPlgoutdir%25
 IF not EXIST "%25stPlgoutdir%25" GOTO END
 COPY "%25stPlgFile%25" "%25stPlgoutdir%25"
 
