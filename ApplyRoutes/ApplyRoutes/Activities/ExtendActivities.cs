@@ -22,6 +22,7 @@ using System.Text;
 using ZoneFiveSoftware.Common.Visuals;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ApplyRoutesPlugin.Activities;
+
 namespace ApplyRoutesPlugin.Views
 {
     class ExtendActivities : IExtendActivityDetailPages
@@ -29,10 +30,18 @@ namespace ApplyRoutesPlugin.Views
 
         #region IExtendActivityDetailPages Members
 
+#if ST_2_1
         public IList<IActivityDetailPage> ActivityDetailPages
         {
             get { return new IActivityDetailPage[] { new GMapActivityDetail() }; }
         }
+
+#else
+        public IList<IDetailPage> GetDetailPages(IDailyActivityView view, ExtendViewDetailPages.Location location)
+        {
+            return new IDetailPage[] { new GMapActivityDetail(view) };
+        }
+#endif
 
         #endregion
     }

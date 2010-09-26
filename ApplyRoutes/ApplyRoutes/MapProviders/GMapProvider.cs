@@ -18,12 +18,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+#if ST_2_1
 using ZoneFiveSoftware.Common.Visuals.Fitness.GPS;
+#else
+using ZoneFiveSoftware.Common.Visuals.Mapping;
+#endif
 using System.Drawing;
 using ZoneFiveSoftware.Common.Data.GPS;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using mshtml;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.ComponentModel;
@@ -52,12 +55,13 @@ namespace ApplyRoutesPlugin.MapProviders
 {
     class cache_entry
     {
-        public cache_entry(string u, IMapImageReadyListener l, Rectangle r, int z)
+        public cache_entry(string u, IMapImageReadyListener l, Rectangle r, int z, IGPSBounds bounds)
         {
             url = u;
             listener = l;
             pixRect = r;
             zoom = z;
+            this.bounds = bounds;
         }
 
         public string url;
@@ -70,6 +74,7 @@ namespace ApplyRoutesPlugin.MapProviders
         public int minZoom = -1;
         public int maxZoom = -1;
         public string proj_info = null;
+        public IGPSBounds bounds = null;
     };
 
     public class GMapImageCache
@@ -105,7 +110,11 @@ namespace ApplyRoutesPlugin.MapProviders
             cache_entry ce = state as cache_entry;
             if (ce != null)
             {
+#if ST_2_1
                 ce.listener.NotifyMapImageReady(ce);
+#else
+                ce.listener.InvalidateRegion(ce.bounds);
+#endif
             }
         }
 
@@ -151,7 +160,7 @@ namespace ApplyRoutesPlugin.MapProviders
             }
         }
 
-        public Bitmap GetMapImage(Rectangle pixRect, IMapImageReadyListener listener, int zoom, string url, out string proj_info)
+        public Bitmap GetMapImage(Rectangle pixRect, IMapImageReadyListener listener, int zoom, string url, out string proj_info, IGPSBounds bounds)
         {
             Bitmap bmp = null;
             cache_entry ce = null;
@@ -176,7 +185,7 @@ namespace ApplyRoutesPlugin.MapProviders
                 Thread.Sleep(5);
                 return null;
             }
-            ce = new cache_entry(url, listener, pixRect, zoom);
+            ce = new cache_entry(url, listener, pixRect, zoom, bounds);
             rwl.AcquireWriterLock(1000);
             cache_map[url] = ce;
             to_do.Add(ce);
@@ -383,7 +392,13 @@ namespace ApplyRoutesPlugin.MapProviders
         }
     };
 
-    class GMapProvider : IMapProvider
+    class GMapProvider :
+#if ST_2_1
+        IMapProvider
+#else
+        IMapTileProvider
+#endif
+
     {
         #region IMapProvider Members
         private static GMapImageCache imageCache = null;
@@ -401,7 +416,7 @@ namespace ApplyRoutesPlugin.MapProviders
                     imageCache = new GMapImageCache(url);
                 }
             }
-
+            m_Proj = new GMapProjection(this);
             enabled = true;
         }
 
@@ -431,11 +446,11 @@ namespace ApplyRoutesPlugin.MapProviders
             get { return imageCache.ToDoSize(); }
         }
 
-        private int GMZoom(double zoomLevel)
+        public int GMZoom(double zoomLevel)
         {
-            int zm = (int)Math.Round(MaxZoomLevel - zoomLevel);
+            int zm = (int)Math.Round(MaximumZoom - zoomLevel);
             if (zm < 0) zm = 0;
-            int max = (proj_res != null) ? proj_res.Length - 1 : (int)(MaxZoomLevel - MinZoomLevel);
+            int max = (proj_res != null) ? proj_res.Length - 1 : (int)(MaximumZoom - MinimumZoom);
             if (zm > max) zm = max;
             return zm;
         }
@@ -474,7 +489,7 @@ namespace ApplyRoutesPlugin.MapProviders
             imageCache.NudgeQueue();
 
             Point offset = new Point(0, 0);
-            Point tlP = MercatorGPSToPixel(center, zoomLevel);
+            Point tlP = m_Proj.MercatorGPSToPixel(center, zoomLevel);
             tlP.X -= drawRectangle.Width >> 1;
             tlP.Y -= drawRectangle.Height >> 1;
             if (tlP.X < 0)
@@ -520,8 +535,8 @@ namespace ApplyRoutesPlugin.MapProviders
                         cpt.Y -= delta.Y;
                     }
 
-                    IGPSLocation c = MercatorPixelToGPS(cpt, zoomLevel);
-                    Point cpt2 = MercatorGPSToPixel(c, zoomLevel);
+                    IGPSLocation c = m_Proj.MercatorPixelToGPS(cpt, zoomLevel);
+                    Point cpt2 = m_Proj.MercatorGPSToPixel(c, zoomLevel);
                     if (cpt2.X != cpt.X || cpt2.Y != cpt.Y)
                     {
                         cpt2.X = cpt.X;
@@ -552,7 +567,25 @@ namespace ApplyRoutesPlugin.MapProviders
                     theUrl += "strp=1" + uri.Fragment;
 
                     string pi;
-                    Bitmap bmp = imageCache.GetMapImage(new Rectangle(tl2, sz), listener, zoom, theUrl, out pi);
+                    //Find outer bounds for tile in WGS84 coordinates
+                    //used in ST3 when notifying ST to draw tiles
+                    //(could be optimized for ST_2_1)
+                    Point NWpt = new Point(tl2.X, tl2.Y);
+                    IGPSLocation NWgps = m_Proj.MercatorPixelToGPS(NWpt, zoomLevel);
+                    Point NEpt = new Point(tl2.X, tl2.Y + size + GMapImageCache.logoSize);
+                    IGPSLocation NEgps = m_Proj.MercatorPixelToGPS(NEpt, zoomLevel);
+                    Point SEpt = new Point(tl2.X + size, tl2.Y + size + GMapImageCache.logoSize);
+                    IGPSLocation SEgps = m_Proj.MercatorPixelToGPS(SEpt, zoomLevel);
+                    Point SWpt = new Point(tl2.X + size);
+                    IGPSLocation SWgps = m_Proj.MercatorPixelToGPS(SWpt, zoomLevel);
+                    IGPSBounds bounds = new GPSBounds(
+                        new GPSLocation((float)Math.Max(NWgps.LatitudeDegrees,  NEgps.LatitudeDegrees),
+                                        (float)Math.Min(NWgps.LongitudeDegrees, SWgps.LongitudeDegrees)),
+                        new GPSLocation((float)Math.Min(SWgps.LatitudeDegrees,  SEgps.LatitudeDegrees),
+                                        (float)Math.Max(NEgps.LongitudeDegrees, SEgps.LongitudeDegrees)));
+
+                    Bitmap bmp = imageCache.GetMapImage(new Rectangle(tl2, sz), listener, zoom, theUrl, out pi, bounds);
+
                     if (bmp != null)
                     {
                         if (SetProjInfo(pi))
@@ -577,47 +610,29 @@ namespace ApplyRoutesPlugin.MapProviders
             return nq;
         }
 
-        public bool FractionalZoom
-        {
-            get { return false; }
-        }
-
         public Guid Id
         {
             get { return guid; }
         }
 
-        public Rectangle MapImagePixelRect(object mapImage, Rectangle drawRectangle, IGPSLocation center, double zoomLevel)
+        public IMapProjection MapProjection
         {
-            cache_entry ce = mapImage as cache_entry;
-            if (ce != null && ce.zoom == GMZoom(zoomLevel) && ce.done)
-            {
-                if (ce.minZoom >= 0 && ce.maxZoom >= 0)
-                {
-                    minZoom = 25 - ce.maxZoom;
-                    maxZoom = 25 - ce.minZoom;
-                }
-                Point tlP = MercatorGPSToPixel(center, zoomLevel);
-                tlP.X -= drawRectangle.Width >> 1;
-                tlP.Y -= drawRectangle.Height >> 1;
-                if (tlP.X < 0) tlP.X = 0;
-                if (tlP.Y < 0) tlP.Y = 0;
-                Rectangle r = new Rectangle(ce.pixRect.X - tlP.X + drawRectangle.X,
-                            ce.pixRect.Y - tlP.Y + drawRectangle.Y, ce.pixRect.Size.Width, ce.pixRect.Size.Height);
-                r.Intersect(drawRectangle);
-                return r;
-            }
-            return Rectangle.Empty;
+            get { return m_Proj; }
         }
 
-        public double MaxZoomLevel
+        public double MaximumZoom
         {
             get { return maxZoom; }
         }
 
-        public double MinZoomLevel
+        public double MinimumZoom
         {
             get { return minZoom; }
+        }
+
+        public bool SupportsFractionalZoom
+        {
+            get { return true; }
         }
 
         public string Name
@@ -632,128 +647,56 @@ namespace ApplyRoutesPlugin.MapProviders
 
         #endregion
 
+#if ST_2_1
+        //A few methods differ ST2/ST3, the ST2 methods are separated
+        public Rectangle MapImagePixelRect(object mapImage, Rectangle drawRectangle, IGPSLocation center, double zoomLevel)
+        {
+            cache_entry ce = mapImage as cache_entry;
+            if (ce != null && ce.zoom == GMZoom(zoomLevel) && ce.done)
+            {
+                if (ce.minZoom >= 0 && ce.maxZoom >= 0)
+                {
+                    minZoom = 25 - ce.maxZoom;
+                    maxZoom = 25 - ce.minZoom;
+                }
+                Point tlP = m_Proj.MercatorGPSToPixel(center, zoomLevel);
+                tlP.X -= drawRectangle.Width >> 1;
+                tlP.Y -= drawRectangle.Height >> 1;
+                if (tlP.X < 0) tlP.X = 0;
+                if (tlP.Y < 0) tlP.Y = 0;
+                Rectangle r = new Rectangle(ce.pixRect.X - tlP.X + drawRectangle.X,
+                            ce.pixRect.Y - tlP.Y + drawRectangle.Y, ce.pixRect.Size.Width, ce.pixRect.Size.Height);
+                r.Intersect(drawRectangle);
+                return r;
+            }
+            return Rectangle.Empty;
+        }
+
+        public double MaxZoomLevel
+        {
+            get { return MaximumZoom; }
+        }
+
+        public double MinZoomLevel
+        {
+            get { return MinimumZoom; }
+        }
+        public bool FractionalZoom
+        {
+            get { return SupportsFractionalZoom; }
+        }
+
         #region IMapProjection Members
-
-        private delegate void InvokeDelegate();
-        //private bool untrue = false;
-
-        private Point GDALGPSToPixel(IGPSLocation where, double zoomLevel)
+        public System.Drawing.Point GPSToPixel(ZoneFiveSoftware.Common.Data.GPS.IGPSLocation origin, double zoomLevel, ZoneFiveSoftware.Common.Data.GPS.IGPSLocation gps)
         {
-            int zm = GMZoom(zoomLevel);
-            double x, y;
-            float res = proj_res[zm];
-            double[] conv = new double[3];
-            GDAL111Wrapper.wrapper w1 = gdal_wrapper as GDAL111Wrapper.wrapper;
-            GDAL11013Wrapper.wrapper w2 = gdal_wrapper as GDAL11013Wrapper.wrapper;
-            if (w1 != null)
-            {
-                w1.transform_to_map(conv, where.LongitudeDegrees, where.LatitudeDegrees);
-            }
-            else if (w2 != null)
-            {
-                w2.transform_to_map(conv, where.LongitudeDegrees, where.LatitudeDegrees);
-            } else {
-                conv[0] = where.LongitudeDegrees;
-                conv[1] = where.LatitudeDegrees;
-            }
-            x = (conv[0] - proj_bounds[0]) / res;
-            y = (proj_bounds[3] - conv[1]) / res;
-
-            return new Point((int)Math.Round(x), (int)Math.Round(y));
+            return m_Proj.GPSToPixel(origin, zoomLevel, gps);
         }
-
-        private Point MercatorGPSToPixel(IGPSLocation where, double zoomLevel)
+        public ZoneFiveSoftware.Common.Data.GPS.IGPSLocation PixelToGPS(ZoneFiveSoftware.Common.Data.GPS.IGPSLocation origin, double zoomLevel, System.Drawing.Point pixel)
         {
-            if (gdal_wrapper != null)
-            {
-                return GDALGPSToPixel(where, zoomLevel);
-            }
-
-            int zm = GMZoom(zoomLevel);
-            double x, y;
-            double z1 = Math.Pow(2, zm) * 64;
-            double z2 = z1 * 2;
-
-            x = where.LongitudeDegrees * z2 / 180 + z2;
-            double s = Math.Sin(where.LatitudeDegrees * Math.PI / 180);
-            s = Math.Max(s, -.9999);
-            s = Math.Min(s, 0.9999);
-            y = z2 - z1 * Math.Log((1 + s) / (1 - s)) / Math.PI;
-            return new Point((int)Math.Round(x), (int)Math.Round(y));
+            return m_Proj.PixelToGPS(origin, zoomLevel, pixel);
         }
-
-        private IGPSLocation GDALPixelToGPS(Point where, double zoomLevel)
-        {
-            int zm = GMZoom(zoomLevel);
-            double x, y;
-            float res = proj_res[zm];
-            double[] conv = new double[3];
-
-            double xin = where.X * res + proj_bounds[0];
-            double yin = proj_bounds[3] - where.Y * res;
-            GDAL111Wrapper.wrapper w1 = gdal_wrapper as GDAL111Wrapper.wrapper;
-            GDAL11013Wrapper.wrapper w2 = gdal_wrapper as GDAL11013Wrapper.wrapper;
-            if (w1 != null)
-            {
-                w1.transform_to_display(conv, xin, yin);
-            }
-            else if (w2 != null)
-            {
-                w2.transform_to_display(conv, xin, yin);
-            }
-            else
-            {
-                conv[0] = xin;
-                conv[1] = yin;
-            }
-
-            x = conv[0];
-            y = conv[1];
-
-            return new GPSLocation((float)y, (float)x);
-        }
-
-        private IGPSLocation MercatorPixelToGPS(Point where, double zoomLevel)
-        {
-            if (gdal_wrapper != null)
-            {
-                return GDALPixelToGPS(where, zoomLevel);
-            }
-
-            int zm = GMZoom(zoomLevel);
-            double x, y;
-            double z = 128 * Math.Pow(2, zm);
-
-            x = ((where.X) / z - 1) * 180;
-            y = Math.Min(Math.Max(1 - (where.Y) / z, -1), 1) * Math.PI;
-
-            y = (2 * Math.Atan(Math.Exp(y)) - Math.PI / 2) * 180 / Math.PI;
-
-            return new GPSLocation((float)y, (float)x);
-        }
-
-        public Point GPSToPixel(IGPSLocation origin, double zoomLevel, IGPSLocation gps)
-        {
-            Point orgP = MercatorGPSToPixel(origin, zoomLevel);
-            Point gpsP = MercatorGPSToPixel(gps, zoomLevel);
-            return new Point(gpsP.X - orgP.X, gpsP.Y - orgP.Y);
-        }
-
-        public IGPSLocation PixelToGPS(IGPSLocation origin, double zoomLevel, Point pixel)
-        {
-            if (origin == null) return origin;
-            Point orgP = MercatorGPSToPixel(origin, zoomLevel);
-            Point pos = new Point(orgP.X + pixel.X, orgP.Y + pixel.Y);
-            IGPSLocation loc = MercatorPixelToGPS(pos, zoomLevel);
-            Point p2 = GPSToPixel(origin, zoomLevel, loc);
-            if (p2.X != pixel.X || p2.Y != pixel.Y)
-            {
-                p2.X = pixel.X;
-            }
-            return loc;
-        }
-
         #endregion
+#endif
 
         public bool Enabled
         {
@@ -761,10 +704,7 @@ namespace ApplyRoutesPlugin.MapProviders
             set { enabled = value; }
         }
 
-        
-
-        
-
+        private readonly GMapProjection m_Proj;
         private Regex pi_decode = new Regex(@"\{res:\[([-+0-9\.,e]+)\]\s*,\s*" +
                 @"bounds:\[([-+0-9\.,e]+)\]\s*,\s*" +
                 "projection:\"([^\"]*)\"\\s*,\\s*" +
@@ -784,12 +724,16 @@ namespace ApplyRoutesPlugin.MapProviders
 
         private void SetGDALProjInfo(string displayProjection, string projection)
         {
+#if ST_2_1
             Object o = GDAL111Wrapper.wrapper.make_wrapper(displayProjection, projection);
             if (o == null)
             {
                 o = GDAL11013Wrapper.wrapper.make_wrapper(displayProjection, projection);
             }
             gdal_wrapper = o;
+#else
+            gdal_wrapper = GDAL113Wrapper.wrapper.make_wrapper(displayProjection, projection);
+#endif
         }
 
         private bool SetProjInfo(string proj_info)
@@ -828,10 +772,10 @@ namespace ApplyRoutesPlugin.MapProviders
         }
 
         private string proj_attrs = null;
-        private float[] proj_bounds;
-        private float[] proj_res;
+        public float[] proj_bounds;
+        public float[] proj_res;
         private float[] proj_tile;
-        private Object gdal_wrapper = null;
+        public Object gdal_wrapper = null;
 
         private bool enabled = true;
 

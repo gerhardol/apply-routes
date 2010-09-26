@@ -326,7 +326,7 @@ namespace ApplyRoutesPlugin.UI
             return name.Trim().ToLower();
         }
 
-        public SortedList<string, string> GetIActivityNameList(IList<IActivity> items,
+        public SortedList<string, string> GetIActivityNameList(IEnumerable<IActivity> items,
             IActivity itemToSelect, out string selected, bool useNames)
         {
             SortedList<string, string> names = new SortedList<string, string>();
@@ -398,7 +398,7 @@ namespace ApplyRoutesPlugin.UI
             return name;
         }
 
-        private static void GetCategoriesRec(SortedList<string, IActivityCategory> list, IList<IActivityCategory> cats)
+        private static void GetCategoriesRec(SortedList<string, IActivityCategory> list, IEnumerable<IActivityCategory> cats)
         {
             foreach (IActivityCategory cat in cats)
             {

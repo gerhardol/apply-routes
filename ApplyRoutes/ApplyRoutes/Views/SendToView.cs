@@ -19,7 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ZoneFiveSoftware.Common.Visuals;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Util;
+#endif
+using ZoneFiveSoftware.Common.Visuals.Fitness;
 using ZoneFiveSoftware.Common.Data.Fitness;
+using ZoneFiveSoftware.Common.Data;
 using System.ComponentModel;
 using ApplyRoutesPlugin.Activities;
 
@@ -28,11 +33,23 @@ namespace ApplyRoutesPlugin.Views
     class SendToView : IAction
     {
         #region IAction Members
+#if ST_2_1
         public SendToView(IList<IActivity> a, IList<IRoute> r)
         {
             activities = a;
             routes = r;
         }
+#else
+        public SendToView(IDailyActivityView aview, IActivityReportsView rview)
+        {
+            this.dailyView = aview;
+            this.reportView = rview;
+        }
+        public SendToView(IRouteView dummy, IRouteView view)
+        {
+            this.routeView = view;
+        }
+#endif
 
         public bool Enabled
         {
@@ -46,7 +63,15 @@ namespace ApplyRoutesPlugin.Views
 
         public System.Drawing.Image Image
         {
-            get { return null; }
+            get { return Properties.Resources.ApplyRoutes.ToBitmap(); }
+        }
+
+        public IList<string> MenuPath
+        {
+            get
+            {
+                return new List<string>();
+            }
         }
 
         public void Refresh()
@@ -55,7 +80,7 @@ namespace ApplyRoutesPlugin.Views
 
         public void Run(System.Drawing.Rectangle rectButton)
         {
-            Plugin.GetApplication().ShowView(Plugin.thePlugin.Id, "");
+            Plugin.GetApplication().ShowView(GUIDs.ApplyRoutesView, "");//TODO exception
             GMapActivityDetail view = Plugin.GetApplication().ActiveView as GMapActivityDetail;
             if (view != null)
             {
@@ -85,6 +110,19 @@ namespace ApplyRoutesPlugin.Views
             }
         }
 
+        private bool firstRun = true;
+        public bool Visible
+        {
+            get
+            {
+                //Analyze menu must be Visible at first call, otherwise it is hidden
+                //Could be done with listeners too
+                //TODO exception
+                if (true == firstRun) { firstRun = false; return true; }
+                if (activities.Count == 0) return false;
+                return true;
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -101,7 +139,68 @@ namespace ApplyRoutesPlugin.Views
 
         #endregion
 
-        IList<IActivity> activities;
-        IList<IRoute> routes;
+#if !ST_2_1
+        private IDailyActivityView dailyView = null;
+        private IActivityReportsView reportView = null;
+        private IRouteView routeView = null;
+#endif
+        private IList<IActivity> _activities = null;
+        private IList<IActivity> activities
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_activities == null)
+                {
+                    if (dailyView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(dailyView.SelectionProvider.SelectedItems);
+                    }
+                    else if (reportView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IActivity>(reportView.SelectionProvider.SelectedItems);
+                    }
+                    else
+                    {
+                        return new List<IActivity>();
+                    }
+                }
+#endif
+                return _activities;
+            }
+            set
+            {
+                _activities = value;
+            }
+        }
+        private IList<IRoute> _routes = null;
+        private IList<IRoute> routes
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_routes == null)
+                {
+                    if (routeView != null)
+                    {
+                        return CollectionUtils.GetAllContainedItemsOfType<IRoute>(routeView.SelectionProvider.SelectedItems);
+                    }
+                    else
+                    {
+                        return new List<IRoute>();
+                    }
+                }
+#endif
+                return _routes;
+            }
+            set
+            {
+                _routes = value;
+            }
+        }
     }
 }

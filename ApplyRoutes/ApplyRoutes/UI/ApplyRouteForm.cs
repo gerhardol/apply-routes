@@ -72,7 +72,11 @@ namespace ApplyRoutesPlugin.UI
 
             
             this.ignoreGPSActChk.CheckedChanged += refreshHandler;
+#if ST_2_1
             this.routeList.SelectedChanged += refreshHandler;
+#else
+            this.routeList.SelectedItemsChanged += refreshHandler;
+#endif
             this.preserve_dist_exactly_rad.CheckedChanged += refreshHandler;
             this.preserve_dist_rounded_rad.CheckedChanged += refreshHandler;
             this.preserve_dist_scaled_rad.CheckedChanged += refreshHandler;

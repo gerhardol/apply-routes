@@ -106,7 +106,7 @@
             this.activityRoutePop.AcceptsTab = false;
             this.activityRoutePop.BackColor = System.Drawing.Color.White;
             this.activityRoutePop.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(114)))), ((int)(((byte)(108)))));
-            this.activityRoutePop.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown8;
+            this.activityRoutePop.ButtonImage = global::ApplyRoutesPlugin.Properties.Resources.DropDown;
             resources.ApplyResources(this.activityRoutePop, "activityRoutePop");
             this.activityRoutePop.Multiline = false;
             this.activityRoutePop.Name = "activityRoutePop";

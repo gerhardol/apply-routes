@@ -25,6 +25,10 @@ using ZoneFiveSoftware.Common.Data;
 using ZoneFiveSoftware.Common.Data.Fitness;
 using ZoneFiveSoftware.Common.Data.GPS;
 using ZoneFiveSoftware.Common.Visuals;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Fitness;
+using ZoneFiveSoftware.Common.Visuals.Util;
+#endif
 
 using ApplyRoutesPlugin.UI;
 
@@ -32,11 +36,23 @@ namespace ApplyRoutesPlugin.Edit
 {
     class UpdateEquipmentAction : IAction
     {
+#if !ST_2_1
+        public UpdateEquipmentAction(IDailyActivityView aview, IActivityReportsView rview)
+        {
+            this.dailyView = aview;
+            this.reportView = rview;
+        }
+        public UpdateEquipmentAction(IRouteView dummy, IRouteView view)
+        {
+            this.routeView = view;
+        }
+#else
         public UpdateEquipmentAction(IList<IActivity> activities, IList<IRoute> routes)
         {
             this.activities = activities;
             this.routes = routes;
         }
+#endif
 
         #region IAction Members
 
@@ -52,7 +68,15 @@ namespace ApplyRoutesPlugin.Edit
 
         public Image Image
         {
-            get { return null; }
+            get { return Properties.Resources.ApplyRoutes.ToBitmap(); }
+        }
+
+        public IList<string> MenuPath
+        {
+            get
+            {
+                return new List<string>();
+            }
         }
 
         public void Refresh()
@@ -187,6 +211,15 @@ namespace ApplyRoutesPlugin.Edit
             get { return Properties.Resources.Edit_UpdateEquipment_Text; }
         }
 
+        public bool Visible
+        {
+            get
+            {
+                if (activities.Count > 0) return true;
+                if (routes.Count > 0) return true;
+                return false;
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -203,7 +236,93 @@ namespace ApplyRoutesPlugin.Edit
             }
         }
 
-        private IList<IActivity> activities = null;
-        private IList<IRoute> routes = null;
+#if !ST_2_1
+        IList<ItemType> GetAllContainedItems<ItemType>(ISelectionProvider selectionProvider)
+        {
+            List<ItemType> items = new List<ItemType>();
+            foreach (ItemType item in CollectionUtils.GetItemsOfType<ItemType>(selectionProvider.SelectedItems))
+            {
+                if (!items.Contains(item)) items.Add(item);
+            }
+            AddGroupItems<ItemType>(CollectionUtils.GetItemsOfType<IGroupedItem<ItemType>>(
+                                    selectionProvider.SelectedItems), items);
+            return items;
+        }
+
+        void AddGroupItems<ItemType>(IList<IGroupedItem<ItemType>> groups, IList<ItemType> allItems)
+        {
+            foreach (IGroupedItem<ItemType> group in groups)
+            {
+                foreach (ItemType item in group.Items)
+                {
+                    if (!allItems.Contains(item)) allItems.Add(item);
+                }
+                AddGroupItems(group.SubGroups, allItems);
+            }
+        }
+#endif
+#if !ST_2_1
+        private IDailyActivityView dailyView = null;
+        private IActivityReportsView reportView = null;
+        private IRouteView routeView = null;
+#endif
+        private IList<IActivity> _activities = null;
+        private IList<IActivity> activities
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_activities == null)
+                {
+                    if (dailyView != null)
+                    {
+                        return GetAllContainedItems<IActivity>(dailyView.SelectionProvider);
+                    }
+                    else if (reportView != null)
+                    {
+                        return GetAllContainedItems<IActivity>(reportView.SelectionProvider);
+                    }
+                    else
+                    {
+                        return new List<IActivity>();
+                    }
+                }
+#endif
+                return _activities;
+            }
+            set
+            {
+                _activities = value;
+            }
+        }
+        private IList<IRoute> _routes = null;
+        private IList<IRoute> routes
+        {
+            get
+            {
+#if !ST_2_1
+                //activities are set either directly or by selection,
+                //not by more than one
+                if (_routes == null)
+                {
+                    if (routeView != null)
+                    {
+                        return GetAllContainedItems<IRoute>(routeView.SelectionProvider);
+                    }
+                    else
+                    {
+                        return new List<IRoute>();
+                    }
+                }
+#endif
+                return _routes;
+            }
+           set
+            {
+                _routes = value;
+            }
+        }
     }
 }

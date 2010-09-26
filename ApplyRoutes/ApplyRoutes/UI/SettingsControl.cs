@@ -102,19 +102,12 @@ namespace ApplyRoutesPlugin.UI
             mapProvidersList.Columns.Add(new TreeList.Column("Url", Properties.Resources.SettingsControl_URL, w2, StringAlignment.Near));
             mapProvidersList.RowData = ExtendMapProviders.GetMapProviders();
             mapProvidersList.CheckBoxes = true;
-            foreach (GMapProvider p in ExtendMapProviders.GetMapProviders())
-            {
-                mapProvidersList.SetChecked(p, p.Enabled);
-            }
-            mapProvidersList.CheckedChanged += delegate(object sender, TreeList.ItemEventArgs e)
-            {
-                GMapProvider item = e.Item as GMapProvider;
-                if (item != null)
-                {
-                    item.Enabled = mapProvidersList.CheckedElements.Contains(item);
-                }
-            };
+            UpdateMapProviderListCheckBoxes();
+#if ST_2_1
             mapProvidersList.SelectedChanged += delegate(object sender, EventArgs e)
+#else
+            mapProvidersList.SelectedItemsChanged += delegate(object sender, EventArgs e)
+#endif 
             {
                 if (mapProvidersList.SelectedItems.Count == 1)
                 {
@@ -146,6 +139,8 @@ namespace ApplyRoutesPlugin.UI
                 ExtendMapProviders.ApplyDefaults();
                 mapProvidersList.Invalidate();
                 GMapRouteControl.ResetMapTypes();
+                mapProvidersList.RowData = ExtendMapProviders.GetMapProviders();
+                UpdateMapProviderListCheckBoxes();
             };
 
             mapProviderUpdateBtn.Enabled = false;
@@ -212,6 +207,24 @@ namespace ApplyRoutesPlugin.UI
             mapProvidersList.Columns[1].Text = Properties.Resources.SettingsControl_URL;
         }
 
+        private void mapProvidersList_CheckedChanged(object sender, TreeList.ItemEventArgs e)
+        {
+            GMapProvider item = e.Item as GMapProvider;
+            if (item != null)
+            {
+                item.Enabled = mapProvidersList.CheckedElements.Contains(item);
+            }
+        }
+        private void UpdateMapProviderListCheckBoxes()
+        {
+            mapProvidersList.CheckedChanged -= mapProvidersList_CheckedChanged;
+            foreach (GMapProvider p in ExtendMapProviders.GetMapProviders())
+            {
+                mapProvidersList.SetChecked(p, p.Enabled);
+            }
+            mapProvidersList.CheckedChanged += mapProvidersList_CheckedChanged;
+        }
+        
         private void homePageLink_Click(object sender, EventArgs e)
         {
             try
@@ -245,7 +258,7 @@ namespace ApplyRoutesPlugin.UI
                 IApplication app = Plugin.GetApplication();
                 if (app != null && app.Logbook != null)
                 {
-                    data = app.Logbook.GetExtensionData(Plugin.thePlugin.Id);
+                    data = app.Logbook.GetExtensionData(GUIDs.PluginMain);
                 }
                 if (data != null && data.Length == 3)
                 {
@@ -271,10 +284,17 @@ namespace ApplyRoutesPlugin.UI
 
             bool sarb = sar == null || sar.Value == "1";
             bool scrb = scr == null || scr.Value == "1";
+            //Action included in ST3 but not ST2, but not visible by default
             bool sueb = sue != null && sue.Value == "1";
             bool sstb = sst == null || sst.Value == "1";
+#if ST_2_1
+            //Action included in ST3 but not ST2
             bool sjrb = sjr == null || sjr.Value == "1";
-            bool srrb = srr == null || srr.Value == "1";
+#else
+            bool sjrb = sjr != null && sjr.Value == "1";
+#endif
+            //ReplayRoutes.com not working right now
+            bool srrb = srr != null && srr.Value == "1";
 
             emsi = new EditMenuSettingsInfo(sarb, scrb, sueb, sstb, sjrb, srrb);
         }

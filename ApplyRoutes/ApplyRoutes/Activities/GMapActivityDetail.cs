@@ -21,36 +21,110 @@ using System.Text;
 
 using ZoneFiveSoftware.Common.Visuals;
 using ZoneFiveSoftware.Common.Visuals.Fitness;
+#if !ST_2_1
+using ZoneFiveSoftware.Common.Visuals.Util;
+#endif
 using ZoneFiveSoftware.Common.Data.Fitness;
 using System.Windows.Forms;
 using System.ComponentModel;
 
 namespace ApplyRoutesPlugin.Activities
 {
-    class GMapActivityDetail : IActivityDetailPage, IView
+    class GMapActivityDetail : IView, 
+#if ST_2_1
+     IActivityDetailPage
+#else
+     IDetailPage
+#endif
     {
+        #region IActivityDetailPage Members
+
         public static GMapActivityDetail Singleton
         {
             get
             {
-                return new GMapActivityDetail();
+                return new GMapActivityDetail(true);
             }
         }
-
-        #region IActivityDetailPage Members
-
-        public IActivity Activity
+        public GMapActivityDetail()
         {
-            set
+        }
+        public GMapActivityDetail(bool isView)
+        {
+            _isView = isView;
+        }
+#if !ST_2_1
+        public GMapActivityDetail(IDailyActivityView view)
+        {
+            this.view = view;
+            view.SelectionProvider.SelectedItemsChanged += new EventHandler(OnViewSelectedItemsChanged);
+            Plugin.GetApplication().PropertyChanged += new PropertyChangedEventHandler(Application_PropertyChanged);
+        }
+
+        private void OnViewSelectedItemsChanged(object sender, EventArgs e)
+        {
+            activities = CollectionUtils.GetAllContainedItemsOfType<IActivity>(view.SelectionProvider.SelectedItems);
+            if ((control != null))
             {
-                activity = value;
-                if (control != null)
+                control.Activities = activities;
+            }
+        }
+        void Application_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //Hide/Show the page if view is changing
+            //Really not important here as SelectedItems will not change anyway
+            //(and there are no other triggers)
+            if (null != view && e.PropertyName == "ActiveView")
+            {
+                Guid viewId = Plugin.GetApplication().ActiveView.Id;
+                if (viewId == view.Id)
                 {
-                    control.Activities = activity != null ? new IActivity[] { activity } : null;
+                    if (_showPage && control != null) { this.ShowPage(_bookmark); }
+                }
+                else
+                {
+                    if (!_showPage && control != null) { this.HidePage(); }
                 }
             }
         }
+#else
+        public IActivity Activity
+        {
+             set
+            {
+                if (null == value) { activities = null; }
+                else { activities = new List<IActivity> { value }; }
+                if ((control != null))
+                {
+                    control.Activities = activities;
+                }
+            }
+        }
+#endif
 
+        public IList<string> MenuPath
+        {
+            get { return menuPath; }
+            set { menuPath = value; OnPropertyChanged("MenuPath"); }
+        }
+
+        public bool MenuEnabled
+        {
+            get { return menuEnabled; }
+            set { menuEnabled = value; OnPropertyChanged("MenuEnabled"); }
+        }
+
+        public bool MenuVisible
+        {
+            get { return menuVisible; }
+            set { menuVisible = value; OnPropertyChanged("MenuVisible"); }
+        }
+
+        public bool PageMaximized
+        {
+            get { return pageMaximized; }
+            set { pageMaximized = value; OnPropertyChanged("PageMaximized"); }
+        }
         public void RefreshPage()
         {
             if (control != null)
@@ -67,11 +141,12 @@ namespace ApplyRoutesPlugin.Activities
         {
             if (control == null)
             {
+#if ST_2_1
                 control = new GMapRouteControl();
-                if (activity != null)
-                {
-                    control.Activities = new IActivity[] { activity };
-                }
+#else
+                control = new GMapRouteControl(view);
+#endif
+                control.Activities = activities;
             }
             return control;
         }
@@ -123,7 +198,6 @@ namespace ApplyRoutesPlugin.Activities
                 control.UICultureChanged(culture);
             }
         }
-
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -140,8 +214,18 @@ namespace ApplyRoutesPlugin.Activities
             }
         }
 
-        private IActivity activity = null;
+        private IList<IActivity> activities = new List<IActivity>();
         private GMapRouteControl control = null;
+#if !ST_2_1
+        private IDailyActivityView view = null;
+        private bool _showPage = false;
+        private string _bookmark = null;
+#endif
+        private IList<string> menuPath = null;
+        private bool menuEnabled = true;
+        private bool menuVisible = true;
+        private bool pageMaximized = false;
+        private bool _isView = false;
 
         #region IView Members
 
@@ -152,7 +236,18 @@ namespace ApplyRoutesPlugin.Activities
 
         public Guid Id
         {
-            get { return Plugin.thePlugin.Id; }
+            //Note: Used in both View and ActivityPage
+            get
+            {
+                if (_isView)
+                {
+                    return GUIDs.ApplyRoutesView;
+                }
+                else
+                { 
+                    return GUIDs.ActivityPage;
+                }
+            }
         }
 
         public string SubTitle

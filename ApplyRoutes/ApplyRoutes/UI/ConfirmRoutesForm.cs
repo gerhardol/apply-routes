@@ -43,7 +43,11 @@ namespace ApplyRoutesPlugin.UI
             this.activityRouteTree.Columns.Add(new TreeList.Column("ActivityName", Properties.Resources.CreateRouteForm_Activity, w2, StringAlignment.Near));
             this.activityRouteTree.Columns.Add(new TreeList.Column("RouteName", Properties.Resources.CreateRouteForm_Route, w1, StringAlignment.Near));
             this.activityRouteTree.RowData = arpList;
+#if ST_2_1
             this.activityRouteTree.SelectedChanged += delegate(object sender, EventArgs e)
+#else
+            this.activityRouteTree.SelectedItemsChanged += delegate(object sender, EventArgs e)
+#endif            
             {
                 SetupActivityRoutePop();
             };

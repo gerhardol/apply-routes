@@ -47,7 +47,7 @@ namespace ApplyRoutesPlugin
 
         public Guid Id
         {
-            get { return new Guid("{a2dcf469-3d83-4690-8702-a21cd18ff7b3}"); }
+            get { return GUIDs.PluginMain; }
         }
 
         public string Name
@@ -155,7 +155,7 @@ namespace ApplyRoutesPlugin
             e.DrawFocusRectangle();
         }
 
-        public static void OpenListPopup<T>(ITheme theme, IList<T> items, System.Windows.Forms.Control control, string Id, T selected, ItemSelectHandler<T> selectHandler)
+        public static void OpenListPopup<T>(ITheme theme, IEnumerable<T> items, System.Windows.Forms.Control control, string Id, T selected, ItemSelectHandler<T> selectHandler)
         {
             TreeListPopup popup = new TreeListPopup();
             popup.ThemeChanged(theme);
@@ -203,6 +203,10 @@ namespace ApplyRoutesPlugin
             {
                 return 0;
             }
+        }
+        public static bool IsRunningOnMono()
+        {
+            return Type.GetType("Mono.Runtime") != null;
         }
 
         #region Private members

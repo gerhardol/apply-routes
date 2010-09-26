@@ -46,6 +46,14 @@ namespace ApplyRoutesPlugin.Activities
     {
         //private XmlDocument root = null;
 
+#if !ST_2_1
+        private IDailyActivityView m_view = null;
+        public GMapRouteControl(IDailyActivityView view)
+            : this()
+        {
+            m_view = view;
+        }
+#endif
         public GMapRouteControl()
         {
             InitializeComponent();
@@ -429,9 +437,7 @@ namespace ApplyRoutesPlugin.Activities
 
                         string refid = activity != null ? activity.ReferenceId : route.ReferenceId;
 
-                        bool isact = activity != null;
                         ActivityInfo ai = activity != null ? ActivityInfoCache.Instance.GetInfo(activity) : null;
-
 
                         string values = "";
                         foreach (ITimeValueEntry<IGPSPoint> pt in groute)
@@ -494,7 +500,9 @@ namespace ApplyRoutesPlugin.Activities
             {
                 Match m = Regex.Match(mp.Url, "[#&]t=([-a-zA-Z_0-9]+)&");
                 bool isSat = m.Success && m.Groups[1].Value == "SATELLITE";
-                if (mp.Enabled || isSat)
+                //OSM is also available from standard ST plugin, but has unique features in ActivityPage
+                bool isOSM = m.Success && m.Groups[1].Value == "OpenStreetMapMapnik";
+                if (mp.Enabled || isSat || isOSM)
                 {
                     MapTypeInfo mti = new MapTypeInfo();
                     mti.title = mp.Title;
@@ -568,7 +576,6 @@ namespace ApplyRoutesPlugin.Activities
 
         public void RefreshPage()
         {
-
         }
 
         public IList<IActivity> Activities
@@ -634,8 +641,8 @@ namespace ApplyRoutesPlugin.Activities
         private IList<IRoute> routes = null;
         private bool ready = false;
         private bool changed = false;
-        private string selected_guid = "";
-        private static string guid = "";
+        private string selected_guid = ""; //ActivityPage, for used guid (map)
+        private static string guid = ""; //ActivityPage, saved in Preferences (may not exist in active maps)
 
         static float GetInterpolatedValue(INumericTimeDataSeries s, DateTime when)
         {
