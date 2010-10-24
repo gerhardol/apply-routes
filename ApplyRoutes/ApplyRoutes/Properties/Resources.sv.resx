@@ -58,52 +58,84 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="okBtn.Text" xml:space="preserve">
-    <value>OK</value>
+  <data name="Edit_ApplyRouteAction_Text" xml:space="preserve">
+    <value>AR - Applicera rutt...</value>
   </data>
-  <data name="cancelBtn.Text" xml:space="preserve">
-    <value>Przerwij</value>
+  <data name="Edit_ApplyRoutesPlugin_Text" xml:space="preserve">
+    <value>Apply Routes Plugin</value>
   </data>
-  <data name="numActLbl.Text" xml:space="preserve">
-    <value>Liczba aktywności:</value>
+  <data name="Edit_CreateRouteAction_Text" xml:space="preserve">
+    <value>AR - Skapa rutter från aktiviteter...</value>
   </data>
-  <data name="minDistLbl.Text" xml:space="preserve">
-    <value>Min. dyst:</value>
+  <data name="Edit_RouteManipulation_Text" xml:space="preserve">
+    <value>Ändra rutt</value>
   </data>
-  <data name="avgDistLbl.Text" xml:space="preserve">
-    <value>Śr. dyst:</value>
+  <data name="Edit_UpdateEquipment_Text" xml:space="preserve">
+    <value>AR - Ändra historik</value>
   </data>
-  <data name="maxDistLbl.Text" xml:space="preserve">
-    <value>Maks. dyst:</value>
+  <data name="MCL_SplitsMCL_Text" xml:space="preserve">
+    <value>Hantera etapper</value>
   </data>
-  <data name="routeLbl.Text" xml:space="preserve">
-    <value>Trasa do zastosowania</value>
+  <data name="Edit_SendToRouteControl_Text" xml:space="preserve">
+    <value>AR - Skicka {0:S} {1:S} till vyn Rutter</value>
   </data>
-  <data name="ignoreGPSActChk.Text" xml:space="preserve">
-    <value>Ignoruj aktywności z danymi GPS</value>
+  <data name="Route_Control_Title" xml:space="preserve">
+    <value>AR - Rutter</value>
   </data>
-  <data name="applyTimesLinearlyChk.Text" xml:space="preserve">
-    <value>Zastosuj czasy liniowo</value>
+  <data name="Route_EndTime_Text" xml:space="preserve">
+    <value>Slut:</value>
   </data>
-  <data name="preserveDistChk.Text" xml:space="preserve">
-    <value>Zachowaj dystans</value>
+  <data name="Route_StartTime_Text" xml:space="preserve">
+    <value>Start:</value>
   </data>
-  <data name="preserve_dist_exactly_rad.Text" xml:space="preserve">
-    <value>Dokładny</value>
+  <data name="Edit_JoinRoutesAction_Text" xml:space="preserve">
+    <value>AR - Förena {0:S} {1:S}</value>
   </data>
-  <data name="preserve_dist_rounded_rad.Text" xml:space="preserve">
-    <value>Zaokrąglony</value>
+  <data name="Generic_Activities_Text" xml:space="preserve">
+    <value>Aktiviteter</value>
   </data>
-  <data name="preserve_dist_scaled_rad.Text" xml:space="preserve">
-    <value>Skalowany</value>
+  <data name="Generic_Activity_Text" xml:space="preserve">
+    <value>Aktivitet</value>
   </data>
-  <data name="Laps_lbl.Text" xml:space="preserve">
-    <value>Odcinki</value>
+  <data name="Generic_One_Text" xml:space="preserve">
+    <value>Ett</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Zastosuj trasę</value>
+  <data name="Generic_Three_Text" xml:space="preserve">
+    <value>Två</value>
+  </data>
+  <data name="Generic_Two_Text" xml:space="preserve">
+    <value>Tre</value>
+  </data>
+  <data name="ApplyRouteForm_Name" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="CreateRouteForm_Activity" xml:space="preserve">
+    <value>Aktivitet</value>
+  </data>
+  <data name="CreateRouteForm_Route" xml:space="preserve">
+    <value>Rutt</value>
+  </data>
+  <data name="SettingsControl_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="SettingsControl_URL" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="UpdateEquipment_Brand" xml:space="preserve">
+    <value>Märke</value>
+  </data>
+  <data name="UpdateEquipment_Model" xml:space="preserve">
+    <value>Modell</value>
+  </data>
+  <data name="UpdateEquipment_Type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="Edit_JoinedActivities_Text" xml:space="preserve">
+    <value>{0:S} {1:S} Förenade av Apply Routes</value>
+  </data>
+  <data name="Edit_RRUpload_Text" xml:space="preserve">
+    <value>AR - Ladda upp {0:S} {1:S} till ReplayRoutes</value>
   </data>
 </root>

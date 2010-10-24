@@ -58,52 +58,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="okBtn.Text" xml:space="preserve">
-    <value>OK</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="editMenuTabPage.Text" xml:space="preserve">
+    <value>Ändra menyn</value>
   </data>
-  <data name="cancelBtn.Text" xml:space="preserve">
-    <value>Przerwij</value>
+  <data name="mapProvidersTabPage.Text" xml:space="preserve">
+    <value>Kartleverantörer</value>
   </data>
-  <data name="numActLbl.Text" xml:space="preserve">
-    <value>Liczba aktywności:</value>
+  <data name="uploadHeadingLbl.Text" xml:space="preserve">
+    <value>Sätt URL för Replay Routes</value>
   </data>
-  <data name="minDistLbl.Text" xml:space="preserve">
-    <value>Min. dyst:</value>
+  <data name="uploadResetBtn.Text" xml:space="preserve">
+    <value>Återställ ursprungsvärden</value>
   </data>
-  <data name="avgDistLbl.Text" xml:space="preserve">
-    <value>Śr. dyst:</value>
+  <data name="uploadUrlLbl.Text" xml:space="preserve">
+    <value>URL:</value>
   </data>
-  <data name="maxDistLbl.Text" xml:space="preserve">
-    <value>Maks. dyst:</value>
+  <data name="uploadTabPage.Text" xml:space="preserve">
+    <value>Ladda upp</value>
   </data>
-  <data name="routeLbl.Text" xml:space="preserve">
-    <value>Trasa do zastosowania</value>
+  <data name="showJoinRoutesChk.Text" xml:space="preserve">
+    <value>Visa 'Förena aktiviteter' i Ändra menyn</value>
   </data>
-  <data name="ignoreGPSActChk.Text" xml:space="preserve">
-    <value>Ignoruj aktywności z danymi GPS</value>
+  <data name="showSendToRoutesChk.Text" xml:space="preserve">
+    <value>Visa 'Skicka till rutter' i Ändra menyn</value>
   </data>
-  <data name="applyTimesLinearlyChk.Text" xml:space="preserve">
-    <value>Zastosuj czasy liniowo</value>
+  <data name="showApplyRoutesChk.Text" xml:space="preserve">
+    <value>Visa 'Applicera rutt...' i Ändra menyn</value>
   </data>
-  <data name="preserveDistChk.Text" xml:space="preserve">
-    <value>Zachowaj dystans</value>
+  <data name="showCreateRoutesChk.Text" xml:space="preserve">
+    <value>Visa 'Skapa rutter från aktiviteter...' i Ändra menyn</value>
   </data>
-  <data name="preserve_dist_exactly_rad.Text" xml:space="preserve">
-    <value>Dokładny</value>
+  <data name="showUpdateEquipmentChk.Text" xml:space="preserve">
+    <value>Visa 'Ändra översikt' i Ändra menyn</value>
   </data>
-  <data name="preserve_dist_rounded_rad.Text" xml:space="preserve">
-    <value>Zaokrąglony</value>
+  <data name="mapProviderResetBtn.Text" xml:space="preserve">
+    <value>Återställ ursprungsvärden</value>
   </data>
-  <data name="preserve_dist_scaled_rad.Text" xml:space="preserve">
-    <value>Skalowany</value>
+  <data name="mapProviderUpdateBtn.Text" xml:space="preserve">
+    <value>Uppdatera kartleverantörer</value>
   </data>
-  <data name="Laps_lbl.Text" xml:space="preserve">
-    <value>Odcinki</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Zastosuj trasę</value>
+  <data name="homePageLink.Text" xml:space="preserve">
+    <value>Apply Routes hemsida</value>
   </data>
 </root>

@@ -31,10 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="osr_csharp, Version=1.0.3467.20497, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=x86">
+    <Reference Include="osr_csharp, Version=1.0.3517.26311, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\osr_csharp.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

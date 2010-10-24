@@ -65,45 +65,45 @@
     <value>OK</value>
   </data>
   <data name="cancelBtn.Text" xml:space="preserve">
-    <value>Przerwij</value>
+    <value>Avbryt</value>
   </data>
   <data name="numActLbl.Text" xml:space="preserve">
-    <value>Liczba aktywności:</value>
+    <value>Antal aktiviteter:</value>
   </data>
   <data name="minDistLbl.Text" xml:space="preserve">
-    <value>Min. dyst:</value>
+    <value>Min dist:</value>
   </data>
   <data name="avgDistLbl.Text" xml:space="preserve">
-    <value>Śr. dyst:</value>
+    <value>Medel dist:</value>
   </data>
   <data name="maxDistLbl.Text" xml:space="preserve">
-    <value>Maks. dyst:</value>
+    <value>Max dist:</value>
   </data>
   <data name="routeLbl.Text" xml:space="preserve">
-    <value>Trasa do zastosowania</value>
+    <value>Rutt att applicera</value>
   </data>
   <data name="ignoreGPSActChk.Text" xml:space="preserve">
-    <value>Ignoruj aktywności z danymi GPS</value>
+    <value>Ignorera aktiviteter med GPS data</value>
   </data>
   <data name="applyTimesLinearlyChk.Text" xml:space="preserve">
-    <value>Zastosuj czasy liniowo</value>
+    <value>Applicera tider linjärt</value>
   </data>
   <data name="preserveDistChk.Text" xml:space="preserve">
-    <value>Zachowaj dystans</value>
+    <value>Bevara distanser</value>
   </data>
   <data name="preserve_dist_exactly_rad.Text" xml:space="preserve">
-    <value>Dokładny</value>
+    <value>Exakt</value>
   </data>
   <data name="preserve_dist_rounded_rad.Text" xml:space="preserve">
-    <value>Zaokrąglony</value>
+    <value>Avrundat</value>
   </data>
   <data name="preserve_dist_scaled_rad.Text" xml:space="preserve">
-    <value>Skalowany</value>
+    <value>Skalad</value>
   </data>
   <data name="Laps_lbl.Text" xml:space="preserve">
-    <value>Odcinki</value>
+    <value>Etapper</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Zastosuj trasę</value>
+    <value>Apply Route</value>
   </data>
 </root>

@@ -100,6 +100,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Activities\GMapRouteControl.sv.resx">
+      <DependentUpon>GMapRouteControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.es.resx" />
     <EmbeddedResource Include="Properties\Resources.fr.resx" />
     <EmbeddedResource Include="Properties\Resources.pl.resx" />
@@ -108,6 +111,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.sv.resx" />
     <EmbeddedResource Include="UI\ApplyRouteForm.es.resx">
       <DependentUpon>ApplyRouteForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,6 +119,9 @@
       <DependentUpon>ApplyRouteForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ApplyRouteForm.pl.resx">
+      <DependentUpon>ApplyRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ApplyRouteForm.sv.resx">
       <DependentUpon>ApplyRouteForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ConfirmRoutesForm.es.resx">
@@ -135,6 +142,9 @@
       <DependentUpon>ApplyRouteForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConfirmRoutesForm.sv.resx">
+      <DependentUpon>ConfirmRoutesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingsControl.es.resx">
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -142,6 +152,9 @@
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingsControl.pl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsControl.sv.resx">
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UpdateEquipmentForm.es.resx">
@@ -160,6 +173,9 @@
     <EmbeddedResource Include="UI\SettingsControl.resx">
       <DependentUpon>SettingsControl.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateEquipmentForm.sv.resx">
+      <DependentUpon>UpdateEquipmentForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +211,6 @@
       <Project>{9576A524-9104-4677-AD33-4699CE9F26B6}</Project>
       <Name>GDAL113Wrapper</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -238,4 +251,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
 </Project>
