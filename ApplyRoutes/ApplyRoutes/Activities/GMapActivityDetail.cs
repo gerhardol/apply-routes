@@ -30,7 +30,7 @@ using System.ComponentModel;
 
 namespace ApplyRoutesPlugin.Activities
 {
-    class GMapActivityDetail : IView, 
+    class GMapActivityDetail : IView, IDisposable,
 #if ST_2_1
      IActivityDetailPage
 #else
@@ -270,5 +270,10 @@ namespace ApplyRoutesPlugin.Activities
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            this.control.Dispose();
+        }
     }
 }

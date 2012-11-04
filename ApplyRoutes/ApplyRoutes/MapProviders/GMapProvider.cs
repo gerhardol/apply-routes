@@ -77,7 +77,7 @@ namespace ApplyRoutesPlugin.MapProviders
         public IGPSBounds bounds = null;
     };
 
-    public class GMapImageCache
+    public class GMapImageCache : IDisposable
     {
         private ReaderWriterLock rwl = new ReaderWriterLock();
         private ManualResetEvent mre = new ManualResetEvent(false);
@@ -297,6 +297,7 @@ namespace ApplyRoutesPlugin.MapProviders
             else
             {
                 IHTMLElementRender render = elt.DomElement as IHTMLElementRender;
+                //TODO: Catch out-of-memory?
                 bmp = new Bitmap(ce.pixRect.Width, ce.pixRect.Height);
                 IViewObject viewobj = webBrowser.Document.DomDocument as IViewObject;
                 if (viewobj != null)
@@ -389,6 +390,11 @@ namespace ApplyRoutesPlugin.MapProviders
             mre.Set();
             timer.Start();
             Application.Run();
+        }
+
+        public void Dispose()
+        {
+            //this.mre.Dispose();
         }
     };
 

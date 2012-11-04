@@ -41,7 +41,7 @@ namespace ApplyRoutesPlugin.Settings
         #endregion
     }
 
-    public class ApplyRoutesSettings : ISettingsPage
+    public class ApplyRoutesSettings : ISettingsPage, IDisposable
     {
         #region ISettingsPage Members
 
@@ -126,5 +126,10 @@ namespace ApplyRoutesPlugin.Settings
         }
 
         private SettingsControl theControl;
+
+        public void Dispose()
+        {
+            this.theControl.Dispose();
+        }
     }
 }
