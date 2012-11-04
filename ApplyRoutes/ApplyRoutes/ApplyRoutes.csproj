@@ -196,6 +196,7 @@
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
+  <!-- ST2 only
   <ItemGroup Condition=" ('$(Configuration)' == 'ST2.1Release') or ('$(Configuration)' == 'ST2.1Debug') ">
     <ProjectReference Include="..\GDAL11013Wrapper\GDAL11013Wrapper.csproj">
       <Project>{4AF01154-ACDD-48FA-B024-FD7F1A28BF9F}</Project>
@@ -206,6 +207,8 @@
       <Name>GDAL111Wrapper</Name>
     </ProjectReference>
   </ItemGroup>
+-->
+  <!-- ST3 -->
   <ItemGroup Condition=" ('$(Configuration)' == 'ST3.0Release') or ('$(Configuration)' == 'ST3.0Debug') ">
     <ProjectReference Include="..\GDAL113Wrapper\GDAL113Wrapper.csproj">
       <Project>{9576A524-9104-4677-AD33-4699CE9F26B6}</Project>
