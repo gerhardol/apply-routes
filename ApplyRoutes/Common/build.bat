@@ -75,12 +75,12 @@ XCOPY  "%TargetDir%*.*" %StTarget% /I/Y/Q/E <NUL:
 
 REM ApplyRoutes specific
 IF NOT "%StPluginVersion%"=="3" GOTO GDAL3
-copy "%ProjectDir%\..\GDAL113Wrapper\bin\%ConfigurationType%\GDAL113Wrapper.dll" %25StTarget%25
+copy "%ProjectDir%\..\GDAL113Wrapper\bin\%ConfigurationType%\GDAL113Wrapper.dll" %StTarget%
 GOTO END_GDAL
 :GDAL3
 IF NOT "%StPluginVersion%"=="2" GOTO GDAL2
-copy "%ProjectDir%\..\GDAL111Wrapper\bin\%ConfigurationType%\GDAL111Wrapper.dll" %25StTarget%25
-copy "%ProjectDir%\..\GDAL11013Wrapper\bin\%ConfigurationType%\GDAL11013Wrapper.dll" %25StTarget%25
+copy "%ProjectDir%\..\GDAL111Wrapper\bin\%ConfigurationType%\GDAL111Wrapper.dll" %StTarget%
+copy "%ProjectDir%\..\GDAL11013Wrapper\bin\%ConfigurationType%\GDAL11013Wrapper.dll" %StTarget%
 :END_GDAL
 
 REM generate the plugin.xml file
