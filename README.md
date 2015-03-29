@@ -1,9 +1,9 @@
 [Apply Routes](http://sporttracks.myosotissp.com/applyroutesplugin.html) provides a number of extensions to the [SportTracks](http://www.zonefivesoftware.com/SportTracks) functionality:
   * It adds a number of MapProviders (google, microsoft, openlayers, geoportail)
-  * It allows 3d [Simulation](Simulation.md) of your workouts
+  * It allows 3d [Simulation](Simulation) of your workouts
   * It has a number of features for modifying activities
     * Adding a gps track to a workout that doesnt have one
-    * [Joining workouts](JoinWorkouts.md)
+    * [Joining workouts](JoinWorkouts)
     * UpdateHistory - Bulk updates to your logbook.
 
 <table><tr><td>
